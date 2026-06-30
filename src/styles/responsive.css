@@ -1,0 +1,121 @@
+@media (max-width: 1100px) {
+  .site-header {
+    grid-template-columns: auto 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .trust-pill {
+    display: none;
+  }
+
+  .hero-metrics,
+  .download-layout,
+  .feature-grid,
+  .architecture-flow,
+  .security-grid,
+  .testlab-layout,
+  .roadmap-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric-link,
+  .setup-panel,
+  .testlab-note {
+    grid-column: 1 / -1;
+  }
+
+  .provider-row,
+  .proof-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .proof-row p,
+  .proof-row small {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --header: 64px;
+  }
+
+  h1 {
+    font-size: clamp(4.2rem, 22vw, 6.8rem);
+  }
+
+  .site-header {
+    gap: 12px;
+    padding-inline: 14px;
+  }
+
+  .header-actions .icon-link {
+    display: none;
+  }
+
+  .header-download {
+    min-height: 40px;
+    padding-inline: 12px;
+  }
+
+  .hero {
+    min-height: 92svh;
+    padding-inline: 18px;
+  }
+
+  .hero-vignette {
+    background:
+      linear-gradient(90deg, rgba(7, 7, 7, 0.97), rgba(7, 7, 7, 0.72)),
+      linear-gradient(0deg, rgba(7, 7, 7, 0.98), rgba(7, 7, 7, 0.32), rgba(7, 7, 7, 0.9));
+  }
+
+  .hero-metrics,
+  .command-strip,
+  .download-layout,
+  .feature-grid,
+  .provider-row,
+  .architecture-flow,
+  .security-grid,
+  .testlab-layout,
+  .roadmap-grid,
+  .proof-row {
+    grid-template-columns: 1fr;
+  }
+
+  .command-cell {
+    min-height: 104px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .command-cell:last-child {
+    border-bottom: 0;
+  }
+
+  .section {
+    padding: 76px 0;
+  }
+
+  .screenshot-frame figcaption {
+    grid-template-columns: auto 1fr;
+  }
+
+  .proof-toolbar,
+  .footer-inner,
+  .footer-links {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
