@@ -1,0 +1,1 @@
+{"id":"019","category":"Security","label":"Electron hardening","value":"Locked down","detail":"Context isolation, sandboxing, disabled Node integration, and CSP are called out in the app docs.","source":"Akorith README privacy section"}
