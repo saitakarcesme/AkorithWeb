@@ -1,0 +1,1 @@
+{"id":"010","label":"Risk-based pauses","control":"Auto Mode pauses on risky, destructive, low-confidence, or ambiguous prompts.","impact":"Keeps human approval in the path for higher-risk actions."}
