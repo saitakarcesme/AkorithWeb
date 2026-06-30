@@ -1,0 +1,1 @@
+{"id":"011","category":"Providers","label":"Claude support","value":"CLI login","detail":"Claude runs through the official claude CLI and the user's existing subscription login.","source":"Akorith README"}
