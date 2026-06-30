@@ -1,0 +1,1 @@
+{"id":"004","label":"Renderer sandbox","control":"Electron sandboxing is part of the stated runtime posture.","impact":"Limits renderer process access when untrusted content is present."}
