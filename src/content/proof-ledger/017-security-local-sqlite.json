@@ -1,0 +1,1 @@
+{"id":"017","category":"Security","label":"Local database","value":"SQLite","detail":"Chats, usage stats, project metadata, and settings are stored as local app data.","source":"Akorith README privacy section"}
