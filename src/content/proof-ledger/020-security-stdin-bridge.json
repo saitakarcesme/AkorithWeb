@@ -1,0 +1,1 @@
+{"id":"020","category":"Security","label":"Prompt delivery","value":"stdin","detail":"Prompts are passed to CLIs over stdin rather than shell arguments.","source":"Akorith README privacy section"}
