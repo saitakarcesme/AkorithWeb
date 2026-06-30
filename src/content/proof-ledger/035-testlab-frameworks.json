@@ -1,0 +1,1 @@
+{"id":"035","category":"Test Lab","label":"Runner support","value":"pytest vitest jest","detail":"Validation covers pytest, vitest, and jest style projects.","source":"docs/validation/testlab-10-run-validation.md"}
