@@ -1,0 +1,1 @@
+{"id":"015","category":"Providers","label":"Graceful degradation","value":"Any subset works","detail":"Missing tools show as unavailable rather than breaking the app.","source":"Akorith README"}
