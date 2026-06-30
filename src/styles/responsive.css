@@ -62,7 +62,7 @@
   }
 
   .hero {
-    min-height: 92svh;
+    min-height: 86svh;
     padding-inline: 18px;
   }
 
@@ -83,6 +83,10 @@
   .roadmap-grid,
   .proof-row {
     grid-template-columns: 1fr;
+  }
+
+  .hero-metrics {
+    display: none;
   }
 
   .command-cell {
