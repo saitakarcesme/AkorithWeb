@@ -1,0 +1,1 @@
+{"id":"014","label":"Fast-forward updater","control":"The in-app updater uses fetch, switch, and merge --ff-only.","impact":"Avoids reset-style updates that would discard local work."}
