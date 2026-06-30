@@ -8,7 +8,7 @@ export function Hero() {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero-media" aria-hidden="true">
-        <img src={withBase("images/screenshots/agent-activity.png")} alt="" />
+        <img src={withBase("images/screenshots/dashboard.png")} alt="" />
       </div>
       <div className="hero-vignette" aria-hidden="true" />
       <div className="hero-inner">
