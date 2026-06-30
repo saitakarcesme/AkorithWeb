@@ -1,0 +1,1 @@
+{"id":"047","category":"Controller","label":"Event stream","value":"HTTP + SSE","detail":"The controller exposes a read-only HTTP and SSE surface for companions and CLIs.","source":"Akorith README major surfaces"}
