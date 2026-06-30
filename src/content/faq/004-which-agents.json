@@ -1,0 +1,1 @@
+{"id":"004","question":"Which agents can it coordinate?","answer":"The current app supports Claude through the claude CLI, Codex through the codex CLI, OpenCode through the opencode CLI, and optional local models through Ollama."}
