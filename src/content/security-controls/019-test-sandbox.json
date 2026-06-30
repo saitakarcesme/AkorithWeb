@@ -1,0 +1,1 @@
+{"id":"019","label":"Test sandboxing","control":"Generated tests run in an isolated sandbox rather than changing source repos.","impact":"Reduces the blast radius of generated test code."}
