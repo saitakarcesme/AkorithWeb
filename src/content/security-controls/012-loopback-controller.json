@@ -1,0 +1,1 @@
+{"id":"012","label":"Loopback controller","control":"The optional controller API is loopback-only and token-protected.","impact":"Keeps companion access local by default."}
