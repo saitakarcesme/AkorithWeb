@@ -1,0 +1,1 @@
+{"id":"008","label":"stdin prompt path","control":"Prompts are passed to CLIs over stdin, not shell arguments.","impact":"Avoids leaking prompt text through process argument inspection."}
