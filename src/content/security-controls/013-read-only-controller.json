@@ -1,0 +1,1 @@
+{"id":"013","label":"Read-only API posture","control":"The controller surface is described as read-only HTTP and SSE.","impact":"Limits what companion tools can do through the API."}
