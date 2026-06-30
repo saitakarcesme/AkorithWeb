@@ -1,0 +1,1 @@
+{"id":"018","label":"Image attachments bounded","control":"Local multimodal image support is routed to local/Ollama where available.","impact":"Keeps image workflows explicit by provider capability."}
