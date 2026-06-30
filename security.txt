@@ -1,0 +1,3 @@
+Contact: https://github.com/saitakarcesme/Akorith/security/advisories
+Preferred-Languages: en
+Policy: https://github.com/saitakarcesme/Akorith
