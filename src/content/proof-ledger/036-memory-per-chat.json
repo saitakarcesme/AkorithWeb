@@ -1,0 +1,1 @@
+{"id":"036","category":"Memory","label":"Per-chat memory","value":"Scoped context","detail":"Conversation memory is scoped to a chat and does not bleed across chats.","source":"Akorith README memory section"}
