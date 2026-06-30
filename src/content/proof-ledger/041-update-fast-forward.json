@@ -1,0 +1,1 @@
+{"id":"041","category":"Updates","label":"Safe source updater","value":"ff-only","detail":"The updater checks GitHub main and fast-forwards without reset behavior.","source":"docs/update-system.md"}
