@@ -1,0 +1,1 @@
+{"id":"042","category":"Updates","label":"No destructive reset","value":"Refuses discard","detail":"The update system avoids resets, local change deletion, and force pushes.","source":"Akorith README update section"}
