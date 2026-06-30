@@ -54,7 +54,7 @@ h3 {
 
 h1 {
   margin-bottom: 18px;
-  font-size: clamp(4rem, 12vw, 9rem);
+  font-size: clamp(4rem, 11vw, 8rem);
   line-height: 0.86;
 }
 
