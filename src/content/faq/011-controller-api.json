@@ -1,0 +1,1 @@
+{"id":"011","question":"What is the Controller API?","answer":"It is an optional loopback-only, token-protected, read-only HTTP and SSE surface for companions and CLIs."}
