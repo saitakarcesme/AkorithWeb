@@ -1,0 +1,103 @@
+.hero {
+  position: relative;
+  display: grid;
+  min-height: 88svh;
+  align-items: end;
+  overflow: hidden;
+  padding: calc(var(--header) + 70px) clamp(18px, 5vw, 70px) 42px;
+  isolation: isolate;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+}
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.58;
+}
+
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(7, 7, 7, 0.98) 0%, rgba(7, 7, 7, 0.84) 34%, rgba(7, 7, 7, 0.18) 72%),
+    linear-gradient(0deg, rgba(7, 7, 7, 0.96) 0%, rgba(7, 7, 7, 0.32) 42%, rgba(7, 7, 7, 0.86) 100%);
+}
+
+.hero-inner {
+  width: min(740px, 100%);
+}
+
+.hero-copy {
+  max-width: 660px;
+  margin-bottom: 28px;
+  color: #e8e4db;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+}
+
+.hero-actions,
+.hero-assurance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-assurance {
+  margin-top: 18px;
+  color: var(--muted);
+}
+
+.hero-assurance svg {
+  color: var(--green);
+}
+
+.hero-metrics {
+  display: grid;
+  width: min(var(--max), 100%);
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: 10px;
+  margin-top: 58px;
+}
+
+.metric-tile,
+.metric-link {
+  min-height: 118px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  background: rgba(12, 13, 14, 0.72);
+  backdrop-filter: blur(16px);
+}
+
+.metric-tile {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+
+.metric-tile strong {
+  color: var(--text);
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.metric-tile span {
+  font-weight: 760;
+}
+
+.metric-link {
+  display: flex;
+  min-width: 170px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--green);
+  font-weight: 780;
+}
