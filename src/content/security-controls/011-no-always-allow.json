@@ -1,0 +1,1 @@
+{"id":"011","label":"No permanent auto-allow","control":"Permanent always-allow prompt options are shown but never auto-selected.","impact":"Prevents accidental broad permission grants."}
