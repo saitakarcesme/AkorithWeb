@@ -1,1 +1,0 @@
-{"id":"015","label":"No force updates","control":"The updater does not force-push or rewrite user work.","impact":"Protects local repositories from destructive sync behavior."}

@@ -1,1 +1,0 @@
-{"id":"006","area":"Code signing","status":"Planned","detail":"The README is explicit that packaged builds are unsigned until signing is configured."}

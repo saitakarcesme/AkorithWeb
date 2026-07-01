@@ -1,1 +1,0 @@
-{"id":"003","label":"Context isolation","control":"Electron is documented with context isolation enabled.","impact":"Separates renderer code from privileged process capabilities."}

@@ -1,1 +1,0 @@
-{"id":"046","category":"Controller","label":"Controller API","value":"Loopback only","detail":"The optional controller is loopback-only, token-protected, and read-only.","source":"docs/controller-api.md"}

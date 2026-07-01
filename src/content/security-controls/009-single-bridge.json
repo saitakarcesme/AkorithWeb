@@ -1,1 +1,0 @@
-{"id":"009","label":"Single terminal bridge","control":"Chat-to-terminal text flows through one programmatic bridge path.","impact":"Reduces duplicate send paths and makes review easier."}

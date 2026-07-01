@@ -1,1 +1,0 @@
-{"id":"011","area":"Release preflight","status":"Available","detail":"npm run release:check verifies identity, icons, targets, git, and tag state."}

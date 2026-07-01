@@ -1,1 +1,0 @@
-{"id":"006","label":"Strict CSP","control":"A strict content security policy is called out in the product docs.","impact":"Narrows the browser attack surface for injected script."}

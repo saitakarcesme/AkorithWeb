@@ -1,1 +1,0 @@
-{"id":"005","label":"Node integration off","control":"The renderer is described as running without Node integration.","impact":"Prevents browser UI code from directly reaching Node primitives."}

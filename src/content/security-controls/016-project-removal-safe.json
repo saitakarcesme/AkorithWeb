@@ -1,1 +1,0 @@
-{"id":"016","label":"Safe project removal","control":"Removing a project from Akorith does not delete its folder on disk.","impact":"Separates app list management from file deletion."}

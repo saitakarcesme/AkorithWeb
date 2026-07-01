@@ -1,1 +1,0 @@
-{"id":"001","label":"No provider API keys","control":"The app uses official CLI logins instead of asking users to paste provider API keys.","impact":"Reduces credential handling inside the desktop app."}

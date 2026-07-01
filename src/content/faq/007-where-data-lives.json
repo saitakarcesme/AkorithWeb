@@ -1,1 +1,0 @@
-{"id":"007","question":"Where does my chat data live?","answer":"Akorith stores app data locally in SQLite and a small JSON config in the operating system user-data directory."}

@@ -1,1 +1,0 @@
-{"id":"009","question":"Do I need Ollama?","answer":"No. Ollama is optional. If it is not running, local-model features degrade gracefully while other configured providers can still work."}
