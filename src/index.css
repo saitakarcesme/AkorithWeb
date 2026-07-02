@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Paper-and-ink palette with violet & emerald accents */
+  --color-paper: #f4f2ec;
+  --color-cream: #eae6db;
+  --color-surface: #fdfcf9;
+  --color-ink: #201d26;
+  --color-soot: #3b3742;
+  --color-muted: #736e79;
+  --color-line: #dcd7cb;
+  --color-clay: #7a52cf;
+  --color-clay-deep: #5f3daa;
+  --color-moss: #1f9d6e;
+  --color-night: #1e1b25;
+  --color-night-soft: #2c2836;
+
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-spin-slow: spin 26s linear infinite;
+  --animate-sway: sway 7s ease-in-out infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(-4deg); }
+    50% { transform: rotate(6deg); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-paper text-soot font-sans antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(122, 82, 207, 0.25);
+  color: #201d26;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f4f2ec;
+}
+::-webkit-scrollbar-thumb {
+  background: #ccc7bc;
+  border-radius: 8px;
+  border: 2px solid #f4f2ec;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b3adcf;
+}
+
+/* Serif accent words inside headlines — italic, brushed with the app icon's
+   violet→emerald gradient */
+.accent-word {
+  font-style: italic;
+  background: linear-gradient(100deg, #7a52cf 10%, #1f9d6e 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Faint editorial dot texture for hero bands */
+.bg-dots {
+  background-image: radial-gradient(rgba(33, 29, 22, 0.09) 1px, transparent 1.2px);
+  background-size: 26px 26px;
+}
+
+.mask-fade-b {
+  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+.mask-fade-x {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+/* Warm card with a quiet hover lift — no neon, no spotlight */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 1.25rem;
+  transition: transform 0.35s cubic-bezier(0.21, 0.47, 0.32, 0.98), box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: #beb3da;
+  box-shadow: 0 18px 40px -18px rgba(58, 44, 96, 0.25);
+}
+
+/* The real "Ak" letterform from the app icon, tintable via mask */
+.ak-mark {
+  display: inline-block;
+  flex-shrink: 0;
+  -webkit-mask: url('/logo-mark.png') center / contain no-repeat;
+  mask: url('/logo-mark.png') center / contain no-repeat;
+}
+.ak-mark-ink {
+  background: var(--color-ink);
+}
+.ak-mark-clay {
+  background: var(--color-clay);
+}
+.ak-mark-cream {
+  background: var(--color-paper);
+}

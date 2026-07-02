@@ -1,0 +1,175 @@
+import { Link } from 'react-router-dom'
+import { Reveal } from './motion.jsx'
+import { AkMark } from './Logo.jsx'
+
+export const GITHUB_URL = 'https://github.com/saitakarcesme/akorith'
+
+/* ---------- Claude-style spark / starburst motif ---------- */
+
+export function Spark({ className = 'h-4 w-4', spin = false }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={`${className} ${spin ? 'animate-spin-slow' : ''}`}
+      aria-hidden
+    >
+      <path d="M12 1.5c.45 3.9 1.05 6.15 2.4 7.5l8.1 3-8.1 3c-1.35 1.35-1.95 3.6-2.4 7.5-.45-3.9-1.05-6.15-2.4-7.5l-8.1-3 8.1-3c1.35-1.35 1.95-3.6 2.4-7.5Z" />
+    </svg>
+  )
+}
+
+/* ---------- Buttons ---------- */
+
+export function PrimaryButton({ to, href, children, className = '' }) {
+  const cls = `group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition-all duration-300 hover:bg-clay hover:shadow-[0_10px_30px_-10px_rgba(122,82,207,0.6)] ${className}`
+  const arrow = (
+    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+  )
+  if (to)
+    return (
+      <Link to={to} className={cls}>
+        {children} {arrow}
+      </Link>
+    )
+  return (
+    <a href={href} target="_blank" rel="noreferrer" className={cls}>
+      {children} {arrow}
+    </a>
+  )
+}
+
+export function GhostButton({ to, href, children, className = '' }) {
+  const cls = `inline-flex items-center gap-2 rounded-full border border-ink/25 bg-transparent px-6 py-3 text-sm font-semibold text-ink transition-all duration-300 hover:border-ink hover:bg-ink/5 ${className}`
+  if (to)
+    return (
+      <Link to={to} className={cls}>
+        {children}
+      </Link>
+    )
+  return (
+    <a href={href} target="_blank" rel="noreferrer" className={cls}>
+      {children}
+    </a>
+  )
+}
+
+/* ---------- Section heading ---------- */
+
+export function SectionHeading({ eyebrow, title, lead, center = false, dark = false }) {
+  return (
+    <div className={`max-w-3xl ${center ? 'mx-auto text-center' : ''}`}>
+      {eyebrow && (
+        <Reveal>
+          <p
+            className={`mb-5 flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.22em] ${
+              center ? 'justify-center' : ''
+            } ${dark ? 'text-clay' : 'text-clay-deep'}`}
+          >
+            <Spark className="h-3.5 w-3.5" />
+            {eyebrow}
+          </p>
+        </Reveal>
+      )}
+      <Reveal delay={0.08}>
+        <h2
+          className={`font-serif text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[2.9rem] lg:leading-[1.12] ${
+            dark ? 'text-paper' : 'text-ink'
+          }`}
+        >
+          {title}
+        </h2>
+      </Reveal>
+      {lead && (
+        <Reveal delay={0.16}>
+          <p className={`mt-5 text-lg leading-relaxed ${dark ? 'text-paper/70' : 'text-muted'}`}>
+            {lead}
+          </p>
+        </Reveal>
+      )}
+    </div>
+  )
+}
+
+/* ---------- Warm card ---------- */
+
+export function Card({ children, className = '' }) {
+  return <div className={`card ${className}`}>{children}</div>
+}
+
+/* ---------- Bare screenshot with rounded edges and a soft shadow ---------- */
+
+export function ScreenshotFrame({ src, alt, className = '' }) {
+  return (
+    <div className={`relative ${className}`}>
+      <div className="relative overflow-hidden rounded-2xl border border-ink/15 bg-night shadow-[0_30px_70px_-24px_rgba(40,32,58,0.45)]">
+        <img src={src} alt={alt} loading="lazy" className="block w-full" />
+      </div>
+    </div>
+  )
+}
+
+/* ---------- Marquee ---------- */
+
+export function Marquee({ items, className = '' }) {
+  const row = [...items, ...items]
+  return (
+    <div className={`mask-fade-x overflow-hidden ${className}`}>
+      <div className="flex w-max animate-marquee gap-4 pr-4">
+        {row.map((item, i) => (
+          <span
+            key={i}
+            className="whitespace-nowrap rounded-full border border-line bg-surface px-5 py-2 font-mono text-sm text-soot"
+          >
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* ---------- Shared end-of-page CTA: dark warm band ---------- */
+
+export function CtaSection() {
+  return (
+    <section className="px-6 py-24 sm:py-28">
+      <Reveal className="mx-auto max-w-6xl">
+        <div className="relative overflow-hidden rounded-[2rem] bg-night px-8 py-20 text-center sm:px-16">
+          {/* quiet spark constellation */}
+          <Spark className="absolute left-10 top-10 h-6 w-6 text-clay/60 animate-sway" />
+          <Spark className="absolute bottom-12 right-14 h-9 w-9 text-clay/40 animate-sway" />
+          <Spark className="absolute right-1/4 top-8 h-4 w-4 text-paper/20" />
+
+          <div className="mx-auto mb-8 w-fit rounded-2xl border border-white/10 bg-white/[0.05] p-4">
+            <AkMark className="h-10 w-10" tone="cream" />
+          </div>
+          <h2 className="mx-auto max-w-2xl font-serif text-4xl font-semibold tracking-tight text-paper sm:text-5xl">
+            Put an agent crew on <span className="accent-word">your machine.</span>
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-paper/65">
+            Free and open source. No accounts, no API keys, no cloud middleman — just your
+            existing CLIs, orchestrated.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              to="/download"
+              className="group inline-flex items-center gap-2 rounded-full bg-clay px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-clay-deep"
+            >
+              Get Akorith{' '}
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </Link>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-paper/30 px-6 py-3 text-sm font-semibold text-paper transition-all duration-300 hover:border-paper hover:bg-paper/10"
+            >
+              Star on GitHub
+            </a>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  )
+}
