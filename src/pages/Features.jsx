@@ -2,10 +2,10 @@ import { Page, Reveal, Stagger, StaggerItem, SplitWords } from '../components/mo
 import {
   SectionHeading,
   Card,
-  ScreenshotFrame,
   CtaSection,
   Spark,
 } from '../components/ui.jsx'
+import { WorkbenchMock, TestLabMock, SettingsMock, PluginsMock } from '../components/mocks.jsx'
 
 const TESTLAB_STEPS = [
   { step: '01', name: 'Detect', desc: 'Akorith scans the benchmark codebase and understands its stack and structure.' },
@@ -89,11 +89,7 @@ export default function Features() {
             </Stagger>
           </div>
           <Reveal delay={0.15}>
-            <ScreenshotFrame
-              src="/screenshots/workbench.png"
-              alt="Akorith workbench general chat with model picker"
-              title="Workbench — general chat"
-            />
+            <WorkbenchMock />
           </Reveal>
         </div>
       </section>
@@ -121,12 +117,8 @@ export default function Features() {
               </StaggerItem>
             ))}
           </Stagger>
-          <Reveal delay={0.2} className="mx-auto mt-14 max-w-5xl">
-            <ScreenshotFrame
-              src="/screenshots/testlab.png"
-              alt="Akorith Model Test Lab comparing local Ollama models"
-              title="Test Lab — Detect · Generate · Run · Score"
-            />
+          <Reveal delay={0.2} className="mx-auto mt-14 max-w-3xl">
+            <TestLabMock />
           </Reveal>
         </div>
       </section>
@@ -135,11 +127,7 @@ export default function Features() {
       <section className="px-6 py-24">
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
           <Reveal className="order-2 lg:order-1">
-            <ScreenshotFrame
-              src="/screenshots/settings.png"
-              alt="Akorith settings with profile, providers and usage limits"
-              title="Settings — workspace controls"
-            />
+            <SettingsMock />
           </Reveal>
           <div className="order-1 lg:order-2">
             <SectionHeading
@@ -202,12 +190,8 @@ export default function Features() {
               </StaggerItem>
             ))}
           </Stagger>
-          <Reveal delay={0.2} className="mx-auto mt-14 max-w-5xl">
-            <ScreenshotFrame
-              src="/screenshots/plugins.png"
-              alt="Akorith plugins page with agent, integration, telemetry and memory plugins"
-              title="Plugins — extend Akorith"
-            />
+          <Reveal delay={0.2} className="mx-auto mt-14 max-w-3xl">
+            <PluginsMock />
           </Reveal>
         </div>
       </section>

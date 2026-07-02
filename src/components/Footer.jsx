@@ -9,6 +9,7 @@ const COLUMNS = [
       { label: 'Features', to: '/features' },
       { label: 'Agents & Companions', to: '/agents' },
       { label: 'Loop', to: '/loop' },
+      { label: 'Developers', to: '/developers' },
       { label: 'Download', to: '/download' },
     ],
   },

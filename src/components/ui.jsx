@@ -97,18 +97,6 @@ export function Card({ children, className = '' }) {
   return <div className={`card ${className}`}>{children}</div>
 }
 
-/* ---------- Bare screenshot with rounded edges and a soft shadow ---------- */
-
-export function ScreenshotFrame({ src, alt, className = '' }) {
-  return (
-    <div className={`relative ${className}`}>
-      <div className="relative overflow-hidden rounded-2xl border border-ink/15 bg-night shadow-[0_30px_70px_-24px_rgba(40,32,58,0.45)]">
-        <img src={src} alt={alt} loading="lazy" className="block w-full" />
-      </div>
-    </div>
-  )
-}
-
 /* ---------- Marquee ---------- */
 
 export function Marquee({ items, className = '' }) {

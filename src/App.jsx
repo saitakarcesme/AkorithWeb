@@ -7,6 +7,7 @@ import Home from './pages/Home.jsx'
 import Features from './pages/Features.jsx'
 import Agents from './pages/Agents.jsx'
 import Loop from './pages/Loop.jsx'
+import Developers from './pages/Developers.jsx'
 import Download from './pages/Download.jsx'
 
 function ScrollToTop() {
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/features" element={<Features />} />
             <Route path="/agents" element={<Agents />} />
             <Route path="/loop" element={<Loop />} />
+            <Route path="/developers" element={<Developers />} />
             <Route path="/download" element={<Download />} />
             <Route path="*" element={<Home />} />
           </Routes>

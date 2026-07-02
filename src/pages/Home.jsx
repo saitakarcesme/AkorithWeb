@@ -6,12 +6,12 @@ import {
   GhostButton,
   SectionHeading,
   Card,
-  ScreenshotFrame,
   Marquee,
   CtaSection,
   Spark,
   GITHUB_URL,
 } from '../components/ui.jsx'
+import { WorkbenchMock, TerminalsMock, DashboardMock } from '../components/mocks.jsx'
 import { AkMark } from '../components/Logo.jsx'
 
 const MODELS = [
@@ -146,18 +146,14 @@ export default function Home() {
           </motion.p>
         </div>
 
-        {/* hero screenshot */}
+        {/* hero: living workbench mock */}
         <motion.div
           initial={{ opacity: 0, y: 70 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 1.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="relative mx-auto mt-20 max-w-5xl"
+          className="relative mx-auto mt-20 max-w-4xl"
         >
-          <ScreenshotFrame
-            src="/screenshots/workbench.png"
-            alt="Akorith workspace with three agent terminals running Codex, OpenCode and Claude"
-            title="Akorith — analizeRepo · 3 agents running"
-          />
+          <WorkbenchMock />
         </motion.div>
       </section>
 
@@ -245,11 +241,7 @@ export default function Home() {
             </Stagger>
           </div>
           <Reveal delay={0.15}>
-            <ScreenshotFrame
-              src="/screenshots/terminals.png"
-              alt="Akorith agent activity panel with Codex and OpenCode terminals running live"
-              title="Agent activity — Olympus · Gaia · Atlantis"
-            />
+            <TerminalsMock />
           </Reveal>
         </div>
       </section>
@@ -259,11 +251,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <Reveal className="order-2 lg:order-1">
-              <ScreenshotFrame
-                src="/screenshots/dashboard.png"
-                alt="Akorith dashboard showing usage activity heatmap, provider mix and daily token usage"
-                title="Dashboard — usage & telemetry"
-              />
+              <DashboardMock />
             </Reveal>
             <div className="order-1 lg:order-2">
               <SectionHeading

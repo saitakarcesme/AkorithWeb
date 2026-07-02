@@ -3,10 +3,10 @@ import { Page, Reveal, Stagger, StaggerItem, SplitWords } from '../components/mo
 import {
   SectionHeading,
   Card,
-  ScreenshotFrame,
   CtaSection,
   Spark,
 } from '../components/ui.jsx'
+import { ActivityMock, CompanionsMock, AgentsMock } from '../components/mocks.jsx'
 
 const TERMINALS = [
   {
@@ -124,12 +124,8 @@ export default function Agents() {
               </StaggerItem>
             ))}
           </Stagger>
-          <Reveal delay={0.2} className="mx-auto mt-14 max-w-5xl">
-            <ScreenshotFrame
-              src="/screenshots/activity.png"
-              alt="Akorith agent activity panel with Olympus, Gaia and Atlantis terminals"
-              title="Agent activity — 3 agents running"
-            />
+          <Reveal delay={0.2} className="mx-auto mt-14 max-w-2xl">
+            <ActivityMock />
           </Reveal>
         </div>
       </section>
@@ -190,11 +186,7 @@ export default function Agents() {
                 </Reveal>
               ))}
               <Reveal delay={0.3}>
-                <ScreenshotFrame
-                  src="/screenshots/companions.png"
-                  alt="Akorith companions Athena and Zeus with memory panel"
-                  title="Companions — Zeus with memory"
-                />
+                <CompanionsMock />
               </Reveal>
             </div>
           </div>
@@ -225,12 +217,8 @@ export default function Agents() {
               </StaggerItem>
             ))}
           </Stagger>
-          <Reveal delay={0.15} className="mx-auto mt-14 max-w-5xl">
-            <ScreenshotFrame
-              src="/screenshots/agents.png"
-              alt="Akorith agents list with permission policies and run history"
-              title="Agents — permission-scoped shortcuts"
-            />
+          <Reveal delay={0.15} className="mx-auto mt-14 max-w-3xl">
+            <AgentsMock />
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mx-auto mt-10 max-w-2xl text-center font-serif text-lg italic text-soot">
