@@ -2,22 +2,23 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  /* Display slot: pixel headlines, OpenCode-terminal flavored */
+  --font-serif: "Pixelify Sans", "IBM Plex Mono", ui-monospace, monospace;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Paper-and-ink palette with violet & emerald accents */
-  --color-paper: #f4f2ec;
-  --color-cream: #eae6db;
-  --color-surface: #fdfcf9;
-  --color-ink: #201d26;
-  --color-soot: #3b3742;
-  --color-muted: #736e79;
-  --color-line: #dcd7cb;
+  /* Light-gray-and-ink palette with violet & emerald accents */
+  --color-paper: #f2f2f1;
+  --color-cream: #e8e8e6;
+  --color-surface: #fbfbfa;
+  --color-ink: #1a1a1c;
+  --color-soot: #3a3a3d;
+  --color-muted: #6f6f73;
+  --color-line: #d9d9d6;
   --color-clay: #7a52cf;
   --color-clay-deep: #5f3daa;
   --color-moss: #1f9d6e;
-  --color-night: #1e1b25;
-  --color-night-soft: #2c2836;
+  --color-night: #191a1c;
+  --color-night-soft: #28292d;
 
   --animate-marquee: marquee 42s linear infinite;
   --animate-spin-slow: spin 26s linear infinite;
@@ -45,37 +46,41 @@ body {
 
 ::selection {
   background: rgba(122, 82, 207, 0.25);
-  color: #201d26;
+  color: #1a1a1c;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #f4f2ec;
+  background: #f2f2f1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #ccc7bc;
+  background: #c9c9c6;
   border-radius: 8px;
-  border: 2px solid #f4f2ec;
+  border: 2px solid #f2f2f1;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #b3adcf;
 }
 
-/* Serif accent words inside headlines — italic, brushed with the app icon's
+/* Accent words inside headlines — brushed with the app icon's
    violet→emerald gradient */
 .accent-word {
-  font-style: italic;
   background: linear-gradient(100deg, #7a52cf 10%, #1f9d6e 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
+/* Pixel display font breathes better without tight tracking */
+.font-serif {
+  letter-spacing: 0.015em !important;
+}
+
 /* Faint editorial dot texture for hero bands */
 .bg-dots {
-  background-image: radial-gradient(rgba(33, 29, 22, 0.09) 1px, transparent 1.2px);
+  background-image: radial-gradient(rgba(26, 26, 28, 0.09) 1px, transparent 1.2px);
   background-size: 26px 26px;
 }
 
