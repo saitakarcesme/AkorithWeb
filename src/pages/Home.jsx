@@ -16,7 +16,7 @@ import {
   CLI_GITHUB_URL,
 } from '../components/ui.jsx'
 import { TerminalsMock, DashboardMock } from '../components/mocks.jsx'
-import { CliMock } from '../components/CliMock.jsx'
+import { CliSession } from '../components/demo/CliTerminal.jsx'
 import { AkMark } from '../components/Logo.jsx'
 
 const MODELS = [
@@ -366,7 +366,7 @@ export default function Home() {
           <Reveal delay={0.2}>
             <div className="relative">
               <div aria-hidden className="shot-glow" />
-              <CliMock />
+              <CliSession />
             </div>
           </Reveal>
         </div>

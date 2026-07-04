@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { NAV_ICONS, IconSpark, IconSettings, IconLoop } from './Icons.jsx'
 
 /* ============================================================
    Interactive in-browser replica of the Akorith desktop app.
@@ -776,9 +777,9 @@ function LockedView({ name, desc }) {
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ repeat: Infinity, duration: 14, ease: 'linear' }}
-        className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${T.cardBorder} ${T.card} text-lg`}
+        className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${T.cardBorder} ${T.card} ${T.text}`}
       >
-        ↻
+        <IconLoop className="h-5 w-5" />
       </motion.div>
       <p className={`mt-4 text-lg font-semibold ${T.text}`}>{name} runs on your machine</p>
       <p className={`mt-2 max-w-sm text-[13px] leading-relaxed ${T.dim}`}>{desc}</p>
@@ -794,16 +795,7 @@ function LockedView({ name, desc }) {
 
 /* ================= SHELL ================= */
 
-const NAV = [
-  ['New chat', '+'],
-  ['Workspace', '▤'],
-  ['Loop', '↻'],
-  ['Dashboard', '▥'],
-  ['Test', '⚗'],
-  ['Plugins', '✦'],
-  ['Companions', '☺'],
-  ['Agents', '⚡'],
-]
+const NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Test', 'Plugins', 'Companions', 'Agents']
 
 const CHATS = ['hello', 'hey which model are you', 'which model are you tell me', 'hello']
 
@@ -844,8 +836,8 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
           <span className={`hidden rounded-md border ${T.cardBorder} px-2.5 py-1 text-[10.5px] sm:block ${T.dim}`}>
             Workbench
           </span>
-          <span className={`hidden rounded-md border ${T.cardBorder} px-2.5 py-1 text-[10.5px] sm:block ${T.dim}`}>
-            ✦ Activity
+          <span className={`hidden items-center gap-1.5 rounded-md border ${T.cardBorder} px-2.5 py-1 text-[10.5px] sm:flex ${T.dim}`}>
+            <IconSpark className="h-3 w-3" /> Activity
           </span>
           <span className="rounded-md border border-clay/40 bg-clay/15 px-2.5 py-1 font-mono text-[9.5px] text-clay-deep">
             live demo
@@ -857,18 +849,21 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
         {/* sidebar */}
         <div className={`${T.side} hidden flex-col md:flex`}>
           <div className="flex-1 p-2.5">
-            {NAV.map(([item, icon]) => (
-              <button
-                key={item}
-                onClick={() => go(item)}
-                className={`mb-0.5 flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[12.5px] transition-colors ${
-                  view === item ? T.sideActive : `${T.dim} hover:bg-white/[0.05] hover:text-white`
-                }`}
-              >
-                <span className="w-4 text-center text-[11px] opacity-70">{icon}</span>
-                {item}
-              </button>
-            ))}
+            {NAV.map((item) => {
+              const Icon = NAV_ICONS[item]
+              return (
+                <button
+                  key={item}
+                  onClick={() => go(item)}
+                  className={`mb-0.5 flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-[12.5px] transition-colors ${
+                    view === item ? T.sideActive : `${T.dim} hover:bg-white/[0.05] hover:text-white`
+                  }`}
+                >
+                  <Icon className="h-[15px] w-[15px] opacity-80" />
+                  {item}
+                </button>
+              )
+            })}
             <p className={`mt-4 px-2.5 font-mono text-[9px] uppercase tracking-wider ${T.faint}`}>
               Projects <span className={`ml-1 rounded bg-white/10 px-1 ${T.dim}`}>1</span>
             </p>
@@ -890,20 +885,20 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
             onClick={() => go('Settings')}
             className={`flex items-center gap-2.5 border-t ${T.cardBorder} px-4 py-3 text-left transition-colors hover:bg-white/[0.04]`}
           >
-            <span className={`flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[11px] ${T.text}`}>
-              ☺
+            <span className={`flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[11px] font-semibold ${T.text}`}>
+              I
             </span>
             <span>
               <span className={`block text-[12px] font-semibold ${T.text}`}>Ibrahim</span>
               <span className={`block text-[9.5px] ${T.faint}`}>Local profile</span>
             </span>
-            <span className={`ml-auto text-[13px] ${T.faint}`}>⚙</span>
+            <IconSettings className={`ml-auto h-4 w-4 ${T.faint}`} />
           </button>
         </div>
 
         {/* mobile nav */}
         <div className={`flex gap-1 overflow-x-auto border-b ${T.cardBorder} p-2 md:hidden`}>
-          {[...NAV.slice(1), ['Settings', '⚙']].map(([item]) => (
+          {[...NAV.slice(1), 'Settings'].map((item) => (
             <button
               key={item}
               onClick={() => go(item)}

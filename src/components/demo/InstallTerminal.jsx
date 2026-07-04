@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { CLI } from './cli.js'
+import { CliBanner, StatusLine, Caret } from './CliTerminal.jsx'
 
-/* Looping hero animation: install Akorith, type `akorith`, watch it boot. */
+/* Looping hero animation: install Akorith, type `akorith`, watch the real
+   banner boot — colors and wordmark match the actual CLI. */
 
+const mono = { fontFamily: '"IBM Plex Mono", ui-monospace, SFMono-Regular, monospace' }
 const CURL = 'curl -fsSL https://akorith.space/install | bash'
 const RUN = 'akorith'
 
@@ -22,16 +26,6 @@ function useTyper(text, active, speed = 34) {
   return active ? text.slice(0, len) : ''
 }
 
-function Blink({ className = 'bg-clay' }) {
-  return (
-    <motion.span
-      className={`ml-0.5 inline-block h-[1.05em] w-[7px] align-text-bottom ${className}`}
-      animate={{ opacity: [1, 0, 1] }}
-      transition={{ repeat: Infinity, duration: 1 }}
-    />
-  )
-}
-
 export function InstallTerminal({ className = '' }) {
   const [step, setStep] = useState(0)
   // 0 type curl · 1 download · 2 installed · 3 type akorith · 4 boot · 5 hold → restart
@@ -39,88 +33,81 @@ export function InstallTerminal({ className = '' }) {
   const runTyped = useTyper(RUN, step === 3, 90)
 
   useEffect(() => {
-    const delays = [CURL.length * 34 + 700, 1500, 1100, RUN.length * 90 + 800, 900, 4200]
+    const delays = [CURL.length * 34 + 700, 1400, 1100, RUN.length * 90 + 800, 5200, 900]
     const id = setTimeout(() => setStep((step + 1) % 6), delays[step])
     return () => clearTimeout(id)
   }, [step])
 
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-white/10 bg-night shadow-[0_30px_80px_-30px_rgba(0,0,0,0.85)] ${className}`}
+      className={`overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.85)] ${className}`}
+      style={{ background: CLI.bg }}
     >
-      <div className="flex items-center justify-between border-b border-white/[0.07] bg-night-soft px-4 py-2.5">
-        <span className="font-mono text-[11px] text-ink/45">zsh — 80×24</span>
-        <span className="font-mono text-[10px] text-ink/25">~/projects</span>
+      <div
+        className="flex items-center justify-between border-b border-white/[0.07] px-4 py-2.5"
+        style={{ background: '#141416' }}
+      >
+        <span className="flex items-center gap-2">
+          <span className="flex gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+            <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+            <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+          </span>
+          <span className="ml-1 text-[11px]" style={{ ...mono, color: CLI.faint }}>
+            zsh — 92×30
+          </span>
+        </span>
+        <span className="text-[10px]" style={{ ...mono, color: CLI.faint }}>
+          ~/projects
+        </span>
       </div>
-      <div className="min-h-[280px] p-6 font-mono text-[13px] leading-relaxed sm:text-sm">
+
+      <div className="min-h-[320px] p-5 text-[13px] leading-relaxed sm:p-6" style={mono}>
         <AnimatePresence mode="wait">
-          {step === 5 ? (
-            <motion.div
-              key="fade"
-              initial={{ opacity: 1 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.4 } }}
-            >
-              <BootFrame runTyped={RUN} showBanner />
+          {step >= 4 ? (
+            <motion.div key="boot" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
+              <CliBanner />
+              <div className="mt-4">
+                <StatusLine />
+                <p className="mt-1 text-[12px] sm:text-[13px]" style={{ ...mono, color: CLI.dim }}>
+                  Type a task. /help for commands, /model to switch models, ! to run shell.
+                </p>
+              </div>
+              <p className="mt-3 text-[13px] font-bold" style={{ ...mono, color: CLI.text }}>
+                ❯ <Caret />
+              </p>
             </motion.div>
           ) : (
             <motion.div key="run" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <p className="text-ink/90">
-                <span className="select-none text-moss">$ </span>
+              <p style={{ color: CLI.text }}>
+                <span className="select-none" style={{ color: CLI.green }}>$ </span>
                 {step === 0 ? curlTyped : CURL}
-                {step === 0 && <Blink />}
+                {step === 0 && <Caret />}
               </p>
               {step >= 1 && (
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-2 text-ink/45">
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-2" style={{ color: CLI.dim }}>
                   ▸ downloading akorith…{' '}
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.7 }}
-                  >
+                  <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}>
                     done
                   </motion.span>
                 </motion.p>
               )}
               {step >= 2 && (
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-1 text-emerald-400">
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-1" style={{ color: CLI.green }}>
                   ✓ installed — 1 new command: akorith
                 </motion.p>
               )}
               {step >= 3 && (
-                <p className="mt-4 text-ink/90">
-                  <span className="select-none text-moss">$ </span>
+                <p className="mt-4" style={{ color: CLI.text }}>
+                  <span className="select-none" style={{ color: CLI.green }}>$ </span>
                   {step === 3 ? runTyped : RUN}
-                  {step === 3 && <Blink />}
+                  {step === 3 && <Caret />}
                 </p>
               )}
-              {step >= 4 && <BootFrame showBanner={step >= 4} />}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
     </div>
-  )
-}
-
-function BootFrame({ showBanner }) {
-  if (!showBanner) return null
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="mt-4 rounded-lg border border-clay/30 bg-clay/[0.06] p-4"
-    >
-      <p className="font-semibold tracking-wide text-clay-deep">AKORITH · the Agent OS</p>
-      <p className="mt-2 text-[12px] text-ink/60">
-        <span className="text-emerald-400">●</span> atlantis · claude{'   '}
-        <span className="text-sky-400">●</span> olympus · codex{'   '}
-        <span className="text-emerald-400">●</span> gaia · opencode
-      </p>
-      <p className="mt-3 text-ink/90">
-        ❯ <Blink className="bg-violet-400" />
-      </p>
-    </motion.div>
   )
 }

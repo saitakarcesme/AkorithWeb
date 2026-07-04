@@ -11,7 +11,7 @@ import {
   Spark,
   CLI_GITHUB_URL,
 } from '../components/ui.jsx'
-import { CliMock } from '../components/CliMock.jsx'
+import { CliSession } from '../components/demo/CliTerminal.jsx'
 
 const COMMANDS = [
   ['/model codex', 'Switch to Codex (Olympus) mid-session — your thread survives.'],
@@ -144,7 +144,7 @@ export default function Cli() {
           className="relative mx-auto mt-16 max-w-2xl"
         >
           <div aria-hidden className="shot-glow" />
-          <CliMock />
+          <CliSession />
         </motion.div>
       </section>
 
