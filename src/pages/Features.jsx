@@ -6,7 +6,7 @@ import {
   Spark,
 } from '../components/ui.jsx'
 import { WorkbenchMock, TestLabMock } from '../components/mocks.jsx'
-import { ShotFrame } from '../components/Screenshots.jsx'
+import { DemoPanel } from '../components/demo/AppDemo.jsx'
 
 const TESTLAB_STEPS = [
   { step: '01', name: 'Detect', desc: 'Akorith scans the benchmark codebase and understands its stack and structure.' },
@@ -128,7 +128,7 @@ export default function Features() {
       <section className="px-6 py-24">
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
           <Reveal className="order-2 lg:order-1">
-            <ShotFrame shot="settings" />
+            <DemoPanel view="settings" title="Settings — live demo, click around" />
           </Reveal>
           <div className="order-1 lg:order-2">
             <SectionHeading
@@ -192,7 +192,7 @@ export default function Features() {
             ))}
           </Stagger>
           <Reveal delay={0.2} className="mx-auto mt-14 max-w-5xl">
-            <ShotFrame shot="plugins" />
+            <DemoPanel view="plugins" title="Plugins — live demo, filter the grid" />
           </Reveal>
         </div>
       </section>

@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Page, Reveal, Stagger, StaggerItem, SplitWords, CountUp, Magnetic, Parallax } from '../components/motion.jsx'
-import { AppShowcase, ShotFrame } from '../components/Screenshots.jsx'
+import { AppDemo } from '../components/demo/AppDemo.jsx'
+import { InstallTerminal } from '../components/demo/InstallTerminal.jsx'
 import {
   PrimaryButton,
   GhostButton,
@@ -163,15 +164,18 @@ export default function Home() {
           </motion.p>
         </div>
 
-        {/* hero: the real app, glowing */}
+        {/* hero: install it, type akorith, watch it boot */}
         <motion.div
           initial={{ opacity: 0, y: 70 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 1.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="relative mx-auto mt-20 max-w-5xl"
+          className="relative mx-auto mt-20 max-w-2xl"
         >
-          <Parallax distance={34}>
-            <ShotFrame shot="workspace" />
+          <Parallax distance={30}>
+            <div className="relative">
+              <div aria-hidden className="shot-glow" />
+              <InstallTerminal />
+            </div>
           </Parallax>
         </motion.div>
       </section>
@@ -227,21 +231,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= SHOWCASE ================= */}
-      <section className="border-t border-line bg-cream/40 px-6 py-28">
-        <div className="mx-auto max-w-6xl">
+      {/* ================= LIVE DEMO ================= */}
+      <section className="relative overflow-hidden border-t border-line bg-cream/40 px-6 py-28">
+        <div
+          aria-hidden
+          className="absolute -left-32 top-24 h-80 w-80 rounded-full bg-clay/[0.10] blur-3xl animate-aurora-a"
+        />
+        <div className="relative mx-auto max-w-6xl">
           <SectionHeading
             center
-            eyebrow="Inside Akorith"
+            eyebrow="Try it right here"
             title={
               <>
-                See the <span className="accent-word">real thing.</span>
+                Don't take screenshots' word — <span className="accent-word">click around.</span>
               </>
             }
-            lead="No mockups here — this is the actual app. Flick through the surfaces, or click any screen to zoom in."
+            lead="This is a living replica of the app. Switch tabs in the sidebar, filter the plugins, poke the settings — even type in the chat. When you want the real engine, it's one command away."
           />
-          <Reveal delay={0.15} className="mt-14">
-            <AppShowcase />
+          <Reveal delay={0.15} className="relative mt-14">
+            <div aria-hidden className="shot-glow" />
+            <AppDemo />
           </Reveal>
         </div>
       </section>

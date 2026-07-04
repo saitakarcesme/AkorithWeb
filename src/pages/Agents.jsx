@@ -7,7 +7,7 @@ import {
   Spark,
 } from '../components/ui.jsx'
 import { ActivityMock, AgentsMock } from '../components/mocks.jsx'
-import { ShotFrame } from '../components/Screenshots.jsx'
+import { DemoPanel } from '../components/demo/AppDemo.jsx'
 
 const TERMINALS = [
   {
@@ -189,7 +189,7 @@ export default function Agents() {
             </div>
           </div>
           <Reveal delay={0.2} className="mx-auto mt-14 max-w-5xl">
-            <ShotFrame shot="companions" />
+            <DemoPanel view="companions" title="Companions — live demo, say hi to Athena" />
           </Reveal>
         </div>
       </section>
@@ -218,12 +218,12 @@ export default function Agents() {
               </StaggerItem>
             ))}
           </Stagger>
-          <div className="mx-auto mt-14 grid max-w-6xl items-start gap-8 lg:grid-cols-[1fr_1.3fr]">
+          <div className="mx-auto mt-14 grid max-w-6xl items-start gap-8 lg:grid-cols-[1fr_1.4fr]">
             <Reveal delay={0.1}>
               <AgentsMock />
             </Reveal>
             <Reveal delay={0.2}>
-              <ShotFrame shot="agents" />
+              <DemoPanel view="agents" title="Agents — live demo, pick one and preview" />
             </Reveal>
           </div>
           <Reveal delay={0.1}>
