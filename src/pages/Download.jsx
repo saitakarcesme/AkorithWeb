@@ -64,11 +64,11 @@ function CodeBlock({ code }) {
     <div className="group relative mt-4 overflow-hidden rounded-xl bg-night">
       <button
         onClick={copy}
-        className="absolute right-3 top-3 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-paper/60 opacity-0 transition-opacity duration-200 hover:text-paper group-hover:opacity-100"
+        className="absolute right-3 top-3 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-ink/60 opacity-0 transition-opacity duration-200 hover:text-ink group-hover:opacity-100"
       >
         {copied ? '✓ copied' : 'copy'}
       </button>
-      <pre className="overflow-x-auto p-5 font-mono text-sm leading-relaxed text-paper/90">
+      <pre className="overflow-x-auto p-5 font-mono text-sm leading-relaxed text-ink/90">
         {code.split('\n').map((line, i) => (
           <div key={i}>
             <span className="select-none text-clay">$ </span>

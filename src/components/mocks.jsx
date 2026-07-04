@@ -11,15 +11,15 @@ import { CountUp } from './motion.jsx'
 export function MockWindow({ title, dark = false, className = '', children }) {
   return (
     <div
-      className={`overflow-hidden rounded-2xl border shadow-[0_24px_60px_-24px_rgba(25,26,28,0.35)] ${
-        dark ? 'border-ink/25 bg-night' : 'border-line bg-surface'
+      className={`overflow-hidden rounded-2xl border shadow-[0_24px_60px_-24px_rgba(0,0,0,0.75)] ${
+        dark ? 'border-white/10 bg-night' : 'border-line bg-surface'
       } ${className}`}
     >
       {title && (
         <div
           className={`border-b px-4 py-2.5 font-mono text-[11px] ${
             dark
-              ? 'border-white/[0.07] bg-night-soft text-paper/50'
+              ? 'border-white/[0.07] bg-night-soft text-ink/50'
               : 'border-line bg-cream/60 text-muted'
           }`}
         >
@@ -170,8 +170,8 @@ const TERM_TABS = [
     provider: 'Codex',
     dot: 'bg-sky-400',
     lines: [
-      ['$ codex exec "add input validation"', 'text-paper/85'],
-      ['model: gpt-5.5 · directory: ~/analizeRepo', 'text-paper/40'],
+      ['$ codex exec "add input validation"', 'text-ink/85'],
+      ['model: gpt-5.5 · directory: ~/analizeRepo', 'text-ink/40'],
       ['✓ patched src/config/parse.ts (+41 −6)', 'text-emerald-400'],
     ],
   },
@@ -180,8 +180,8 @@ const TERM_TABS = [
     provider: 'OpenCode',
     dot: 'bg-emerald-400',
     lines: [
-      ['$ opencode run "fix broken tests"', 'text-paper/85'],
-      ['Build · Big Pickle · OpenCode Zen', 'text-paper/40'],
+      ['$ opencode run "fix broken tests"', 'text-ink/85'],
+      ['Build · Big Pickle · OpenCode Zen', 'text-ink/40'],
       ['✓ 24 passed · 0 failed', 'text-emerald-400'],
     ],
   },
@@ -190,8 +190,8 @@ const TERM_TABS = [
     provider: 'Claude',
     dot: 'bg-violet-400',
     lines: [
-      ['$ claude -p "review this diff"', 'text-paper/85'],
-      ['claude-fable-5 · long-context review', 'text-paper/40'],
+      ['$ claude -p "review this diff"', 'text-ink/85'],
+      ['claude-fable-5 · long-context review', 'text-ink/40'],
       ['✓ 2 issues found, patch suggested', 'text-violet-300'],
     ],
   },
@@ -213,7 +213,7 @@ export function TerminalsMock({ className = '' }) {
             key={t.name}
             onClick={() => setActive(i)}
             className={`relative flex items-center gap-2 rounded-t-lg px-3.5 py-2 font-mono text-[11px] transition-colors ${
-              i === active ? 'text-paper' : 'text-paper/40'
+              i === active ? 'text-ink' : 'text-ink/40'
             }`}
           >
             {i === active && (
@@ -225,7 +225,7 @@ export function TerminalsMock({ className = '' }) {
             )}
             <span className={`relative h-1.5 w-1.5 rounded-full ${t.dot}`} />
             <span className="relative">{t.name}</span>
-            <span className="relative hidden text-paper/30 sm:inline">· {t.provider}</span>
+            <span className="relative hidden text-ink/30 sm:inline">· {t.provider}</span>
           </button>
         ))}
       </div>
@@ -320,7 +320,7 @@ export function DashboardMock({ className = '' }) {
         <div className="flex flex-col items-center justify-center rounded-xl border border-line bg-paper p-4">
           <div className="relative">
             <svg viewBox="0 0 80 80" className="h-32 w-32 -rotate-90">
-              <circle cx="40" cy="40" r="30" fill="none" strokeWidth="9" className="stroke-cream" />
+              <circle cx="40" cy="40" r="30" fill="none" strokeWidth="9" className="stroke-line" />
               <motion.circle
                 cx="40" cy="40" r="30" fill="none" strokeWidth="9" strokeLinecap="butt"
                 className="stroke-clay" strokeDasharray={C}
@@ -349,7 +349,7 @@ export function DashboardMock({ className = '' }) {
           <div className="mt-3 space-y-1.5 font-mono text-[10px] text-muted">
             <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-clay" /> claude · codex 62%</p>
             <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-moss" /> local (ollama) 22%</p>
-            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-cream" /> other 16%</p>
+            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-line" /> other 16%</p>
           </div>
         </div>
       </div>
@@ -377,7 +377,7 @@ export function TestLabMock({ className = '' }) {
             <div key={s} className="relative flex flex-col items-center gap-2">
               <motion.span
                 className="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-surface font-serif text-sm text-clay"
-                animate={{ scale: [1, 1.14, 1], borderColor: ['#d9d9d6', '#7a52cf', '#d9d9d6'] }}
+                animate={{ scale: [1, 1.14, 1], borderColor: ['#2c2d32', '#8f6ae0', '#2c2d32'] }}
                 transition={{ repeat: Infinity, duration: 4.8, delay: i * 1.2 }}
               >
                 {String(i + 1).padStart(2, '0')}
@@ -493,7 +493,7 @@ function Toggle({ on, label }) {
       <span className="font-mono text-[11px] text-soot">{label}</span>
       <motion.span
         className={`flex h-5 w-9 items-center rounded-full px-0.5 ${on ? 'bg-moss' : 'bg-ink/15'}`}
-        animate={{ backgroundColor: on ? '#1f9d6e' : 'rgba(26,26,28,0.15)' }}
+        animate={{ backgroundColor: on ? '#34c08b' : 'rgba(242,242,241,0.14)' }}
       >
         <motion.span
           className="h-4 w-4 rounded-full bg-white shadow"
@@ -623,8 +623,8 @@ export function CompanionsMock({ className = '' }) {
 /* ---------------- Agents: permission card + live run log ---------------- */
 
 const RUN_LOG = [
-  ['[run ] repo_health — safe commands', 'text-paper/85'],
-  ['[scan] 214 files · 3 suggestions', 'text-paper/45'],
+  ['[run ] repo_health — safe commands', 'text-ink/85'],
+  ['[scan] 214 files · 3 suggestions', 'text-ink/45'],
   ['[ask ] write HEALTH.md? → approved', 'text-violet-300'],
   ['[done] report saved · action logged', 'text-emerald-400'],
 ]
@@ -634,24 +634,24 @@ export function AgentsMock({ className = '' }) {
     <MockWindow dark title="agents — permission-scoped run" className={className}>
       <div className="grid gap-0 sm:grid-cols-[1fr_1.25fr]">
         <div className="border-b border-white/[0.07] p-5 sm:border-b-0 sm:border-r">
-          <p className="font-serif text-lg text-paper">repo_health</p>
+          <p className="font-serif text-lg text-ink">repo_health</p>
           <div className="mt-3 space-y-2 font-mono text-[10.5px]">
-            <p className="text-paper/45">
+            <p className="text-ink/45">
               permission{' '}
               <span className="ml-1 rounded border border-violet-400/40 bg-violet-400/10 px-1.5 py-0.5 text-violet-300">
                 safe commands
               </span>
             </p>
-            <p className="text-paper/45">
-              folder <span className="ml-1 text-paper/75">~/Projects/analizeRepo</span>
+            <p className="text-ink/45">
+              folder <span className="ml-1 text-ink/75">~/Projects/analizeRepo</span>
             </p>
-            <p className="text-paper/45">
-              commands <span className="ml-1 text-paper/75">allowlist only</span>
+            <p className="text-ink/45">
+              commands <span className="ml-1 text-ink/75">allowlist only</span>
             </p>
           </div>
           <motion.button
-            className="mt-5 rounded-full bg-paper px-4 py-1.5 font-mono text-[11px] font-semibold text-ink"
-            animate={{ boxShadow: ['0 0 0 0 rgba(122,82,207,0.5)', '0 0 0 9px rgba(122,82,207,0)'] }}
+            className="mt-5 rounded-full bg-ink px-4 py-1.5 font-mono text-[11px] font-semibold text-night"
+            animate={{ boxShadow: ['0 0 0 0 rgba(143,106,224,0.5)', '0 0 0 9px rgba(143,106,224,0)'] }}
             transition={{ repeat: Infinity, duration: 1.8 }}
           >
             ▶ Run
@@ -707,11 +707,11 @@ export function ActivityMock({ className = '' }) {
             className="flex items-center gap-3 px-5 py-4"
           >
             <PulseDot color={r.dot} />
-            <span className="font-mono text-[13px] font-semibold text-paper">{r.name}</span>
-            <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 font-mono text-[10px] text-paper/60">
+            <span className="font-mono text-[13px] font-semibold text-ink">{r.name}</span>
+            <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 font-mono text-[10px] text-ink/60">
               {r.provider}
             </span>
-            <span className="ml-auto font-mono text-[10px] text-paper/35">live · click to restore</span>
+            <span className="ml-auto font-mono text-[10px] text-ink/35">live · click to restore</span>
           </motion.div>
         ))}
       </motion.div>

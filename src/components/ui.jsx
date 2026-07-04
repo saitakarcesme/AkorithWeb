@@ -22,7 +22,7 @@ export function Spark({ className = 'h-4 w-4', spin = false }) {
 /* ---------- Buttons ---------- */
 
 export function PrimaryButton({ to, href, children, className = '' }) {
-  const cls = `group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition-all duration-300 hover:bg-clay hover:shadow-[0_10px_30px_-10px_rgba(122,82,207,0.6)] ${className}`
+  const cls = `group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-night transition-all duration-300 hover:bg-clay hover:text-white hover:shadow-[0_10px_34px_-8px_rgba(143,106,224,0.7)] ${className}`
   const arrow = (
     <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
   )
@@ -91,10 +91,19 @@ export function SectionHeading({ eyebrow, title, lead, center = false, dark = fa
   )
 }
 
-/* ---------- Warm card ---------- */
+/* ---------- Dark card with cursor spotlight ---------- */
 
 export function Card({ children, className = '' }) {
-  return <div className={`card ${className}`}>{children}</div>
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+    e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+  }
+  return (
+    <div onMouseMove={onMove} className={`card ${className}`}>
+      {children}
+    </div>
+  )
 }
 
 /* ---------- Marquee ---------- */
@@ -117,44 +126,55 @@ export function Marquee({ items, className = '' }) {
   )
 }
 
-/* ---------- Shared end-of-page CTA: dark warm band ---------- */
+/* ---------- Shared end-of-page CTA: glowing dark band ---------- */
 
 export function CtaSection() {
   return (
     <section className="px-6 py-24 sm:py-28">
       <Reveal className="mx-auto max-w-6xl">
-        <div className="relative overflow-hidden rounded-[2rem] bg-night px-8 py-20 text-center sm:px-16">
+        <div className="relative overflow-hidden rounded-[2rem] border border-line bg-night px-8 py-20 text-center sm:px-16">
+          {/* drifting aurora glow */}
+          <div
+            aria-hidden
+            className="absolute -left-24 -top-24 h-80 w-80 rounded-full bg-clay/25 blur-3xl animate-aurora-a"
+          />
+          <div
+            aria-hidden
+            className="absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-moss/20 blur-3xl animate-aurora-b"
+          />
           {/* quiet spark constellation */}
           <Spark className="absolute left-10 top-10 h-6 w-6 text-clay/60 animate-sway" />
           <Spark className="absolute bottom-12 right-14 h-9 w-9 text-clay/40 animate-sway" />
-          <Spark className="absolute right-1/4 top-8 h-4 w-4 text-paper/20" />
+          <Spark className="absolute right-1/4 top-8 h-4 w-4 text-ink/20" />
 
-          <div className="mx-auto mb-8 w-fit rounded-2xl border border-white/10 bg-white/[0.05] p-4">
-            <AkMark className="h-10 w-10" tone="cream" />
-          </div>
-          <h2 className="mx-auto max-w-2xl font-serif text-4xl font-semibold tracking-tight text-paper sm:text-5xl">
-            Put an agent crew on <span className="accent-word">your machine.</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-paper/65">
-            Free and open source. No accounts, no API keys, no cloud middleman — just your
-            existing CLIs, orchestrated.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/download"
-              className="group inline-flex items-center gap-2 rounded-full bg-clay px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-clay-deep"
-            >
-              Get Akorith{' '}
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </Link>
-            <a
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-paper/30 px-6 py-3 text-sm font-semibold text-paper transition-all duration-300 hover:border-paper hover:bg-paper/10"
-            >
-              Star on GitHub
-            </a>
+          <div className="relative">
+            <div className="mx-auto mb-8 w-fit rounded-2xl border border-white/10 bg-white/[0.05] p-4">
+              <AkMark className="h-10 w-10" tone="cream" />
+            </div>
+            <h2 className="mx-auto max-w-2xl font-serif text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+              Put an agent crew on <span className="accent-word">your machine.</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink/65">
+              Free and open source. No accounts, no API keys, no cloud middleman — just your
+              existing CLIs, orchestrated.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <Link
+                to="/download"
+                className="group inline-flex items-center gap-2 rounded-full bg-clay px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-clay-deep hover:shadow-[0_10px_34px_-8px_rgba(143,106,224,0.7)]"
+              >
+                Get Akorith{' '}
+                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </Link>
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-ink/30 px-6 py-3 text-sm font-semibold text-ink transition-all duration-300 hover:border-ink hover:bg-ink/10"
+              >
+                Star on GitHub
+              </a>
+            </div>
           </div>
         </div>
       </Reveal>

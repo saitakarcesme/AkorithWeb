@@ -86,7 +86,7 @@ export function Navbar() {
           </a>
           <Link
             to="/download"
-            className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-paper transition-all duration-300 hover:bg-clay"
+            className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-night transition-all duration-300 hover:bg-clay hover:text-white"
           >
             Get Akorith
           </Link>

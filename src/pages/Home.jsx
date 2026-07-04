@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Page, Reveal, Stagger, StaggerItem, SplitWords, CountUp } from '../components/motion.jsx'
+import { Page, Reveal, Stagger, StaggerItem, SplitWords, CountUp, Magnetic, Parallax } from '../components/motion.jsx'
+import { AppShowcase, ShotFrame } from '../components/Screenshots.jsx'
 import {
   PrimaryButton,
   GhostButton,
@@ -11,7 +12,7 @@ import {
   Spark,
   GITHUB_URL,
 } from '../components/ui.jsx'
-import { WorkbenchMock, TerminalsMock, DashboardMock } from '../components/mocks.jsx'
+import { TerminalsMock, DashboardMock } from '../components/mocks.jsx'
 import { AkMark } from '../components/Logo.jsx'
 
 const MODELS = [
@@ -90,6 +91,15 @@ export default function Home() {
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden px-6 pb-24 pt-36 sm:pt-44">
         <div aria-hidden className="bg-dots mask-fade-b absolute inset-0 opacity-70" />
+        {/* drifting aurora glow */}
+        <div
+          aria-hidden
+          className="absolute left-1/2 top-10 h-[420px] w-[620px] -translate-x-[70%] rounded-full bg-clay/[0.16] blur-3xl animate-aurora-a"
+        />
+        <div
+          aria-hidden
+          className="absolute left-1/2 top-32 h-[360px] w-[520px] -translate-x-[10%] rounded-full bg-moss/[0.10] blur-3xl animate-aurora-b"
+        />
         {/* quiet sparks */}
         <Spark className="absolute left-[12%] top-40 hidden h-6 w-6 text-clay/50 animate-sway lg:block" />
         <Spark className="absolute right-[14%] top-64 hidden h-4 w-4 text-clay/35 animate-sway lg:block" />
@@ -132,8 +142,12 @@ export default function Home() {
             transition={{ delay: 0.9, duration: 0.7 }}
             className="mt-10 flex flex-wrap items-center justify-center gap-4"
           >
-            <PrimaryButton to="/download">Download for macOS</PrimaryButton>
-            <GhostButton href={GITHUB_URL}>View on GitHub</GhostButton>
+            <Magnetic>
+              <PrimaryButton to="/download">Download for macOS</PrimaryButton>
+            </Magnetic>
+            <Magnetic>
+              <GhostButton href={GITHUB_URL}>View on GitHub</GhostButton>
+            </Magnetic>
           </motion.div>
 
           <motion.p
@@ -146,14 +160,16 @@ export default function Home() {
           </motion.p>
         </div>
 
-        {/* hero: living workbench mock */}
+        {/* hero: the real app, glowing */}
         <motion.div
           initial={{ opacity: 0, y: 70 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 1.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="relative mx-auto mt-20 max-w-4xl"
+          className="relative mx-auto mt-20 max-w-5xl"
         >
-          <WorkbenchMock />
+          <Parallax distance={34}>
+            <ShotFrame shot="workspace" />
+          </Parallax>
         </motion.div>
       </section>
 
@@ -205,6 +221,25 @@ export default function Home() {
               </StaggerItem>
             ))}
           </Stagger>
+        </div>
+      </section>
+
+      {/* ================= SHOWCASE ================= */}
+      <section className="border-t border-line bg-cream/40 px-6 py-28">
+        <div className="mx-auto max-w-6xl">
+          <SectionHeading
+            center
+            eyebrow="Inside Akorith"
+            title={
+              <>
+                See the <span className="accent-word">real thing.</span>
+              </>
+            }
+            lead="No mockups here — this is the actual app. Flick through the surfaces, or click any screen to zoom in."
+          />
+          <Reveal delay={0.15} className="mt-14">
+            <AppShowcase />
+          </Reveal>
         </div>
       </section>
 

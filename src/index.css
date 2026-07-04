@@ -6,23 +6,28 @@
   --font-serif: "Pixelify Sans", "IBM Plex Mono", ui-monospace, monospace;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Light-gray-and-ink palette with violet & emerald accents */
-  --color-paper: #f2f2f1;
-  --color-cream: #e8e8e6;
-  --color-surface: #fbfbfa;
-  --color-ink: #1a1a1c;
-  --color-soot: #3a3a3d;
-  --color-muted: #6f6f73;
-  --color-line: #d9d9d6;
-  --color-clay: #7a52cf;
-  --color-clay-deep: #5f3daa;
-  --color-moss: #1f9d6e;
-  --color-night: #191a1c;
-  --color-night-soft: #28292d;
+  /* Dark neutral palette matched to the Akorith app UI,
+     with the brand violet & emerald accents brightened for dark bg.
+     Token names keep their original meanings flipped:
+     paper = page bg, ink = primary (light) text. */
+  --color-paper: #121316;
+  --color-cream: #191a1e;
+  --color-surface: #1d1e22;
+  --color-ink: #f2f2f1;
+  --color-soot: #c9cacd;
+  --color-muted: #94959b;
+  --color-line: #2c2d32;
+  --color-clay: #8f6ae0;
+  --color-clay-deep: #b39bef;
+  --color-moss: #34c08b;
+  --color-night: #0b0b0d;
+  --color-night-soft: #17181b;
 
   --animate-marquee: marquee 42s linear infinite;
   --animate-spin-slow: spin 26s linear infinite;
   --animate-sway: sway 7s ease-in-out infinite;
+  --animate-aurora-a: aurora-a 16s ease-in-out infinite;
+  --animate-aurora-b: aurora-b 20s ease-in-out infinite;
 
   @keyframes marquee {
     from { transform: translateX(0); }
@@ -31,6 +36,16 @@
   @keyframes sway {
     0%, 100% { transform: rotate(-4deg); }
     50% { transform: rotate(6deg); }
+  }
+  @keyframes aurora-a {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(60px, 40px) scale(1.15); }
+    66% { transform: translate(-40px, 20px) scale(0.95); }
+  }
+  @keyframes aurora-b {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    40% { transform: translate(-70px, -30px) scale(1.1); }
+    75% { transform: translate(40px, -50px) scale(0.9); }
   }
 }
 
@@ -45,29 +60,29 @@ body {
 }
 
 ::selection {
-  background: rgba(122, 82, 207, 0.25);
-  color: #1a1a1c;
+  background: rgba(143, 106, 224, 0.4);
+  color: #f2f2f1;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #f2f2f1;
+  background: #121316;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c9c9c6;
+  background: #2f3035;
   border-radius: 8px;
-  border: 2px solid #f2f2f1;
+  border: 2px solid #121316;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #b3adcf;
+  background: #4a4560;
 }
 
 /* Accent words inside headlines — brushed with the app icon's
-   violet→emerald gradient */
+   violet→emerald gradient, brightened for the dark theme */
 .accent-word {
-  background: linear-gradient(100deg, #7a52cf 10%, #1f9d6e 90%);
+  background: linear-gradient(100deg, #a07df2 10%, #34c08b 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -78,9 +93,9 @@ body {
   letter-spacing: 0.015em !important;
 }
 
-/* Faint editorial dot texture for hero bands */
+/* Faint dot texture for hero bands — light dots on dark */
 .bg-dots {
-  background-image: radial-gradient(rgba(26, 26, 28, 0.09) 1px, transparent 1.2px);
+  background-image: radial-gradient(rgba(242, 242, 241, 0.1) 1px, transparent 1.2px);
   background-size: 26px 26px;
 }
 
@@ -94,18 +109,60 @@ body {
   mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
 }
 
-/* Warm card with a quiet hover lift — no neon, no spotlight */
+/* Dark card with a quiet hover lift + cursor-tracking spotlight.
+   --mx / --my are set from JS (Card in ui.jsx). */
 .card {
+  position: relative;
   background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: 1.25rem;
   transition: transform 0.35s cubic-bezier(0.21, 0.47, 0.32, 0.98), box-shadow 0.35s ease,
     border-color 0.35s ease;
 }
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(143, 106, 224, 0.12),
+    transparent 65%
+  );
+}
 .card:hover {
   transform: translateY(-4px);
-  border-color: #beb3da;
-  box-shadow: 0 18px 40px -18px rgba(58, 44, 96, 0.25);
+  border-color: rgba(143, 106, 224, 0.45);
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.65), 0 0 32px -12px rgba(143, 106, 224, 0.25);
+}
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Screenshot frame: gradient hairline + deep shadow + violet bloom */
+.shot-frame {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid rgba(242, 242, 241, 0.1);
+  background: var(--color-night-soft);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.85), 0 0 60px -24px rgba(143, 106, 224, 0.28);
+  overflow: hidden;
+}
+.shot-frame img {
+  display: block;
+  width: 100%;
+}
+.shot-glow {
+  position: absolute;
+  inset: -40px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(50% 55% at 50% 45%, rgba(143, 106, 224, 0.22), transparent 70%),
+    radial-gradient(40% 45% at 70% 60%, rgba(52, 192, 139, 0.12), transparent 70%);
+  filter: blur(30px);
 }
 
 /* The real "Ak" letterform from the app icon, tintable via mask */
@@ -122,5 +179,5 @@ body {
   background: var(--color-clay);
 }
 .ak-mark-cream {
-  background: var(--color-paper);
+  background: var(--color-ink);
 }

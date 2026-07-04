@@ -18,13 +18,13 @@ const CYCLE = [
 ]
 
 const TERMINAL_LINES = [
-  { text: '$ akorith loop start ./my-project', color: 'text-paper/85' },
-  { text: '[loop] iteration 12 · model qwen3.5:9b-64k', color: 'text-paper/45' },
+  { text: '$ akorith loop start ./my-project', color: 'text-ink/85' },
+  { text: '[loop] iteration 12 · model qwen3.5:9b-64k', color: 'text-ink/45' },
   { text: '[plan] add input validation to config parser', color: 'text-sky-300' },
-  { text: '[gen ] src/config/parse.ts (+41 −6)', color: 'text-paper/85' },
+  { text: '[gen ] src/config/parse.ts (+41 −6)', color: 'text-ink/85' },
   { text: '[test] 24 passed · 0 failed', color: 'text-emerald-400' },
   { text: '[commit] a41f9c2 "config: validate user input"', color: 'text-violet-300' },
-  { text: '[loop] iteration 13 queued…', color: 'text-paper/45' },
+  { text: '[loop] iteration 13 queued…', color: 'text-ink/45' },
 ]
 
 const GUARANTEES = [
@@ -157,7 +157,7 @@ export default function Loop() {
           <Reveal delay={0.15}>
             <div className="overflow-hidden rounded-2xl border border-ink/15 bg-night shadow-[0_30px_70px_-24px_rgba(40,32,58,0.45)]">
               <div className="border-b border-white/[0.07] bg-night-soft px-4 py-2.5">
-                <span className="font-mono text-[11px] text-paper/50">akorith loop — zsh</span>
+                <span className="font-mono text-[11px] text-ink/50">akorith loop — zsh</span>
               </div>
               <motion.div
                 className="space-y-2.5 p-6 font-mono text-[13px] leading-relaxed"

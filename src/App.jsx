@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
+import { ScrollProgress } from './components/motion.jsx'
 import { Navbar } from './components/Navbar.jsx'
 import { Footer } from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
@@ -23,6 +24,7 @@ export default function App() {
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollToTop />
+      <ScrollProgress />
       <Navbar />
       <div className="flex-1">
         <AnimatePresence mode="wait">

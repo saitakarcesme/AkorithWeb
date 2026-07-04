@@ -9,9 +9,9 @@ const PROFILE_URL = 'https://github.com/saitakarcesme'
 const COMMITS = [
   ['a41f9c2', 'loop: validate commits before landing', 'text-emerald-400'],
   ['7c22d10', 'companions: long-memory for Athena & Zeus', 'text-violet-300'],
-  ['e90b3af', 'testlab: sandbox runs + PDF scoring', 'text-paper/85'],
-  ['12fd8c4', 'agents: permission policies (ask write)', 'text-paper/85'],
-  ['b06a4e5', 'dashboard: provider mix & GPU telemetry', 'text-paper/45'],
+  ['e90b3af', 'testlab: sandbox runs + PDF scoring', 'text-ink/85'],
+  ['12fd8c4', 'agents: permission policies (ask write)', 'text-ink/85'],
+  ['b06a4e5', 'dashboard: provider mix & GPU telemetry', 'text-ink/45'],
 ]
 
 export default function Developers() {
@@ -153,7 +153,7 @@ export default function Developers() {
                 ))}
                 <motion.p
                   variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
-                  className="pt-1 text-paper/45"
+                  className="pt-1 text-ink/45"
                 >
                   $ git shortlog -sn → 100% İbrahim Sait
                   <Cursor dark />
