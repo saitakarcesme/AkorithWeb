@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { AkMark } from './Logo.jsx'
-import { GITHUB_URL, Spark } from './ui.jsx'
+import { GITHUB_URL, CLI_GITHUB_URL, Spark } from './ui.jsx'
 
 const COLUMNS = [
   {
@@ -9,6 +9,7 @@ const COLUMNS = [
       { label: 'Features', to: '/features' },
       { label: 'Agents & Companions', to: '/agents' },
       { label: 'Loop', to: '/loop' },
+      { label: 'Akorith CLI', to: '/cli' },
       { label: 'Developers', to: '/developers' },
       { label: 'Download', to: '/download' },
     ],
@@ -17,6 +18,7 @@ const COLUMNS = [
     title: 'Resources',
     links: [
       { label: 'GitHub', href: GITHUB_URL },
+      { label: 'CLI on GitHub', href: CLI_GITHUB_URL },
       { label: 'Issues', href: `${GITHUB_URL}/issues` },
       { label: 'Releases', href: `${GITHUB_URL}/releases` },
       { label: 'Docs', href: `${GITHUB_URL}/tree/main/docs` },

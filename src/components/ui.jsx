@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Reveal } from './motion.jsx'
 import { AkMark } from './Logo.jsx'
 
 export const GITHUB_URL = 'https://github.com/saitakarcesme/akorith'
+export const CLI_GITHUB_URL = 'https://github.com/saitakarcesme/AkorithCLI'
 
 /* ---------- Claude-style spark / starburst motif ---------- */
 
@@ -102,6 +104,35 @@ export function Card({ children, className = '' }) {
   return (
     <div onMouseMove={onMove} className={`card ${className}`}>
       {children}
+    </div>
+  )
+}
+
+/* ---------- Copyable terminal code block ---------- */
+
+export function CodeBlock({ code, prompt = '$', className = '' }) {
+  const [copied, setCopied] = useState(false)
+  const copy = () => {
+    navigator.clipboard.writeText(code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1600)
+  }
+  return (
+    <div className={`group relative overflow-hidden rounded-xl border border-white/[0.07] bg-night ${className}`}>
+      <button
+        onClick={copy}
+        className="absolute right-3 top-3 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-ink/60 opacity-0 transition-opacity duration-200 hover:text-ink group-hover:opacity-100"
+      >
+        {copied ? '✓ copied' : 'copy'}
+      </button>
+      <pre className="overflow-x-auto p-5 font-mono text-sm leading-relaxed text-ink/90">
+        {code.split('\n').map((line, i) => (
+          <div key={i}>
+            <span className="select-none text-clay">{prompt} </span>
+            {line}
+          </div>
+        ))}
+      </pre>
     </div>
   )
 }

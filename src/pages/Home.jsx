@@ -7,12 +7,15 @@ import {
   GhostButton,
   SectionHeading,
   Card,
+  CodeBlock,
   Marquee,
   CtaSection,
   Spark,
   GITHUB_URL,
+  CLI_GITHUB_URL,
 } from '../components/ui.jsx'
 import { TerminalsMock, DashboardMock } from '../components/mocks.jsx'
+import { CliMock } from '../components/CliMock.jsx'
 import { AkMark } from '../components/Logo.jsx'
 
 const MODELS = [
@@ -315,6 +318,48 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ================= CLI ================= */}
+      <section className="relative overflow-hidden border-t border-line px-6 py-28">
+        <div
+          aria-hidden
+          className="absolute -right-32 top-10 h-72 w-72 rounded-full bg-clay/[0.12] blur-3xl animate-aurora-b"
+        />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
+          <div>
+            <Reveal>
+              <p className="mb-5 flex w-fit items-center gap-2 rounded-full border border-clay/40 bg-clay/10 px-4 py-1.5 font-mono text-xs text-clay-deep">
+                <Spark className="h-3.5 w-3.5 text-clay" />
+                New · Akorith CLI
+              </p>
+            </Reveal>
+            <SectionHeading
+              eyebrow=""
+              title={
+                <>
+                  The same crew, now in <span className="accent-word">your terminal.</span>
+                </>
+              }
+              lead="One prompt for Claude, Codex, and OpenCode — switch models mid-session with /model, keep a thread per provider, and script it with one-shot mode. No API keys, ever."
+            />
+            <Reveal delay={0.15}>
+              <CodeBlock className="mt-8" code="curl -fsSL https://akorith.space/install | bash" />
+            </Reveal>
+            <Reveal delay={0.25}>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <PrimaryButton to="/cli">Meet the CLI</PrimaryButton>
+                <GhostButton href={CLI_GITHUB_URL}>CLI on GitHub</GhostButton>
+              </div>
+            </Reveal>
+          </div>
+          <Reveal delay={0.2}>
+            <div className="relative">
+              <div aria-hidden className="shot-glow" />
+              <CliMock />
+            </div>
+          </Reveal>
         </div>
       </section>
 
