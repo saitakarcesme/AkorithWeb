@@ -192,7 +192,15 @@ export function AppShowcase({ className = '' }) {
             aria-label={`Enlarge ${shot.label} screenshot`}
           >
             <div className="shot-frame">
-              <img src={shot.src} alt={`Akorith — ${shot.label}`} loading="lazy" />
+              {/* fixed 16:9 stage so mixed screenshot widths never jump the layout */}
+              <div className="flex aspect-[16/9] items-center justify-center">
+                <img
+                  src={shot.src}
+                  alt={`Akorith — ${shot.label}`}
+                  loading="lazy"
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
             </div>
           </motion.button>
         </AnimatePresence>

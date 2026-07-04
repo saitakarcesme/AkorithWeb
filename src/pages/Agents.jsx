@@ -188,7 +188,7 @@ export default function Agents() {
               ))}
             </div>
           </div>
-          <Reveal delay={0.2} className="mt-14">
+          <Reveal delay={0.2} className="mx-auto mt-14 max-w-5xl">
             <ShotFrame shot="companions" />
           </Reveal>
         </div>
