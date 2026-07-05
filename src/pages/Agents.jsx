@@ -84,9 +84,7 @@ export default function Agents() {
           </p>
           <h1 className="font-serif text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-6xl">
             <SplitWords text="A crew for" />{' '}
-            <span className="accent-word">
-              <SplitWords text="your codebase." delay={0.25} />
-            </span>
+            <SplitWords text="your codebase." delay={0.25} gradient />
           </h1>
           <Reveal delay={0.5}>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">

@@ -71,9 +71,7 @@ export default function Loop() {
 
           <h1 className="font-serif text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-6xl">
             <SplitWords text="Your repo," />{' '}
-            <span className="accent-word">
-              <SplitWords text="still growing" delay={0.25} />
-            </span>
+            <SplitWords text="still growing" delay={0.25} gradient />
             <br />
             <SplitWords text="at 3 a.m." delay={0.5} />
           </h1>

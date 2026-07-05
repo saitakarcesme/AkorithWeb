@@ -128,9 +128,7 @@ export default function Download() {
           <h1 className="font-serif text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-6xl">
             <SplitWords text="From clone to crew" />
             <br />
-            <span className="accent-word">
-              <SplitWords text="in three commands." delay={0.3} />
-            </span>
+            <SplitWords text="in three commands." delay={0.3} gradient />
           </h1>
           <Reveal delay={0.5}>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">

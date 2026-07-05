@@ -122,9 +122,7 @@ export default function Home() {
           <h1 className="font-serif text-5xl font-semibold leading-[1.06] tracking-tight text-ink sm:text-6xl lg:text-7xl">
             <SplitWords text="The Agent OS for" />
             <br />
-            <span className="accent-word">
-              <SplitWords text="your desktop." delay={0.35} />
-            </span>
+            <SplitWords text="your desktop." delay={0.35} gradient />
           </h1>
 
           <motion.p

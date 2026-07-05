@@ -52,7 +52,7 @@ export function StaggerItem({ children, className = '', y = 26 }) {
 }
 
 /** Per-word staggered headline reveal. */
-export function SplitWords({ text, className = '', delay = 0 }) {
+export function SplitWords({ text, className = '', delay = 0, gradient = false }) {
   const words = text.split(' ')
   return (
     <motion.span
@@ -65,7 +65,7 @@ export function SplitWords({ text, className = '', delay = 0 }) {
       {words.map((word, i) => (
         <span key={i} className="inline-block overflow-hidden pb-1 align-bottom">
           <motion.span
-            className="inline-block"
+            className={`inline-block ${gradient ? 'accent-word' : ''}`}
             variants={{
               hidden: { y: '110%', opacity: 0 },
               show: { y: 0, opacity: 1, transition: { duration: 0.8, ease: EASE } },
