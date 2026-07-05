@@ -118,7 +118,7 @@ export function CodeBlock({ code, prompt = '$', className = '' }) {
     setTimeout(() => setCopied(false), 1600)
   }
   return (
-    <div className={`group relative overflow-hidden rounded-xl border border-white/[0.07] bg-night ${className}`}>
+    <div className={`group relative min-w-0 overflow-hidden rounded-xl border border-white/[0.07] bg-night ${className}`}>
       <button
         onClick={copy}
         className="absolute right-3 top-3 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-ink/60 opacity-0 transition-opacity duration-200 hover:text-ink group-hover:opacity-100"

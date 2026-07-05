@@ -11,13 +11,21 @@ const mono = { fontFamily: '"IBM Plex Mono", ui-monospace, SFMono-Regular, monos
 
 export function CliBanner({ compact = false }) {
   return (
-    <div>
+    <div className="min-w-0">
+      {/* full ASCII art on sm+; the real CLI prints a compact wordmark when
+          the terminal is under ~58 cols, so mobile does the same */}
       <pre
-        className="cli-wordmark overflow-x-auto text-[7px] font-bold leading-[1.05] sm:text-[9px] md:text-[10px]"
+        className="cli-wordmark hidden overflow-hidden text-[8px] font-bold leading-[1.05] sm:block sm:text-[9px] md:text-[10px]"
         style={{ ...mono, marginBottom: compact ? 6 : 10 }}
       >
         {WORDMARK}
       </pre>
+      <p
+        className="cli-wordmark text-2xl font-bold tracking-[0.2em] sm:hidden"
+        style={{ ...mono, marginBottom: compact ? 6 : 10 }}
+      >
+        AKORITH
+      </p>
       <p className="text-[12px] leading-relaxed sm:text-[13px]" style={mono}>
         <b style={{ color: CLI.text }}>Akorith</b>{' '}
         <span style={{ color: CLI.faint }}>v{CLI.version}</span>{' '}

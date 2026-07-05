@@ -488,7 +488,7 @@ export function CompanionsView() {
       </div>
 
       {/* chat */}
-      <div className="flex min-h-[320px] flex-col p-4 sm:p-5">
+      <div className="flex min-h-[320px] min-w-0 flex-col p-4 sm:p-5">
         <p className={`border-b ${T.cardBorder} pb-3 text-[13px] ${T.dim}`}>
           <b className={T.text}>{companion}</b>{' '}
           {companion === 'Athena'
@@ -557,8 +557,8 @@ export function AgentsView() {
     ])
 
   return (
-    <div className="grid h-full md:grid-cols-[220px_1fr]">
-      <div className={`border-b md:border-b-0 md:border-r ${T.cardBorder} p-4`}>
+    <div className="grid h-full min-w-0 md:grid-cols-[220px_1fr]">
+      <div className={`min-w-0 border-b md:border-b-0 md:border-r ${T.cardBorder} p-4`}>
         <div className="flex items-center justify-between">
           <p className={`font-mono text-[10px] uppercase tracking-wider ${T.dim}`}>Your agents</p>
           <span className="rounded-full bg-white px-2.5 py-0.5 font-mono text-[9px] font-semibold text-black">
@@ -585,7 +585,7 @@ export function AgentsView() {
         </div>
       </div>
 
-      <div className="p-4 sm:p-6">
+      <div className="min-w-0 p-4 sm:p-6">
         <div className="flex items-start justify-between gap-3">
           <div>
             <h3 className={`text-lg font-semibold ${T.text}`}>{selected}</h3>
@@ -667,8 +667,8 @@ export function SettingsView() {
   const [saved, setSaved] = useState(false)
 
   return (
-    <div className="grid h-full md:grid-cols-[210px_1fr]">
-      <div className={`border-b md:border-b-0 md:border-r ${T.cardBorder} p-4`}>
+    <div className="grid h-full min-w-0 md:grid-cols-[210px_1fr]">
+      <div className={`min-w-0 border-b md:border-b-0 md:border-r ${T.cardBorder} p-4`}>
         <h3 className={`text-[15px] font-semibold ${T.text}`}>Settings</h3>
         <p className={`text-[10.5px] ${T.dim}`}>Akorith workspace controls</p>
         <div className="mt-3 flex gap-2 overflow-x-auto md:block md:space-y-1.5 md:overflow-visible">
@@ -691,7 +691,7 @@ export function SettingsView() {
         </div>
       </div>
 
-      <div className="p-4 sm:p-6">
+      <div className="min-w-0 p-4 sm:p-6">
         {section === 'Profile' ? (
           <>
             <h4 className={`text-lg font-semibold ${T.text}`}>Profile</h4>
@@ -845,7 +845,7 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-[190px_1fr]">
+      <div className="grid min-w-0 md:grid-cols-[190px_1fr]">
         {/* sidebar */}
         <div className={`${T.side} hidden flex-col md:flex`}>
           <div className="flex-1 p-2.5">
@@ -912,7 +912,7 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
         </div>
 
         {/* main view */}
-        <div className="min-h-[440px]">
+        <div className="min-h-[440px] min-w-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={view + seed}
@@ -961,7 +961,7 @@ export function DemoPanel({ view, title, className = '' }) {
   const View = Views[view]
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-white/10 ${T.shell} text-left font-sans shadow-[0_28px_70px_-28px_rgba(0,0,0,0.85)] ${className}`}
+      className={`min-w-0 overflow-hidden rounded-2xl border border-white/10 ${T.shell} text-left font-sans shadow-[0_28px_70px_-28px_rgba(0,0,0,0.85)] ${className}`}
     >
       <div className={`flex items-center justify-between border-b ${T.cardBorder} px-4 py-2.5`}>
         <span className={`text-[12px] font-semibold ${T.text}`}>{title}</span>

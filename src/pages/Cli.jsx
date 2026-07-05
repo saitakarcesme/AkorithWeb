@@ -242,7 +242,7 @@ export default function Cli() {
       {/* ===== One-shot mode ===== */}
       <section className="px-6 py-24">
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
-          <div>
+          <div className="min-w-0">
             <SectionHeading
               eyebrow="One-shot mode"
               title={
@@ -263,7 +263,7 @@ export default function Cli() {
               ))}
             </Stagger>
           </div>
-          <Reveal delay={0.15}>
+          <Reveal delay={0.15} className="min-w-0">
             <CodeBlock code={'akorith -p "summarize the diff" -m claude/haiku'} />
             <p className="mt-4 flex items-center gap-2 font-mono text-xs text-muted">
               <Spark className="h-3.5 w-3.5 text-clay" />
