@@ -26,7 +26,7 @@ const REQUIREMENTS = [
   { name: 'claude CLI', desc: 'Unlocks the Atlantis terminal and Claude chats.', required: false },
   { name: 'codex CLI', desc: 'Unlocks the Olympus terminal and Codex chats.', required: false },
   { name: 'opencode CLI', desc: 'Unlocks the Gaia terminal.', required: false },
-  { name: 'Ollama', desc: 'Unlocks local models, Loop, and the Test Lab — fully offline.', required: false },
+  { name: 'Ollama', desc: 'Unlocks local models, Loop, and Benchmark — fully offline.', required: false },
   { name: 'gh CLI', desc: 'Unlocks the GitHub Workbench plugin.', required: false },
 ]
 
@@ -45,7 +45,7 @@ const FAQ = [
   },
   {
     q: 'Can agents damage my system?',
-    a: 'Agents run behind explicit permission policies — preview, safe writes, safe commands, or ask-write. Nothing destructive runs silently, every action is logged, and Test Lab work happens in disposable sandboxes.',
+    a: 'Agents run behind explicit permission policies — preview, safe writes, safe commands, or ask-write. Nothing destructive runs silently, every action is logged, and Benchmark work happens in disposable sandboxes.',
   },
   {
     q: 'Is it really free?',

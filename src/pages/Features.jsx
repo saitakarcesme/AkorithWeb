@@ -5,10 +5,10 @@ import {
   CtaSection,
   Spark,
 } from '../components/ui.jsx'
-import { WorkbenchMock, TestLabMock } from '../components/mocks.jsx'
+import { WorkbenchMock, BenchmarkMock } from '../components/mocks.jsx'
 import { DemoPanel } from '../components/demo/AppDemo.jsx'
 
-const TESTLAB_STEPS = [
+const BENCHMARK_STEPS = [
   { step: '01', name: 'Detect', desc: 'Akorith scans the benchmark codebase and understands its stack and structure.' },
   { step: '02', name: 'Generate', desc: 'Each selected local model receives the identical prompt, file path, and runner.' },
   { step: '03', name: 'Run', desc: 'Generated tests execute inside a fresh, disposable temp sandbox — never in your repo.' },
@@ -56,7 +56,7 @@ export default function Features() {
           </h1>
           <Reveal delay={0.5}>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              Workbench, Dashboard, Test Lab, and Plugins — everything you need to run serious
+              Workbench, Dashboard, Benchmark, and Plugins — everything you need to run serious
               AI work from one desktop app.
             </p>
           </Reveal>
@@ -93,20 +93,20 @@ export default function Features() {
         </div>
       </section>
 
-      {/* ===== Test Lab ===== */}
+      {/* ===== Benchmark ===== */}
       <section className="border-y border-line bg-cream/40 px-6 py-24">
         <div className="relative mx-auto max-w-7xl">
           <SectionHeading
-            eyebrow="Model Test Lab"
+            eyebrow="Model Benchmark"
             title={
               <>
                 Benchmark local models <span className="accent-word">on your codebase.</span>
               </>
             }
-            lead="Stop guessing which Ollama model to trust. Test Lab pits them against the same generated-test task in a sandbox and hands you a scored PDF."
+            lead="Stop guessing which Ollama model to trust. Benchmark pits them against the same task in a sandbox and hands you an objective leaderboard plus a scored PDF."
           />
           <Stagger className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {TESTLAB_STEPS.map((s) => (
+            {BENCHMARK_STEPS.map((s) => (
               <StaggerItem key={s.step}>
                 <Card className="h-full p-7">
                   <p className="font-serif text-3xl font-medium text-clay">{s.step}</p>
@@ -117,7 +117,7 @@ export default function Features() {
             ))}
           </Stagger>
           <Reveal delay={0.2} className="mx-auto mt-14 max-w-3xl">
-            <TestLabMock />
+            <BenchmarkMock />
           </Reveal>
         </div>
       </section>

@@ -252,7 +252,7 @@ const DASH_STATS = [
   ['ACTIVE WORKSPACE', 'analizeRepo', '~/Desktop/Projects/…'],
   ['RUNTIME OBSERVED', '3', '0 sessions / 3 PTYs'],
   ['PROVIDER USAGE', '1.2M', '4 recorded sessions'],
-  ['TEST SIGNAL', '8 ✓', '8 passed / 1 failed'],
+  ['BENCHMARK SIGNAL', '8 ✓', '8 passed / 1 failed'],
   ['LOOP ACTIVITY', '5', 'recent loops loaded'],
 ]
 
@@ -273,7 +273,7 @@ export function DashboardView() {
           </p>
           <h3 className={`mt-1 text-xl font-semibold ${T.text}`}>Dashboard</h3>
           <p className={`mt-1 text-[12.5px] ${T.dim}`}>
-            Local usage, runtime observation, loops, and test signal — read-only.
+            Local usage, runtime observation, loops, and benchmark signal — read-only.
           </p>
         </div>
         <span className={`rounded-full border ${T.cardBorder} px-3 py-1 font-mono text-[10px] ${T.dim}`}>
@@ -769,7 +769,7 @@ export function SettingsView() {
   )
 }
 
-/* ================= LOCKED (Loop / Test) ================= */
+/* ================= LOCKED (Loop / Benchmark) ================= */
 
 function LockedView({ name, desc }) {
   return (
@@ -795,7 +795,7 @@ function LockedView({ name, desc }) {
 
 /* ================= SHELL ================= */
 
-const NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Test', 'Plugins', 'Companions', 'Agents']
+const NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Benchmark', 'Plugins', 'Companions', 'Agents']
 
 const CHATS = ['hello', 'hey which model are you', 'which model are you tell me', 'hello']
 
@@ -803,7 +803,7 @@ const TITLES = {
   Workspace: 'analizeRepo · Project workspace',
   Loop: 'Loop',
   Dashboard: 'Dashboard',
-  Test: 'Test',
+  Benchmark: 'Benchmark',
   Plugins: 'Plugins',
   Companions: 'Companions',
   Agents: 'Agents',
@@ -934,9 +934,9 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
                   desc="The autonomous builder plans, writes, validates, and commits with local models — a browser tab can't do that."
                 />
               )}
-              {view === 'Test' && (
+              {view === 'Benchmark' && (
                 <LockedView
-                  name="Test Lab"
+                  name="Model Benchmark"
                   desc="Benchmarks run local Ollama models in disposable sandboxes on your hardware — download the app to score your own models."
                 />
               )}

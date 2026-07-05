@@ -65,7 +65,7 @@ export function IconDashboard(p) {
   )
 }
 
-/* Test — FlaskConical */
+/* Benchmark — FlaskConical */
 export function IconTest(p) {
   return (
     <Svg {...p}>
@@ -134,7 +134,7 @@ export const NAV_ICONS = {
   Workspace: IconWorkspace,
   Loop: IconLoop,
   Dashboard: IconDashboard,
-  Test: IconTest,
+  Benchmark: IconTest,
   Plugins: IconPlugins,
   Companions: IconCompanions,
   Agents: IconAgents,

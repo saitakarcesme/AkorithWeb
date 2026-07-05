@@ -85,7 +85,7 @@ const PRIVACY = [
   },
   {
     title: 'Your GPU, your models',
-    desc: 'Run fully offline with Ollama. Loop, Test Lab, and Companions work without a single network call.',
+    desc: 'Run fully offline with Ollama. Loop, Benchmark, and Companions work without a single network call.',
   },
 ]
 

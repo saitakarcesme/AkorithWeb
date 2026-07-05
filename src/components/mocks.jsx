@@ -74,7 +74,7 @@ function useTypeLoop(texts, speed = 45, hold = 1700) {
 
 /* ---------------- Workbench: chat home with cycling models ---------------- */
 
-const WB_NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Test', 'Plugins', 'Companions', 'Agents']
+const WB_NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Benchmark', 'Plugins', 'Companions', 'Agents']
 const WB_MODELS = [
   { dot: 'bg-clay', provider: 'Claude', name: 'Claude Fable 5' },
   { dot: 'bg-sky-600', provider: 'Codex', name: 'GPT-5.5 Codex' },
@@ -357,7 +357,7 @@ export function DashboardMock({ className = '' }) {
   )
 }
 
-/* ---------------- Test Lab: pipeline + scored models ---------------- */
+/* ---------------- Benchmark: pipeline + scored models ---------------- */
 
 const LAB_STEPS = ['Detect', 'Generate', 'Run', 'Score']
 const LAB_MODELS = [
@@ -366,9 +366,9 @@ const LAB_MODELS = [
   { name: 'llama3.1:8b', score: 61 },
 ]
 
-export function TestLabMock({ className = '' }) {
+export function BenchmarkMock({ className = '' }) {
   return (
-    <MockWindow title="model test lab — sandbox run" className={className}>
+    <MockWindow title="model benchmark — sandbox run" className={className}>
       <div className="p-6">
         {/* pipeline */}
         <div className="relative flex items-center justify-between">
