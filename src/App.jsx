@@ -6,7 +6,7 @@ import { Navbar } from './components/Navbar.jsx'
 import { Footer } from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
 import Features from './pages/Features.jsx'
-import Agents from './pages/Agents.jsx'
+import Workspace from './pages/Workspace.jsx'
 import Loop from './pages/Loop.jsx'
 import Cli from './pages/Cli.jsx'
 import Developers from './pages/Developers.jsx'
@@ -32,7 +32,8 @@ export default function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/features" element={<Features />} />
-            <Route path="/agents" element={<Agents />} />
+            <Route path="/workspace" element={<Workspace />} />
+            <Route path="/agents" element={<Workspace />} />
             <Route path="/loop" element={<Loop />} />
             <Route path="/cli" element={<Cli />} />
             <Route path="/developers" element={<Developers />} />

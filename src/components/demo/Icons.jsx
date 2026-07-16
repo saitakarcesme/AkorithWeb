@@ -128,15 +128,3 @@ export function IconSpark(p) {
     </svg>
   )
 }
-
-export const NAV_ICONS = {
-  'New chat': IconPlus,
-  Workspace: IconWorkspace,
-  Loop: IconLoop,
-  Dashboard: IconDashboard,
-  Test: IconTest,
-  Plugins: IconPlugins,
-  Companions: IconCompanions,
-  Agents: IconAgents,
-  Settings: IconSettings,
-}

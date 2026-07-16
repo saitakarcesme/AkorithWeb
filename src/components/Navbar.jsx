@@ -6,7 +6,7 @@ import { GITHUB_URL } from './ui.jsx'
 
 const LINKS = [
   { to: '/features', label: 'Features' },
-  { to: '/agents', label: 'Agents' },
+  { to: '/workspace', label: 'Workspace' },
   { to: '/loop', label: 'Loop' },
   { to: '/cli', label: 'CLI' },
   { to: '/developers', label: 'Developers' },

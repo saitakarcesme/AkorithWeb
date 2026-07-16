@@ -183,11 +183,11 @@ export function CtaSection() {
               <AkMark className="h-10 w-10" tone="cream" />
             </div>
             <h2 className="mx-auto max-w-2xl font-serif text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-              Put an agent crew on <span className="accent-word">your machine.</span>
+              Put your AI workspace on <span className="accent-word">your machine.</span>
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink/65">
               Free and open source. No accounts, no API keys, no cloud middleman — just your
-              existing CLIs, orchestrated.
+              existing CLIs, project context, durable goals, and local tools — orchestrated.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Link

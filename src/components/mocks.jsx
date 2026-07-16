@@ -74,16 +74,16 @@ function useTypeLoop(texts, speed = 45, hold = 1700) {
 
 /* ---------------- Workbench: chat home with cycling models ---------------- */
 
-const WB_NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Test', 'Plugins', 'Companions', 'Agents']
+const WB_NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Benchmark', 'Plugins']
 const WB_MODELS = [
-  { dot: 'bg-clay', provider: 'Claude', name: 'Claude Fable 5' },
-  { dot: 'bg-sky-600', provider: 'Codex', name: 'GPT-5.5 Codex' },
-  { dot: 'bg-moss', provider: 'Local', name: 'qwen3.5:9b-64k' },
+  { dot: 'bg-moss', provider: 'OpenCode', name: 'kimi-k2.7-code' },
+  { dot: 'bg-sky-600', provider: 'Codex', name: 'GPT-5.4' },
+  { dot: 'bg-clay', provider: 'Claude', name: 'Sonnet' },
 ]
 const WB_PROMPTS = [
   'Refactor the config parser and add tests…',
   'Summarize what changed in this repo today…',
-  'Plan a task and drive all three agents…',
+  'Inspect the project and implement the next change…',
 ]
 
 export function WorkbenchMock({ className = '' }) {
@@ -121,8 +121,8 @@ export function WorkbenchMock({ className = '' }) {
 
         {/* chat area */}
         <div className="flex flex-col items-center justify-center px-6 py-10 sm:py-14">
-          <p className="font-serif text-xl text-ink sm:text-2xl">Welcome back, Ibrahim</p>
-          <p className="mt-1.5 text-xs text-muted">Pick a model and start a fresh conversation.</p>
+          <p className="font-serif text-xl text-ink sm:text-2xl">What should we build in AkorithWeb?</p>
+          <p className="mt-1.5 text-xs text-muted">Pick one model and work directly inside the project.</p>
 
           <div className="mt-6 w-full max-w-md rounded-xl border border-line bg-paper p-4">
             <p className="min-h-[1.4em] text-sm text-soot">
@@ -154,7 +154,7 @@ export function WorkbenchMock({ className = '' }) {
           </div>
 
           <p className="mt-4 flex items-center gap-2 font-mono text-[10px] text-muted">
-            <PulseDot color="bg-moss" className="scale-75" /> memory on · session summarized automatically
+            <PulseDot color="bg-moss" className="scale-75" /> project memory on · direct project editing
           </p>
         </div>
       </div>
@@ -166,33 +166,33 @@ export function WorkbenchMock({ className = '' }) {
 
 const TERM_TABS = [
   {
-    name: 'Olympus',
-    provider: 'Codex',
-    dot: 'bg-sky-400',
-    lines: [
-      ['$ codex exec "add input validation"', 'text-ink/85'],
-      ['model: gpt-5.5 · directory: ~/analizeRepo', 'text-ink/40'],
-      ['✓ patched src/config/parse.ts (+41 −6)', 'text-emerald-400'],
-    ],
-  },
-  {
-    name: 'Gaia',
-    provider: 'OpenCode',
+    name: 'Understand',
+    provider: 'Workspace',
     dot: 'bg-emerald-400',
     lines: [
-      ['$ opencode run "fix broken tests"', 'text-ink/85'],
-      ['Build · Big Pickle · OpenCode Zen', 'text-ink/40'],
-      ['✓ 24 passed · 0 failed', 'text-emerald-400'],
+      ['Loaded ~/Projects/AkorithWeb', 'text-ink/85'],
+      ['Read project memory and attachments', 'text-ink/40'],
+      ['✓ project context ready', 'text-emerald-400'],
     ],
   },
   {
-    name: 'Atlantis',
-    provider: 'Claude',
+    name: 'Work',
+    provider: 'OpenCode',
     dot: 'bg-violet-400',
     lines: [
-      ['$ claude -p "review this diff"', 'text-ink/85'],
-      ['claude-fable-5 · long-context review', 'text-ink/40'],
-      ['✓ 2 issues found, patch suggested', 'text-violet-300'],
+      ['Planning the focused project change', 'text-ink/85'],
+      ['Edited 2 project files', 'text-ink/40'],
+      ['Akorithing… verifying the result', 'text-violet-300'],
+    ],
+  },
+  {
+    name: 'Result',
+    provider: 'Receipt',
+    dot: 'bg-emerald-400',
+    lines: [
+      ['✓ typecheck and production build passed', 'text-emerald-400'],
+      ['2 files changed · +84 −19', 'text-ink/85'],
+      ['Worked for 18s · ready for review', 'text-ink/40'],
     ],
   },
 ]
@@ -206,7 +206,7 @@ export function TerminalsMock({ className = '' }) {
   const tab = TERM_TABS[active]
 
   return (
-    <MockWindow dark title="agent activity — 3 agents running" className={className}>
+    <MockWindow dark title="workspace — streamed project progress" className={className}>
       <div className="flex gap-1.5 border-b border-white/[0.07] px-3 pt-3">
         {TERM_TABS.map((t, i) => (
           <button
@@ -271,11 +271,11 @@ function heat(r, c) {
 export function DashboardMock({ className = '' }) {
   const C = 2 * Math.PI * 30
   return (
-    <MockWindow title="dashboard — usage & telemetry" className={className}>
+    <MockWindow title="dashboard — profile & compute" className={className}>
       <div className="grid gap-5 p-5 sm:grid-cols-[1.35fr_1fr]">
         {/* left: heatmap + bars */}
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Usage activity</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Token activity · Daily</p>
           <motion.div
             className="mt-3 grid grid-cols-[repeat(16,1fr)] gap-1"
             initial="hidden"
@@ -300,7 +300,7 @@ export function DashboardMock({ className = '' }) {
           </motion.div>
 
           <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
-            Daily tokens · last 12 days
+            Compute usage · This Mac
           </p>
           <div className="mt-3 flex h-20 items-end gap-1.5">
             {BAR_HEIGHTS.map((h, i) => (
@@ -347,9 +347,9 @@ export function DashboardMock({ className = '' }) {
             </div>
           </div>
           <div className="mt-3 space-y-1.5 font-mono text-[10px] text-muted">
-            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-clay" /> claude · codex 62%</p>
-            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-moss" /> local (ollama) 22%</p>
-            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-line" /> other 16%</p>
+            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-clay" /> peak · 970.9K</p>
+            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-moss" /> current streak · 3d</p>
+            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-line" /> longest task · 6m 4s</p>
           </div>
         </div>
       </div>
@@ -359,16 +359,16 @@ export function DashboardMock({ className = '' }) {
 
 /* ---------------- Test Lab: pipeline + scored models ---------------- */
 
-const LAB_STEPS = ['Detect', 'Generate', 'Run', 'Score']
+const LAB_STEPS = ['Select', 'Challenge', 'Battle', 'Compare']
 const LAB_MODELS = [
-  { name: 'qwen3.5:9b-64k', score: 92, win: true },
-  { name: 'gemma3:12b', score: 74 },
-  { name: 'llama3.1:8b', score: 61 },
+  { name: 'opencode-go/glm-5.2', score: 91, win: true },
+  { name: 'opencode-go/deepseek-v4', score: 81 },
+  { name: 'qwen2.5-coder:1.5b', score: 74 },
 ]
 
 export function TestLabMock({ className = '' }) {
   return (
-    <MockWindow title="model test lab — sandbox run" className={className}>
+    <MockWindow title="benchmark — performance matrix" className={className}>
       <div className="p-6">
         {/* pipeline */}
         <div className="relative flex items-center justify-between">
@@ -419,7 +419,7 @@ export function TestLabMock({ className = '' }) {
 
         <p className="mt-6 flex items-center gap-2 font-mono text-[10px] text-muted">
           <PulseDot color="bg-moss" className="scale-75" />
-          fresh temp sandbox per run · PDF report exported
+          same challenge · saved results · visual performance library
         </p>
       </div>
     </MockWindow>
@@ -429,17 +429,17 @@ export function TestLabMock({ className = '' }) {
 /* ---------------- Plugins: tile grid with scan sweep ---------------- */
 
 const PLUGIN_TILES = [
-  { name: 'OpenCode Agent', cat: 'agents', dot: 'bg-moss' },
-  { name: 'GitHub Workbench', cat: 'integrations', dot: 'bg-moss' },
-  { name: 'Chrome Automation', cat: 'browser', dot: 'bg-moss' },
-  { name: 'Ollama Telemetry', cat: 'telemetry', dot: 'bg-clay' },
-  { name: 'Hermes Memory', cat: 'memory', dot: 'bg-ink/25' },
-  { name: 'Chroma Memory', cat: 'memory', dot: 'bg-clay' },
+  { name: 'OpenCode', cat: 'providers', dot: 'bg-moss' },
+  { name: 'Git', cat: 'developer', dot: 'bg-moss' },
+  { name: 'ripgrep', cat: 'developer', dot: 'bg-moss' },
+  { name: 'Pandoc', cat: 'documents', dot: 'bg-moss' },
+  { name: 'FFmpeg', cat: 'media', dot: 'bg-moss' },
+  { name: 'SQLite', cat: 'data', dot: 'bg-moss' },
 ]
 
 export function PluginsMock({ className = '' }) {
   return (
-    <MockWindow title="plugins — 4/9 ready" className={className}>
+    <MockWindow title="plugins — 21/24 ready" className={className}>
       <div className="relative overflow-hidden p-5">
         {/* scan sweep */}
         <motion.div

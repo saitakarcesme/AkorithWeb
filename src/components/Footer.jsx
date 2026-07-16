@@ -7,7 +7,7 @@ const COLUMNS = [
     title: 'Product',
     links: [
       { label: 'Features', to: '/features' },
-      { label: 'Agents & Companions', to: '/agents' },
+      { label: 'Workspace', to: '/workspace' },
       { label: 'Loop', to: '/loop' },
       { label: 'Akorith CLI', to: '/cli' },
       { label: 'Developers', to: '/developers' },
@@ -48,8 +48,8 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink/60">
-              The local-first Agent OS. Orchestrate Claude, Codex, OpenCode, and local models —
-              on your machine, with your logins, under your rules.
+              A local-first workspace for building with Claude, Codex, OpenCode, and local models —
+              directly inside your projects, with your logins and your rules.
             </p>
             <p className="mt-6 flex items-center gap-2 font-mono text-xs text-ink/40">
               <Spark className="h-3 w-3 text-clay" />

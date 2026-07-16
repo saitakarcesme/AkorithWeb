@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { NAV_ICONS, IconSpark, IconSettings, IconLoop } from './Icons.jsx'
+import { IconSettings } from './Icons.jsx'
+import { NAV_ICONS } from './nav-icons.js'
 
 /* ============================================================
    Interactive in-browser replica of the Akorith desktop app.
@@ -26,9 +27,9 @@ const T = {
 /* ---------------- canned demo replies ---------------- */
 
 const REPLIES = [
-  "Nice prompt — but this is the browser demo, so no models were harmed. In the real app this goes straight to Claude, Codex, or OpenCode running on your machine.",
-  "I'd love to plan that, but the demo has no engine under the hood. The real Akorith drives the agent CLIs you're already signed into — zero API keys.",
-  'That one needs the real Agent OS. It installs with one line and lights up whatever CLIs you have.',
+  'The project pass is complete. I inspected the current structure, applied the focused change, and verified the production build.',
+  'I finished the requested update and kept the result scoped to this project. The changed files and verification summary are below.',
+  'The implementation is ready for review. No commit or push was performed; Akorith only recorded the local project delta.',
 ]
 
 const ATHENA_REPLIES = [
@@ -108,6 +109,11 @@ function useChat(replies) {
   const [busy, setBusy] = useState(false)
   const n = useRef(0)
   const endRef = useRef(null)
+  const replyTimer = useRef(null)
+
+  useEffect(() => () => {
+    if (replyTimer.current) window.clearTimeout(replyTimer.current)
+  }, [])
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
@@ -117,10 +123,11 @@ function useChat(replies) {
     if (!text.trim() || busy) return false
     setMessages((m) => [...m, { role: 'user', text: text.trim() }])
     setBusy(true)
-    setTimeout(() => {
+    replyTimer.current = window.setTimeout(() => {
       setMessages((m) => [...m, { role: 'assistant', text: replies[n.current % replies.length], typed: true }])
       n.current += 1
       setBusy(false)
+      replyTimer.current = null
     }, 700)
     return true
   }
@@ -158,9 +165,40 @@ function ChatInput({ placeholder, onSend, accent = true }) {
 
 /* ================= WORKSPACE ================= */
 
+const WORKSPACE_MODELS = ['OpenCode · kimi-k2.7-code', 'Codex · GPT-5.4', 'Claude · Sonnet']
+
+function WorkspaceTrace({ busy }) {
+  const steps = busy
+    ? ['Reading project context', 'Planning the focused change']
+    : ['Read project context', 'Updated the requested interface', 'Verified the production build']
+  return (
+    <div className={`mt-4 border-t ${T.cardBorder} pt-4`}>
+      <p className={`text-[11px] ${T.dim}`}>{busy ? 'Working for 8s' : 'Worked for 18s'}</p>
+      <div className="mt-3 space-y-2">
+        {steps.map((step, index) => (
+          <div key={step} className="flex items-start gap-2.5">
+            <span className={`mt-1 h-2 w-2 shrink-0 rounded-full ${busy && index === steps.length - 1 ? 'animate-pulse bg-violet-400' : 'bg-emerald-400'}`} />
+            <div>
+              <p className={`text-[12px] font-medium ${T.text}`}>{step}</p>
+              <p className={`mt-0.5 text-[10.5px] leading-relaxed ${T.dim}`}>
+                {index === 0 ? 'Loaded the selected folder and bounded project memory.' : index === 1 ? 'Kept the next action small and visible in the conversation.' : 'Typecheck and build completed without errors.'}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      {!busy && (
+        <div className={`mt-4 grid grid-cols-3 gap-2 rounded-lg border ${T.cardBorder} bg-black/20 p-3 font-mono text-[9.5px] ${T.dim}`}>
+          <span>2 files changed</span><span className="text-emerald-400">+84 lines</span><span className="text-red-300">−19 lines</span>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function WorkspaceView({ seed }) {
-  const { messages, send, endRef, setMessages } = useChat(REPLIES)
-  const [model, setModel] = useState('Atlantis')
+  const { messages, send, busy, endRef, setMessages } = useChat(REPLIES)
+  const [modelIndex, setModelIndex] = useState(0)
   const seeded = useRef('')
 
   useEffect(() => {
@@ -178,44 +216,34 @@ export function WorkspaceView({ seed }) {
       {messages.length === 0 ? (
         <div className="text-center">
           <h3 className={`text-xl font-semibold sm:text-2xl ${T.text}`}>
-            What should we build in analizeRepo?
+            What should we build in AkorithWeb?
           </h3>
           <p className={`mt-2 text-[13px] ${T.dim}`}>
-            Type a task — Akorith plans it and drives Codex, OpenCode, and Claude for you.
+            Choose a model and work directly inside this project.
           </p>
         </div>
       ) : (
         <div className="mb-5 max-h-64 overflow-y-auto pr-1">
           <Thread messages={messages} endRef={endRef} />
+          <WorkspaceTrace busy={busy} />
         </div>
       )}
 
       <div className={`mx-auto mt-6 w-full max-w-xl rounded-2xl border ${T.cardBorder} ${T.input} p-4`}>
         <ChatInputInner onSend={send} />
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
-          <span
+          <button
+            onClick={() => setModelIndex((current) => (current + 1) % WORKSPACE_MODELS.length)}
             className={`flex items-center gap-1.5 rounded-full border ${T.cardBorder} px-3 py-1 font-mono text-[10.5px] ${T.dim}`}
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Claude{' '}
-            <b className={T.text}>Default</b> ⌄
-          </span>
-          {['Olympus', 'Gaia', 'Atlantis'].map((m) => (
-            <button
-              key={m}
-              onClick={() => setModel(m)}
-              className={`rounded-full px-3 py-1 font-mono text-[10.5px] transition-colors ${
-                model === m ? 'bg-white text-black' : `${T.dim} hover:text-white`
-              }`}
-            >
-              {m}
-            </button>
-          ))}
-          <span className={`rounded-full px-2.5 py-1 font-mono text-[10.5px] ${T.faint}`}>✦ More</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <b className={T.text}>{WORKSPACE_MODELS[modelIndex]}</b> ⌄
+          </button>
+          <span className={`rounded-full px-2.5 py-1 font-mono text-[10.5px] ${T.faint}`}>✦ Plan · Queue · @ files</span>
         </div>
       </div>
       <p className={`mx-auto mt-3 flex items-center gap-1.5 font-mono text-[10px] ${T.faint}`}>
-        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Session memory on · target{' '}
-        {model}
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Project memory on · direct project editing
       </p>
     </div>
   )
@@ -232,7 +260,7 @@ function ChatInputInner({ onSend }) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && submit()}
-        placeholder="Describe a task for analizeRepo…  (Enter to send)"
+        placeholder="Describe a task for AkorithWeb…  (Enter to send)"
         className={`w-full bg-transparent text-[13px] outline-none placeholder:text-[#6b6b72] ${T.text}`}
       />
       <button
@@ -249,70 +277,57 @@ function ChatInputInner({ onSend }) {
 /* ================= DASHBOARD ================= */
 
 const DASH_STATS = [
-  ['ACTIVE WORKSPACE', 'analizeRepo', '~/Desktop/Projects/…'],
-  ['RUNTIME OBSERVED', '3', '0 sessions / 3 PTYs'],
-  ['PROVIDER USAGE', '1.2M', '4 recorded sessions'],
-  ['TEST SIGNAL', '8 ✓', '8 passed / 1 failed'],
-  ['LOOP ACTIVITY', '5', 'recent loops loaded'],
-]
-
-const DASH_VISIBILITY = [
-  ['REGISTERED AGENTS', '5', '3 connected through runtime paths'],
-  ['OBSERVED SESSIONS', '0', '0 active provider calls'],
-  ['LOCAL RUNTIME', 'ok', 'conservative local detection'],
-  ['RECENT CHAT', '15h ago', '“hello”'],
+  ['1.2M', 'Lifetime tokens'],
+  ['970.9K', 'Peak tokens'],
+  ['6m 4s', 'Longest task'],
+  ['3 days', 'Current streak'],
+  ['5 days', 'Longest streak'],
 ]
 
 export function DashboardView() {
   return (
     <div className="px-5 py-6 sm:px-8">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className={`font-mono text-[9.5px] uppercase tracking-[0.2em] ${T.faint}`}>
-            Agent OS command surface
-          </p>
-          <h3 className={`mt-1 text-xl font-semibold ${T.text}`}>Dashboard</h3>
-          <p className={`mt-1 text-[12.5px] ${T.dim}`}>
-            Local usage, runtime observation, loops, and test signal — read-only.
-          </p>
-        </div>
-        <span className={`rounded-full border ${T.cardBorder} px-3 py-1 font-mono text-[10px] ${T.dim}`}>
-          Observation only
-        </span>
+      <div className="text-center">
+        <div className="mx-auto h-14 w-14 rounded-full border border-violet-400/40 bg-gradient-to-br from-violet-400/70 to-emerald-400/60" />
+        <h3 className={`mt-3 text-2xl font-semibold ${T.text}`}>Ibrahim</h3>
+        <p className={`mt-1 text-[12px] ${T.dim}`}>@local · <span className={`rounded-full border ${T.cardBorder} px-2 py-0.5`}>Akorith</span></p>
       </div>
 
       <motion.div
-        className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-5"
+        className={`mx-auto mt-5 grid max-w-3xl grid-cols-2 overflow-hidden rounded-xl border ${T.cardBorder} lg:grid-cols-5`}
         initial="hidden"
         animate="show"
         variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}
       >
-        {DASH_STATS.map(([label, value, sub]) => (
+        {DASH_STATS.map(([value, label]) => (
           <motion.div
             key={label}
             variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
-            className={`rounded-xl border ${T.cardBorder} ${T.card} p-4`}
+            className={`border-r border-white/[0.05] p-3 text-center ${T.card}`}
           >
-            <p className={`font-mono text-[9px] uppercase tracking-wider ${T.faint}`}>{label}</p>
-            <p className={`mt-1.5 text-lg font-semibold ${T.text}`}>{value}</p>
-            <p className={`mt-0.5 truncate text-[11px] ${T.dim}`}>{sub}</p>
+            <p className={`text-[14px] font-semibold ${T.text}`}>{value}</p>
+            <p className={`mt-1 text-[9.5px] ${T.dim}`}>{label}</p>
           </motion.div>
         ))}
       </motion.div>
 
-      <div className={`mt-4 rounded-xl border ${T.cardBorder} ${T.card} p-4`}>
+      <div className="mx-auto mt-5 max-w-3xl">
         <div className="flex items-center justify-between">
-          <p className={`text-[13px] font-semibold ${T.text}`}>Agent OS visibility</p>
-          <span className={`font-mono text-[10px] ${T.faint}`}>checked just now</span>
+          <p className={`text-[12px] font-semibold ${T.text}`}>Token activity</p>
+          <span className={`text-[10px] ${T.dim}`}>Daily</span>
         </div>
-        <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {DASH_VISIBILITY.map(([label, value, sub]) => (
-            <div key={label} className={`rounded-lg border ${T.cardBorder} bg-black/20 p-3`}>
-              <p className={`font-mono text-[9px] uppercase tracking-wider ${T.faint}`}>{label}</p>
-              <p className={`mt-1 text-[15px] font-semibold ${T.text}`}>{value}</p>
-              <p className={`mt-0.5 truncate text-[10.5px] ${T.dim}`}>{sub}</p>
-            </div>
-          ))}
+        <div className="mt-3 grid grid-cols-[repeat(36,minmax(0,1fr))] gap-1">
+          {Array.from({ length: 36 * 5 }).map((_, index) => {
+            const hot = index > 158 && index % 7 !== 0
+            const peak = index === 170
+            return <span key={index} className={`aspect-square rounded-[2px] border border-white/[0.04] ${peak ? 'bg-violet-400' : hot ? 'bg-emerald-400/45' : 'bg-white/[0.04]'}`} />
+          })}
+        </div>
+        <div className={`mt-5 border-t ${T.cardBorder} pt-4`}>
+          <div className="flex items-center justify-between"><p className={`text-[12px] font-semibold ${T.text}`}>Compute usage</p><span className={`font-mono text-[9px] ${T.faint}`}>THIS MAC · CPU 38%</span></div>
+          <svg viewBox="0 0 600 54" className="mt-2 h-12 w-full" preserveAspectRatio="none" aria-hidden>
+            <path d="M0 39 C35 36 55 16 90 24 S145 46 185 30 240 12 280 26 335 45 380 31 430 10 470 25 530 43 600 18" fill="none" stroke="#7b7b82" strokeWidth="2" />
+          </svg>
         </div>
       </div>
     </div>
@@ -321,49 +336,49 @@ export function DashboardView() {
 
 /* ================= PLUGINS ================= */
 
-const PLUGIN_CATS = ['All', 'Agents', 'Integrations', 'Telemetry', 'Memory', 'Browser']
+const PLUGIN_CATS = ['All', 'Providers', 'Developer', 'Documents', 'Media', 'Data']
 const PLUGINS = [
   {
-    name: 'OpenCode Agent (Gaia)',
-    cat: 'Agents',
+    name: 'OpenCode',
+    cat: 'Providers',
     status: 'AVAILABLE',
-    desc: 'Routes prompts to the Gaia terminal; output is captured and summarized into chat.',
-    note: 'Detected: 1.17.13 · Terminal (Gaia) ready',
+    desc: 'Runs installed OpenCode models directly inside project chats and durable goals.',
+    note: 'Detected: opencode 1.17.13',
   },
   {
-    name: 'GitHub Workbench',
-    cat: 'Integrations',
+    name: 'Git',
+    cat: 'Developer',
     status: 'AVAILABLE',
-    desc: 'Pull requests, issues, and checks as a read-first workbench panel.',
-    note: 'Detected: gh version 2.88.1',
+    desc: 'Read-only repository context and completion deltas with no automatic push authority.',
+    note: 'Detected: git 2.50.1',
   },
   {
-    name: 'Remote Ollama Telemetry',
-    cat: 'Telemetry',
-    status: 'UNAVAILABLE',
-    desc: 'Reports remote GPU/VRAM so the Dashboard can show off-machine runtimes.',
-    note: 'No local Ollama CLI configured yet.',
-  },
-  {
-    name: 'Hermes Memory / Skills',
-    cat: 'Memory',
-    status: 'PLANNED',
-    desc: 'Durable memory and reusable skills shared across chats, projects, and missions.',
-    note: 'Planned — see the plugin notes for the roadmap.',
-  },
-  {
-    name: 'Chroma Memory',
-    cat: 'Memory',
-    status: 'UNAVAILABLE',
-    desc: 'Vector memory backend with semantic search for missions and projects.',
-    note: 'python3 found, chromadb not installed.',
-  },
-  {
-    name: 'Browser / Chrome Automation',
-    cat: 'Browser',
+    name: 'ripgrep',
+    cat: 'Developer',
     status: 'AVAILABLE',
-    desc: 'Controlled browser tasks for research, web-app testing, and debugging.',
-    note: 'Chrome/Chromium detected.',
+    desc: 'Fast bounded project search for files and text during local model work.',
+    note: 'Detected: ripgrep 15.1.0',
+  },
+  {
+    name: 'Pandoc',
+    cat: 'Documents',
+    status: 'AVAILABLE',
+    desc: 'Local document conversion capability surfaced to compatible tasks.',
+    note: 'Detected: pandoc 3.7.0',
+  },
+  {
+    name: 'FFmpeg',
+    cat: 'Media',
+    status: 'AVAILABLE',
+    desc: 'Audited local audio and video inspection or conversion capability.',
+    note: 'Detected: ffmpeg 7.1',
+  },
+  {
+    name: 'SQLite',
+    cat: 'Data',
+    status: 'AVAILABLE',
+    desc: 'Local database inspection capability with a static installation diagnostic.',
+    note: 'Detected: sqlite 3.50.2',
   },
 ]
 
@@ -382,12 +397,12 @@ export function PluginsView() {
         <div>
           <h3 className={`text-xl font-semibold ${T.text}`}>Plugins</h3>
           <p className={`mt-1 text-[12.5px] ${T.dim}`}>
-            Extend Akorith with agents, tools, panels, and automations.
+            Provider CLIs and audited local tools detected on this Mac.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <span className={`rounded-full border ${T.cardBorder} px-3 py-1 font-mono text-[10px] ${T.dim}`}>
-            4/9 ready
+            21/24 ready
           </span>
           <span className="rounded-full bg-white px-3 py-1 font-mono text-[10px] font-semibold text-black">
             Re-check all
@@ -652,16 +667,17 @@ export function AgentsView() {
 /* ================= SETTINGS ================= */
 
 const SETTINGS_NAV = [
-  ['Profile', 'Identity and theme'],
+  ['General', 'Identity and theme'],
   ['Providers', 'Claude, ChatGPT, Ollama'],
-  ['Agents', 'Agent OS foundation'],
-  ['API', 'Controller (optional)'],
-  ['Workflow', 'Bridge and repo context'],
+  ['Telemetry', 'This Mac and connected computer'],
+  ['Update', 'Install the latest Akorith'],
+  ['Workflow', 'Project context and queues'],
+  ['Benchmark', 'Defaults and exports'],
   ['Data', 'Storage and safety'],
 ]
 
 export function SettingsView() {
-  const [section, setSection] = useState('Profile')
+  const [section, setSection] = useState('General')
   const [name, setName] = useState('Ibrahim')
   const [theme, setTheme] = useState('Dark')
   const [saved, setSaved] = useState(false)
@@ -692,9 +708,9 @@ export function SettingsView() {
       </div>
 
       <div className="min-w-0 p-4 sm:p-6">
-        {section === 'Profile' ? (
+        {section === 'General' ? (
           <>
-            <h4 className={`text-lg font-semibold ${T.text}`}>Profile</h4>
+            <h4 className={`text-lg font-semibold ${T.text}`}>General</h4>
             <p className={`text-[12px] ${T.dim}`}>Local display and app appearance.</p>
 
             <p className={`mt-4 text-[11.5px] font-medium ${T.dim}`}>Display name</p>
@@ -729,9 +745,9 @@ export function SettingsView() {
 
             <div className="mt-4 grid grid-cols-3 gap-2">
               {[
-                ['Available providers', '2/3'],
-                ['Auto-Enter', 'On'],
-                ['Repo context', 'Off'],
+                ['Available providers', '4/4'],
+                ['Project memory', 'On'],
+                ['App version', '0.7.4'],
               ].map(([label, value]) => (
                 <div key={label} className={`rounded-lg border ${T.cardBorder} ${T.card} p-3`}>
                   <p className={`truncate text-[10px] ${T.faint}`}>{label}</p>
@@ -747,7 +763,7 @@ export function SettingsView() {
               }}
               className="mt-4 rounded-lg bg-white px-4 py-2 text-[12px] font-semibold text-black transition-colors hover:bg-[#c9b6f5]"
             >
-              {saved ? '✓ saved locally' : 'Save usage limits'}
+              {saved ? '✓ saved locally' : 'Save changes'}
             </button>
           </>
         ) : (
@@ -769,33 +785,65 @@ export function SettingsView() {
   )
 }
 
-/* ================= LOCKED (Loop / Test) ================= */
+/* ================= LOOP ================= */
 
-function LockedView({ name, desc }) {
+const LOOP_PHASES = ['Understand', 'Plan', 'Execute', 'Analyze', 'Replan']
+
+export function LoopView() {
+  const [activeTab, setActiveTab] = useState(0)
+  const [phase, setPhase] = useState(2)
+  const tabs = ['Ship responsive dashboard', 'Summarize research PDF']
   return (
-    <div className="flex h-full min-h-[320px] flex-col items-center justify-center px-6 text-center">
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ repeat: Infinity, duration: 14, ease: 'linear' }}
-        className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${T.cardBorder} ${T.card} ${T.text}`}
-      >
-        <IconLoop className="h-5 w-5" />
-      </motion.div>
-      <p className={`mt-4 text-lg font-semibold ${T.text}`}>{name} runs on your machine</p>
-      <p className={`mt-2 max-w-sm text-[13px] leading-relaxed ${T.dim}`}>{desc}</p>
-      <Link
-        to="/download"
-        className="mt-5 rounded-full bg-white px-4 py-2 text-[12.5px] font-semibold text-black transition-colors hover:bg-[#c9b6f5]"
-      >
-        Download Akorith ↓
-      </Link>
+    <div className="p-4 sm:p-6">
+      <div className={`flex gap-1 border-b ${T.cardBorder} pb-3`}>
+        {tabs.map((tab, index) => (
+          <button key={tab} onClick={() => setActiveTab(index)} className={`rounded-lg px-3 py-1.5 text-[11px] ${activeTab === index ? 'bg-white/10 text-white' : T.dim}`}>{tab}</button>
+        ))}
+        <button className={`rounded-lg px-3 py-1.5 text-[11px] ${T.dim}`}>＋ New</button>
+      </div>
+      <div className="mt-4 flex items-start justify-between gap-4">
+        <div><p className={`font-mono text-[9px] uppercase tracking-wider ${T.faint}`}>Durable goal · cycle 2</p><h3 className={`mt-1 text-[16px] font-semibold ${T.text}`}>{tabs[activeTab]}</h3></div>
+        <span className="rounded-full border border-violet-400/30 bg-violet-400/10 px-3 py-1 font-mono text-[9px] text-violet-300">{LOOP_PHASES[phase]}</span>
+      </div>
+      <div className={`relative mt-5 overflow-hidden rounded-xl border ${T.cardBorder} ${T.card} p-4`}>
+        <svg className="absolute inset-0 hidden h-full w-full sm:block" viewBox="0 0 600 190" fill="none" aria-hidden>
+          <path d="M105 45H195M275 45H365M405 70V122M365 145H275M235 122V70M445 145H530" stroke="#6b6b72" strokeWidth="1.4" />
+          <path d="M235 122V70M365 145H275" stroke="#8f6ae0" strokeDasharray="5 5" />
+          <path d="M445 145H530" stroke="#34c08b" />
+        </svg>
+        <div className="relative grid grid-cols-2 gap-3 sm:h-[158px] sm:grid-cols-none">
+          {LOOP_PHASES.map((name, index) => {
+            const pos = ['sm:absolute sm:left-[4%] sm:top-1', 'sm:absolute sm:left-[34%] sm:top-1', 'sm:absolute sm:left-[64%] sm:top-1', 'sm:absolute sm:left-[64%] sm:top-[62%]', 'sm:absolute sm:left-[34%] sm:top-[62%]']
+            return <button key={name} onClick={() => setPhase(index)} className={`rounded-lg border px-3 py-3 text-left sm:w-[22%] ${pos[index]} ${phase === index ? 'border-violet-400/40 bg-violet-400/10' : `${T.cardBorder} bg-black/20`}`}><span className={`font-mono text-[8px] ${T.faint}`}>0{index + 1}</span><p className={`mt-1 text-[11px] font-semibold ${T.text}`}>{name}</p></button>
+          })}
+          <div className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-3 py-3 sm:absolute sm:left-[88%] sm:top-[62%] sm:w-[11%]"><span className="font-mono text-[8px] text-emerald-400">✓</span><p className="mt-1 text-[10px] font-semibold text-emerald-400">Done</p></div>
+        </div>
+      </div>
+      <p className={`mt-4 text-[11px] leading-relaxed ${T.dim}`}>Analyze checks the definition of done. If evidence is incomplete, the goal returns through Replan; otherwise it exits to Complete.</p>
+    </div>
+  )
+}
+
+/* ================= BENCHMARK ================= */
+
+const BENCHMARK_MODELS = ['OpenCode · glm-5.2', 'OpenCode · deepseek-v4', 'Ollama · qwen2.5-coder']
+export function BenchmarkView() {
+  const [challenge, setChallenge] = useState('UI behavior flow')
+  const [selected, setSelected] = useState([0, 1])
+  const toggle = (index) => setSelected((current) => current.includes(index) ? current.filter((item) => item !== index) : [...current, index])
+  return (
+    <div className="p-4 sm:p-6">
+      <div className="flex flex-wrap items-end justify-between gap-3"><div><h3 className={`text-lg font-semibold ${T.text}`}>Benchmark</h3><p className={`mt-1 text-[11px] ${T.dim}`}>Run one challenge across models and compare objective performance.</p></div><select value={challenge} onChange={(event) => setChallenge(event.target.value)} className={`rounded-lg border ${T.cardBorder} ${T.input} px-3 py-2 text-[11px] ${T.text}`}><option>UI behavior flow</option><option>Token efficiency</option><option>Python test writing</option><option>Speed test</option></select></div>
+      <div className="mt-4 flex flex-wrap gap-2">{BENCHMARK_MODELS.map((model, index) => <button key={model} onClick={() => toggle(index)} className={`rounded-full border px-3 py-1.5 font-mono text-[9.5px] ${selected.includes(index) ? 'border-emerald-400/40 bg-emerald-400/10 text-emerald-300' : `${T.cardBorder} ${T.dim}`}`}>{selected.includes(index) ? '● ' : '○ '}{model}</button>)}</div>
+      <div className={`mt-5 overflow-hidden rounded-xl border ${T.cardBorder}`}><div className={`grid grid-cols-[1.4fr_repeat(3,1fr)] border-b ${T.cardBorder} px-3 py-2 font-mono text-[8.5px] ${T.faint}`}><span>MODEL</span><span>UI FLOW</span><span>TOKENS</span><span>AVG</span></div>{BENCHMARK_MODELS.map((model, index) => <div key={model} className={`grid grid-cols-[1.4fr_repeat(3,1fr)] items-center border-b ${T.cardBorder} px-3 py-2.5 text-[10px] last:border-0`}><span className={`truncate ${T.text}`}>{model}</span><span className={index === 0 ? 'text-emerald-400' : 'text-violet-300'}>{[81,66,72][index]}</span><span>{[100,96,75][index]}</span><strong className={T.text}>{[91,81,74][index]}</strong></div>)}</div>
+      <div className="mt-4 grid grid-cols-3 gap-2">{[['Leader','glm-5.2'],['Library average','82/100'],['Saved runs','16']].map(([label,value]) => <div key={label} className={`rounded-lg border ${T.cardBorder} ${T.card} p-3`}><p className={`font-mono text-[8px] uppercase ${T.faint}`}>{label}</p><p className={`mt-1 text-[11px] font-semibold ${T.text}`}>{value}</p></div>)}</div>
     </div>
   )
 }
 
 /* ================= SHELL ================= */
 
-const NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Test', 'Plugins', 'Companions', 'Agents']
+const NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Benchmark', 'Plugins']
 
 const CHATS = ['hello', 'hey which model are you', 'which model are you tell me', 'hello']
 
@@ -803,10 +851,8 @@ const TITLES = {
   Workspace: 'analizeRepo · Project workspace',
   Loop: 'Loop',
   Dashboard: 'Dashboard',
-  Test: 'Test',
+  Benchmark: 'Benchmark',
   Plugins: 'Plugins',
-  Companions: 'Companions',
-  Agents: 'Agents',
   Settings: 'Settings',
 }
 
@@ -834,10 +880,10 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
         <span className={`truncate text-[12.5px] font-semibold ${T.text}`}>{TITLES[view]}</span>
         <div className="flex items-center gap-2">
           <span className={`hidden rounded-md border ${T.cardBorder} px-2.5 py-1 text-[10.5px] sm:block ${T.dim}`}>
-            Workbench
+            Project workspace
           </span>
           <span className={`hidden items-center gap-1.5 rounded-md border ${T.cardBorder} px-2.5 py-1 text-[10.5px] sm:flex ${T.dim}`}>
-            <IconSpark className="h-3 w-3" /> Activity
+            Changes
           </span>
           <span className="rounded-md border border-clay/40 bg-clay/15 px-2.5 py-1 font-mono text-[9.5px] text-clay-deep">
             live demo
@@ -923,23 +969,11 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
               className="h-full"
             >
               {view === 'Workspace' && <WorkspaceView seed={seed} />}
+              {view === 'Loop' && <LoopView />}
               {view === 'Dashboard' && <DashboardView />}
+              {view === 'Benchmark' && <BenchmarkView />}
               {view === 'Plugins' && <PluginsView />}
-              {view === 'Companions' && <CompanionsView />}
-              {view === 'Agents' && <AgentsView />}
               {view === 'Settings' && <SettingsView />}
-              {view === 'Loop' && (
-                <LockedView
-                  name="Loop"
-                  desc="The autonomous builder plans, writes, validates, and commits with local models — a browser tab can't do that."
-                />
-              )}
-              {view === 'Test' && (
-                <LockedView
-                  name="Test Lab"
-                  desc="Benchmarks run local Ollama models in disposable sandboxes on your hardware — download the app to score your own models."
-                />
-              )}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -953,9 +987,9 @@ export function DemoPanel({ view, title, className = '' }) {
   const Views = {
     workspace: WorkspaceView,
     dashboard: DashboardView,
+    loop: LoopView,
+    benchmark: BenchmarkView,
     plugins: PluginsView,
-    companions: CompanionsView,
-    agents: AgentsView,
     settings: SettingsView,
   }
   const View = Views[view]

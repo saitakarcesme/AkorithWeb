@@ -9,26 +9,26 @@ import { WorkbenchMock, TestLabMock } from '../components/mocks.jsx'
 import { DemoPanel } from '../components/demo/AppDemo.jsx'
 
 const TESTLAB_STEPS = [
-  { step: '01', name: 'Detect', desc: 'Akorith scans the benchmark codebase and understands its stack and structure.' },
-  { step: '02', name: 'Generate', desc: 'Each selected local model receives the identical prompt, file path, and runner.' },
-  { step: '03', name: 'Run', desc: 'Generated tests execute inside a fresh, disposable temp sandbox — never in your repo.' },
-  { step: '04', name: 'Score', desc: 'Results are scored side by side and exported as a shareable PDF report.' },
+  { step: '01', name: 'Select', desc: 'Build a lineup from available Claude, Codex, OpenCode, Ollama, and local models.' },
+  { step: '02', name: 'Challenge', desc: 'Choose one consistent task: token efficiency, test writing, speed, visual work, or repo behavior.' },
+  { step: '03', name: 'Battle', desc: 'Akorith runs the same objective benchmark for every selected model and records the evidence.' },
+  { step: '04', name: 'Compare', desc: 'The library turns saved runs into a performance matrix, leader, averages, and recent results.' },
 ]
 
 const PLUGINS = [
-  { name: 'OpenCode Agent (Gaia)', cat: 'Agents', status: 'Available', desc: 'Routes prompts to the Gaia terminal with output captured and summarized into chat.' },
-  { name: 'GitHub Workbench', cat: 'Integrations', status: 'Available', desc: 'Pull requests, issues, and checks as a read-first workbench panel via the gh CLI.' },
-  { name: 'Browser / Chrome Automation', cat: 'Browser', status: 'Available', desc: 'Controlled browser tasks for research and web-app testing — permission-gated.' },
-  { name: 'Remote Ollama Telemetry', cat: 'Telemetry', status: 'Preview', desc: 'Reports remote GPU and VRAM so the Dashboard can show off-machine runtimes.' },
-  { name: 'Hermes Memory / Skills', cat: 'Memory', status: 'Planned', desc: 'Durable memory and reusable skills shared across chats, projects, and missions.' },
-  { name: 'Chroma Memory', cat: 'Memory', status: 'Preview', desc: 'Vector memory backend for mission, skill, and project memory with semantic search.' },
+  { name: 'Claude', cat: 'Providers', status: 'Available', desc: 'Runs the signed-in Claude CLI directly from Workspace, General Chat, Benchmark, and Loop.' },
+  { name: 'OpenAI Codex', cat: 'Providers', status: 'Available', desc: 'Uses your local Codex CLI session for project work without storing an API key.' },
+  { name: 'OpenCode', cat: 'Providers', status: 'Available', desc: 'Exposes installed OpenCode models with project-scoped, streamed execution.' },
+  { name: 'Git + Git LFS', cat: 'Developer tools', status: 'Available', desc: 'Adds repository inspection and large-file capabilities while preserving Akorith’s no-push boundary.' },
+  { name: 'Pandoc + Poppler', cat: 'Documents', status: 'Available', desc: 'Detects local document and PDF tooling for tasks that need conversion or inspection.' },
+  { name: 'FFmpeg + ImageMagick', cat: 'Media', status: 'Available', desc: 'Surfaces audited local media tools through capability hints and static diagnostics.' },
 ]
 
 const WORKBENCH_POINTS = [
   ['Multi-project sidebar', 'Keep every repo one click away, each with its own chats and context.'],
-  ['Direct model chat', 'Ask any provider or local model directly — Enter to send, memory on by default.'],
-  ['Image understanding', 'Drop PNG, JPEG, WebP, or GIF straight into the conversation.'],
-  ['Session memory', 'Conversations are summarized automatically so context survives restarts.'],
+  ['Direct project editing', 'Select one model, describe the outcome, and follow the work inside a Codex-style project thread.'],
+  ['Plans and attachments', 'Use read-only Plan mode or attach images, PDFs, Markdown, and bounded @ project files.'],
+  ['Durable project memory', 'Each project keeps its own chat history and summarized context without leaking running state.'],
 ]
 
 const statusColor = {
@@ -56,8 +56,8 @@ export default function Features() {
           </h1>
           <Reveal delay={0.5}>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              Workbench, Dashboard, Test Lab, and Plugins — everything you need to run serious
-              AI work from one desktop app.
+              Workspace, Loop, Dashboard, Benchmark, and Plugins — the current Akorith workflow
+              in one local desktop app.
             </p>
           </Reveal>
         </div>
@@ -68,13 +68,13 @@ export default function Features() {
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
           <div>
             <SectionHeading
-              eyebrow="Workbench"
+              eyebrow="Workspace"
               title={
                 <>
                   Every project, every model, <span className="accent-word">one window.</span>
                 </>
               }
-              lead="The Workbench is home base: pick a model, start a conversation, attach a project, and let Akorith keep the memory."
+              lead="Workspace is home base: choose a project and one model, then plan, edit, verify, and review changes in the same conversation."
             />
             <Stagger className="mt-8 space-y-4" gap={0.1}>
               {WORKBENCH_POINTS.map(([title, desc]) => (
@@ -93,17 +93,17 @@ export default function Features() {
         </div>
       </section>
 
-      {/* ===== Test Lab ===== */}
+      {/* ===== Benchmark ===== */}
       <section className="border-y border-line bg-cream/40 px-6 py-24">
         <div className="relative mx-auto max-w-7xl">
           <SectionHeading
-            eyebrow="Model Test Lab"
+            eyebrow="Benchmark"
             title={
               <>
-                Benchmark local models <span className="accent-word">on your codebase.</span>
+                Compare models with <span className="accent-word">the same challenge.</span>
               </>
             }
-            lead="Stop guessing which Ollama model to trust. Test Lab pits them against the same generated-test task in a sandbox and hands you a scored PDF."
+            lead="Mix local and cloud models, run one objective challenge, and keep every result in a visual performance library."
           />
           <Stagger className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {TESTLAB_STEPS.map((s) => (
@@ -136,12 +136,12 @@ export default function Features() {
                   Usage limits you define. <span className="accent-word">Telemetry you own.</span>
                 </>
               }
-              lead="Enter your plan's Claude or Codex limits and Akorith compares them against its locally recorded usage — because the CLIs won't tell you. GPU and VRAM telemetry included."
+              lead="Configure providers, appearance, project workflow, telemetry, updates, and safe local data behavior without a wall of unused controls."
             />
             <Stagger className="mt-8 space-y-4" gap={0.1}>
               {[
-                ['270-day activity heatmap', 'GitHub-style view of every active day, send, and peak.'],
-                ['Provider mix', 'See exactly how tokens split across Claude, Codex, and local models.'],
+                ['53-week activity map', 'Hover any day for token and request detail, from low green to peak purple.'],
+                ['Compute history', 'See live CPU history on Apple Silicon plus detected local and connected GPU hardware.'],
                 ['Light & dark themes', 'A native-feeling Electron app that respects your aesthetic.'],
                 ['In-app source updater', 'Keep your checkout current with upstream from inside the app.'],
               ].map(([title, desc]) => (
@@ -167,7 +167,7 @@ export default function Features() {
                 Extend <span className="accent-word">the OS.</span>
               </>
             }
-            lead="Agents, integrations, telemetry, memory, browser automation — a growing plugin surface built on a read-only foundation, where nothing executes without you."
+            lead="Provider CLIs and audited local tools are detected with static version checks, authentic product identity, and no automatic installation."
           />
           <Stagger className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {PLUGINS.map((p) => (

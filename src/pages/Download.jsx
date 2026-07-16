@@ -6,28 +6,28 @@ import { SectionHeading, Card, GhostButton, Spark, GITHUB_URL } from '../compone
 const STEPS = [
   {
     n: '01',
-    title: 'Clone the repository',
-    code: 'git clone https://github.com/saitakarcesme/akorith.git\ncd akorith',
+    title: 'Open the latest release',
+    code: 'open https://github.com/saitakarcesme/Akorith/releases/latest',
   },
   {
     n: '02',
-    title: 'Install dependencies',
-    code: 'npm install',
+    title: 'Install the native build',
+    code: 'macOS: open the DMG and move Akorith to Applications\nWindows: run Akorith-Setup-x64.exe',
   },
   {
     n: '03',
-    title: 'Launch the app',
-    code: 'npm run dev',
+    title: 'Launch and choose a CLI',
+    code: 'Open Akorith · add a project · choose Claude, Codex, OpenCode, or Ollama',
   },
 ]
 
 const REQUIREMENTS = [
-  { name: 'Node.js 22+', desc: 'The only hard requirement. Everything else is optional.', required: true },
-  { name: 'claude CLI', desc: 'Unlocks the Atlantis terminal and Claude chats.', required: false },
-  { name: 'codex CLI', desc: 'Unlocks the Olympus terminal and Codex chats.', required: false },
-  { name: 'opencode CLI', desc: 'Unlocks the Gaia terminal.', required: false },
-  { name: 'Ollama', desc: 'Unlocks local models, Loop, and the Test Lab — fully offline.', required: false },
-  { name: 'gh CLI', desc: 'Unlocks the GitHub Workbench plugin.', required: false },
+  { name: 'macOS or Windows', desc: 'Signed macOS builds and Windows installer/portable builds are published with every stable release.', required: true },
+  { name: 'claude CLI', desc: 'Adds your signed-in Claude models to General Chat, Workspace, Benchmark, and Loop.', required: false },
+  { name: 'codex CLI', desc: 'Adds your signed-in OpenAI Codex models without storing an API key.', required: false },
+  { name: 'opencode CLI', desc: 'Adds installed OpenCode models for direct project work and goals.', required: false },
+  { name: 'Ollama', desc: 'Adds fully local models for chat, benchmarks, and compatible Loop work.', required: false },
+  { name: 'Local tools', desc: 'Git, ripgrep, Pandoc, FFmpeg, and other audited tools are detected individually when installed.', required: false },
 ]
 
 const FAQ = [
@@ -37,15 +37,15 @@ const FAQ = [
   },
   {
     q: 'Where is my data stored?',
-    a: 'Everything lives on your machine in a local SQLite database plus JSON config files. Chats, companion memory, usage stats — all local, all deletable, never synced anywhere.',
+    a: 'Everything lives on your machine in a local SQLite database plus app configuration and managed attachment files. Chats, project memory, goals, benchmarks, and usage stats remain local and deletable.',
   },
   {
     q: 'Which platforms are supported?',
-    a: 'Akorith is an Electron app built with electron-vite, so it runs on macOS, Windows, and Linux. Development happens primarily on macOS.',
+    a: 'Stable releases currently include signed macOS Apple Silicon/Intel builds plus Windows installer and portable builds. Linux can still be run from source but is not a packaged release target yet.',
   },
   {
-    q: 'Can agents damage my system?',
-    a: 'Agents run behind explicit permission policies — preview, safe writes, safe commands, or ask-write. Nothing destructive runs silently, every action is logged, and Test Lab work happens in disposable sandboxes.',
+    q: 'Can project tasks push or delete things automatically?',
+    a: 'Workspace change review does not grant commit, push, revert, or destructive authority. Loop and local execution remain project-scoped, and destructive actions require explicit human approval.',
   },
   {
     q: 'Is it really free?',
@@ -126,14 +126,14 @@ export default function Download() {
             Download
           </p>
           <h1 className="font-serif text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-6xl">
-            <SplitWords text="From clone to crew" />
+            <SplitWords text="From download to workspace" />
             <br />
-            <SplitWords text="in three commands." delay={0.3} gradient />
+            <SplitWords text="in a few minutes." delay={0.3} gradient />
           </h1>
           <Reveal delay={0.5}>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              No installer, no sign-up, no license key. Clone the source, install, run — Akorith
-              detects your CLIs and lights up whatever you have.
+              Install the latest native release, choose the CLI you already use, and start working.
+              No Akorith account, API key, or cloud proxy is required.
             </p>
           </Reveal>
         </div>
@@ -157,14 +157,14 @@ export default function Download() {
           </Stagger>
           <Reveal delay={0.2}>
             <p className="mt-8 text-center text-sm text-muted">
-              Want a packaged build instead?{' '}
+              Prefer to inspect or build the source?{' '}
               <a
-                href={`${GITHUB_URL}/releases`}
+                href={GITHUB_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="font-medium text-clay-deep underline-offset-4 hover:underline"
               >
-                Check the releases page ↗
+                Open the repository ↗
               </a>
             </p>
           </Reveal>
@@ -181,7 +181,7 @@ export default function Download() {
                 Bring what you have. <span className="accent-word">Skip what you don't.</span>
               </>
             }
-            lead="Akorith degrades gracefully — each provider CLI you're logged into unlocks its terminal, and Ollama unlocks the fully offline features."
+            lead="Akorith degrades gracefully: each signed-in provider CLI adds its models, while local tools and Ollama unlock only the capabilities present on your machine."
           />
           <Stagger className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {REQUIREMENTS.map((r) => (

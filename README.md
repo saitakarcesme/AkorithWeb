@@ -1,16 +1,29 @@
-# React + Vite
+# AkorithWeb
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+The public website for [Akorith](https://akorith.space). It keeps the site's editorial visual system while presenting the current desktop product: project-scoped Workspace chat, durable concurrent Loops, profile and compute telemetry, model Benchmarking, Plugins, Settings, and native updates.
 
-Currently, two official plugins are available:
+## Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 and React Router 7
+- Vite 8
+- Tailwind CSS 4 design tokens in `src/index.css`
+- Framer Motion for page and interaction transitions
+- Static deployment configured by `vercel.json`
 
-## React Compiler
+Routes are composed in `src/App.jsx`. Shared navigation, footer, motion primitives, and UI primitives live under `src/components`. The interactive desktop replica is centralized in `src/components/demo/AppDemo.jsx`; smaller animated product illustrations live in `src/components/mocks.jsx`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Local development
 
-## Expanding the Oxlint configuration
+```bash
+npm ci
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Before publishing:
+
+```bash
+npm run lint
+npm run build
+```
+
+The website intentionally preserves Akorith's existing public visual identity. Product updates should revise copy, routes, and interactive replicas without replacing that design system.

@@ -2,7 +2,6 @@ import { motion } from 'framer-motion'
 import { Page, Reveal, Stagger, StaggerItem, SplitWords } from '../components/motion.jsx'
 import {
   SectionHeading,
-  Card,
   CtaSection,
   PrimaryButton,
   GhostButton,
@@ -11,36 +10,87 @@ import {
 } from '../components/ui.jsx'
 
 const CYCLE = [
-  { name: 'Plan', desc: 'Loop reads the repo state and picks the next most valuable increment.' },
-  { name: 'Generate', desc: 'A local model writes the change — code, tests, docs — offline on your GPU.' },
-  { name: 'Validate', desc: 'The change is built and tested. If it fails, it never lands.' },
-  { name: 'Commit', desc: 'Only validated work is committed, with a clean message and full history.' },
+  { name: 'Understand', desc: 'Turn the request, project, and attachments into one explicit definition of done.' },
+  { name: 'Plan', desc: 'Choose the next bounded action that moves the durable goal forward.' },
+  { name: 'Execute', desc: 'Run the selected CLI against the chosen directory and record meaningful progress.' },
+  { name: 'Analyze', desc: 'Inspect evidence, outputs, tests, and remaining work instead of assuming success.' },
+  { name: 'Replan', desc: 'If the goal is not reached, feed the analysis into the next focused plan.' },
 ]
 
 const TERMINAL_LINES = [
-  { text: '$ akorith loop start ./my-project', color: 'text-ink/85' },
-  { text: '[loop] iteration 12 · model qwen3.5:9b-64k', color: 'text-ink/45' },
-  { text: '[plan] add input validation to config parser', color: 'text-sky-300' },
-  { text: '[gen ] src/config/parse.ts (+41 −6)', color: 'text-ink/85' },
-  { text: '[test] 24 passed · 0 failed', color: 'text-emerald-400' },
-  { text: '[commit] a41f9c2 "config: validate user input"', color: 'text-violet-300' },
-  { text: '[loop] iteration 13 queued…', color: 'text-ink/45' },
+  { text: 'Goal · redesign the blog and verify every route', color: 'text-ink/85' },
+  { text: 'Cycle 2 · Analyze', color: 'text-ink/45' },
+  { text: '✓ Homepage and article layout implemented', color: 'text-emerald-400' },
+  { text: '○ Mobile navigation still needs visual verification', color: 'text-ink/70' },
+  { text: '↩ returning to Plan with the remaining evidence', color: 'text-violet-300' },
+  { text: 'Next · verify 375 px layout, then run the production build', color: 'text-sky-300' },
 ]
 
 const GUARANTEES = [
   {
-    title: 'Validated commits only',
-    desc: 'Every iteration must build and pass tests before it can land. Broken code never enters history.',
+    title: 'Evidence before completion',
+    desc: 'A Goal finishes only when its definition of done is supported by the work and verification evidence.',
   },
   {
-    title: 'Fully local models',
-    desc: 'Loop runs on Ollama models — your hardware, your electricity, zero token bills, zero data leaving.',
+    title: 'Any selected CLI',
+    desc: 'Use Claude, Codex, OpenCode, or a local Ollama model and keep the work scoped to one chosen directory.',
   },
   {
-    title: 'Grows over time',
-    desc: 'Leave it running. Loop compounds small validated increments into a repository that keeps improving.',
+    title: 'Concurrent durable goals',
+    desc: 'Keep multiple Loop tabs, resume each goal independently, and preserve its phase, cycle, evidence, and elapsed time.',
   },
 ]
+
+function GoalCycleDiagram() {
+  return (
+    <div className="mt-14 overflow-hidden rounded-[1.5rem] border border-line bg-surface p-5 sm:p-8">
+      <div className="relative mx-auto hidden aspect-[3.25/1] max-w-5xl md:block">
+        <svg className="absolute inset-0 h-full w-full text-muted/55" viewBox="0 0 1000 310" fill="none" aria-hidden>
+          <defs>
+            <marker id="web-loop-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0 0 8 4 0 8Z" fill="currentColor" />
+            </marker>
+          </defs>
+          <path d="M170 72H314M434 72H578M638 104V205M578 236H434" stroke="currentColor" markerEnd="url(#web-loop-arrow)" />
+          <path d="M374 205V105" stroke="#8f6ae0" strokeDasharray="7 7" markerEnd="url(#web-loop-arrow)" />
+          <path d="M698 236H826" stroke="#34c08b" markerEnd="url(#web-loop-arrow)" />
+        </svg>
+        {CYCLE.map((step, index) => {
+          const positions = ['left-[5%] top-[9%]', 'left-[31%] top-[9%]', 'left-[57%] top-[9%]', 'left-[57%] top-[63%]', 'left-[31%] top-[63%]']
+          return (
+            <motion.div
+              key={step.name}
+              whileHover={{ y: -3 }}
+              className={`absolute w-[18%] rounded-xl border border-line bg-paper p-4 ${positions[index]}`}
+            >
+              <span className="font-mono text-[10px] text-clay-deep">0{index + 1}</span>
+              <p className="mt-1 font-serif text-base font-semibold text-ink">{step.name}</p>
+            </motion.div>
+          )
+        })}
+        <div className="absolute left-[83%] top-[63%] w-[14%] rounded-xl border border-moss/40 bg-moss/10 p-4">
+          <span className="font-mono text-[10px] text-moss">✓</span>
+          <p className="mt-1 font-serif text-base font-semibold text-moss">Complete</p>
+        </div>
+        <span className="absolute left-[44%] top-[58%] font-mono text-[9px] text-muted">goal not reached</span>
+        <span className="absolute left-[72%] top-[71%] font-mono text-[9px] text-moss">goal reached</span>
+      </div>
+      <div className="space-y-3 md:hidden">
+        {CYCLE.map((step, index) => (
+          <div key={step.name}>
+            <div className="flex items-center gap-3 rounded-xl border border-line bg-paper p-4">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-clay/10 font-mono text-xs text-clay-deep">0{index + 1}</span>
+              <div><p className="font-serif font-semibold text-ink">{step.name}</p><p className="mt-0.5 text-xs text-muted">{step.desc}</p></div>
+            </div>
+            {index < CYCLE.length - 1 && <p className="py-1 text-center text-muted">↓</p>}
+          </div>
+        ))}
+        <div className="rounded-xl border border-moss/40 bg-moss/10 p-4 text-center font-serif font-semibold text-moss">Goal reached → Complete</div>
+        <p className="text-center font-mono text-[10px] text-clay-deep">not reached ↺ return to Plan</p>
+      </div>
+    </div>
+  )
+}
 
 export default function Loop() {
   return (
@@ -70,16 +120,15 @@ export default function Loop() {
           </motion.div>
 
           <h1 className="font-serif text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-6xl">
-            <SplitWords text="Your repo," />{' '}
-            <SplitWords text="still growing" delay={0.25} gradient />
+            <SplitWords text="One goal," />{' '}
+            <SplitWords text="kept alive" delay={0.25} gradient />
             <br />
-            <SplitWords text="at 3 a.m." delay={0.5} />
+            <SplitWords text="until it is done." delay={0.5} />
           </h1>
           <Reveal delay={0.6}>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              Loop is Akorith's autonomous project builder. It plans, writes, validates, and
-              commits — iteration after iteration — using local models that cost you nothing per
-              token.
+              Loop is Akorith's durable Goal mode. Give it a directory and a concrete outcome;
+              it understands, plans, executes, analyzes, and replans until the evidence says done.
             </p>
           </Reveal>
           <Reveal delay={0.75}>
@@ -98,31 +147,12 @@ export default function Loop() {
             eyebrow="The cycle"
             title={
               <>
-                Plan → Generate → Validate → <span className="accent-word">Commit.</span>
+                Understand → Plan → Execute → <span className="accent-word">Analyze.</span>
               </>
             }
-            lead="A disciplined engineering loop, not a code firehose. Each pass is small, checked, and recorded."
+            lead="Analyze either exits to Complete or returns through Replan. The cycle is explicit, durable, and visible while it runs."
           />
-          <div className="relative mt-16">
-            {/* connecting line */}
-            <div aria-hidden className="absolute left-0 right-0 top-9 hidden h-px bg-line lg:block" />
-            <Stagger className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4" gap={0.14}>
-              {CYCLE.map((step, i) => (
-                <StaggerItem key={step.name}>
-                  <div className="relative">
-                    <motion.div
-                      whileHover={{ scale: 1.08, rotate: -3 }}
-                      className="relative z-10 flex h-[72px] w-[72px] items-center justify-center rounded-2xl border border-line bg-surface font-serif text-2xl font-semibold text-clay shadow-sm"
-                    >
-                      {String(i + 1).padStart(2, '0')}
-                    </motion.div>
-                    <h3 className="mt-5 font-serif text-xl font-semibold text-ink">{step.name}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted">{step.desc}</p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
+          <GoalCycleDiagram />
         </div>
       </section>
 
@@ -134,10 +164,10 @@ export default function Loop() {
               eyebrow="Watch it work"
               title={
                 <>
-                  Small steps. Real tests. <span className="accent-word">Honest history.</span>
+                  Visible phases. Real evidence. <span className="accent-word">A clear finish.</span>
                 </>
               }
-              lead="Loop's output reads like a careful engineer's shell — because that's what it is. Failed iterations are discarded; only proven work makes it into git."
+              lead="Loop keeps the calm chat language of Workspace, but adds durable phase state, a definition of done, cycle evidence, and an explicit path back to Plan."
             />
             <Stagger className="mt-8 space-y-4" gap={0.12}>
               {GUARANTEES.map((g) => (
@@ -193,9 +223,9 @@ export default function Loop() {
           <Reveal>
             <Spark className="mx-auto mb-6 h-6 w-6 text-clay" />
             <p className="font-serif text-2xl font-medium leading-relaxed text-ink sm:text-3xl">
-              “Cloud agents bill by the minute.{' '}
-              <span className="accent-word">Loop bills by the kilowatt</span> — and your GPU was
-              idle anyway.”
+              “A long task should not disappear into a spinner.{' '}
+              <span className="accent-word">Loop makes the reasoning cycle visible</span> — and
+              keeps returning until the outcome is real.”
             </p>
           </Reveal>
         </div>

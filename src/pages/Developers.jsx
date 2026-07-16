@@ -7,11 +7,11 @@ import { MockWindow, Cursor } from '../components/mocks.jsx'
 const PROFILE_URL = 'https://github.com/saitakarcesme'
 
 const COMMITS = [
-  ['a41f9c2', 'loop: validate commits before landing', 'text-emerald-400'],
-  ['7c22d10', 'companions: long-memory for Athena & Zeus', 'text-violet-300'],
-  ['e90b3af', 'testlab: sandbox runs + PDF scoring', 'text-ink/85'],
-  ['12fd8c4', 'agents: permission policies (ask write)', 'text-ink/85'],
-  ['b06a4e5', 'dashboard: provider mix & GPU telemetry', 'text-ink/45'],
+  ['2b14bec', 'loop: responsive goal topology and profile alignment', 'text-emerald-400'],
+  ['fff7303', 'loop: quiet tabs and visual workspace flow', 'text-violet-300'],
+  ['a289c2d', 'workspace: direct project editing and durable goals', 'text-ink/85'],
+  ['96f140a', 'benchmark: performance matrix and saved library', 'text-ink/85'],
+  ['83d52a1', 'updates: signed releases and in-app installer', 'text-ink/45'],
 ]
 
 export default function Developers() {
@@ -43,8 +43,8 @@ export default function Developers() {
           </h1>
           <Reveal delay={0.5}>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              Akorith is designed, written, and maintained by one developer — with a crew of
-              local agents doing the heavy lifting.
+              Akorith is designed, written, and maintained by one developer — with local CLI
+              models helping build, test, and review the product.
             </p>
           </Reveal>
         </div>
@@ -98,9 +98,9 @@ export default function Developers() {
                     github.com/saitakarcesme ↗
                   </a>
                   <p className="mt-4 max-w-md leading-relaxed text-muted">
-                    Designs and builds Akorith end to end — the Loop engine, the three agent
-                    terminals, companions, and the local-first plumbing that keeps everything on
-                    your machine.
+                    Designs and builds Akorith end to end — project-native Workspace, durable
+                    Loop goals, model Benchmarking, local telemetry, plugins, and the secure
+                    Electron plumbing that keeps everything on your machine.
                   </p>
 
                   {/* live GitHub stats */}

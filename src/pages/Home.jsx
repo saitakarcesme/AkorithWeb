@@ -36,10 +36,10 @@ const MODELS = [
 
 const PILLARS = [
   {
-    to: '/loop',
-    name: 'Loop',
-    tag: 'Autonomous builder',
-    desc: 'Point Loop at a repository and let local models grow it over time — every change validated before it is committed.',
+    to: '/workspace',
+    name: 'Workspace',
+    tag: 'Project-native chat',
+    desc: 'Choose one CLI model and build directly inside a repository through a readable, streaming conversation.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
         <path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6" strokeLinecap="round" strokeLinejoin="round" />
@@ -47,10 +47,10 @@ const PILLARS = [
     ),
   },
   {
-    to: '/agents',
-    name: 'Companions',
-    tag: 'Long-memory minds',
-    desc: 'Athena and Zeus think with you and remember your goals across sessions — but never touch your files.',
+    to: '/loop',
+    name: 'Loop',
+    tag: 'Durable goal cycle',
+    desc: 'Give Akorith a concrete outcome and watch it understand, plan, execute, analyze, and replan until the goal is reached.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
         <path d="M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.4-7 10-7 10Z" strokeLinecap="round" strokeLinejoin="round" />
@@ -58,10 +58,10 @@ const PILLARS = [
     ),
   },
   {
-    to: '/agents',
-    name: 'Agents',
-    tag: 'Actions with guardrails',
-    desc: 'Reusable local shortcuts — organize folders, audit repos, write changelogs — behind an explicit permission policy.',
+    to: '/features',
+    name: 'Benchmark',
+    tag: 'Comparable evidence',
+    desc: 'Run the same challenge across local and cloud models, then compare scores, speed, and saved results in one library.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
         <path d="M13 2 4.5 12.5H11L9.5 22 19 10h-6.5L13 2Z" strokeLinecap="round" strokeLinejoin="round" />
@@ -81,11 +81,11 @@ const PRIVACY = [
   },
   {
     title: 'Every action logged',
-    desc: 'Nothing destructive runs silently. Agents log each step and ask before writing outside their sandbox.',
+    desc: 'Nothing destructive runs silently. Workspace and Loop record meaningful progress and keep work scoped to the selected project.',
   },
   {
     title: 'Your GPU, your models',
-    desc: 'Run fully offline with Ollama. Loop, Test Lab, and Companions work without a single network call.',
+    desc: 'Run supported work locally with Ollama, or drive the cloud CLIs you are already signed into without storing an API key.',
   },
 ]
 
@@ -135,7 +135,7 @@ export default function Home() {
             <span className="font-medium text-ink">Codex</span>,{' '}
             <span className="font-medium text-ink">OpenCode</span>, and local{' '}
             <span className="font-medium text-ink">Ollama</span> models in one workspace — chats,
-            autonomous loops, benchmarks, and agents that act only with your permission.
+            project workspaces, durable loops, benchmarks, and local tools in one native app.
           </motion.p>
 
           <motion.div
@@ -192,13 +192,13 @@ export default function Home() {
       <section className="px-6 py-28">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
-            eyebrow="The three pillars"
+            eyebrow="The core workflow"
             title={
               <>
-                Think. Remember. <span className="accent-word">Act.</span>
+                Build. Iterate. <span className="accent-word">Compare.</span>
               </>
             }
-            lead="Akorith splits AI work into pieces you can actually trust — a builder that proves its work, minds that keep context, and hands that ask first."
+            lead="Akorith separates direct project work, long-running goals, and model evaluation so every mode stays understandable and useful."
           />
           <Stagger className="mt-14 grid gap-6 md:grid-cols-3">
             {PILLARS.map((p, i) => (
@@ -244,7 +244,7 @@ export default function Home() {
                 Don't take screenshots' word — <span className="accent-word">click around.</span>
               </>
             }
-            lead="This is a living replica of the app. Switch tabs in the sidebar, filter the plugins, poke the settings — even type in the chat. When you want the real engine, it's one command away."
+            lead="This is a living replica of the current app. Try Workspace, inspect the Loop cycle, compare benchmark results, filter local plugins, and explore the Dashboard."
           />
           <Reveal delay={0.15} className="relative mt-14">
             <div aria-hidden className="shot-glow" />
@@ -258,20 +258,20 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
           <div>
             <SectionHeading
-              eyebrow="Multi-agent workspace"
+              eyebrow="Project workspace"
               title={
                 <>
-                  Three terminals. One task.{' '}
-                  <span className="accent-word">Zero tab-switching.</span>
+                  One project. One selected model.{' '}
+                  <span className="accent-word">One continuous thread.</span>
                 </>
               }
-              lead="Type a task once and Akorith plans it, then drives Olympus (Codex), Gaia (OpenCode), and Atlantis (Claude) side by side — with live output, summaries, and full session memory."
+              lead="Pick Claude, Codex, OpenCode, or Ollama for the task. Akorith runs that CLI behind the chat and turns its work into readable progress, tool activity, and a final change receipt."
             />
             <Stagger className="mt-8 space-y-4" gap={0.12}>
               {[
-                ['Olympus', 'OpenAI Codex terminal — heavyweight code generation'],
-                ['Gaia', 'OpenCode terminal — fast open-source agent runs'],
-                ['Atlantis', 'Claude terminal — deep reasoning and review'],
+                ['Streaming progress', 'Short updates explain what is happening and why'],
+                ['Project changes', 'Changed files and line deltas appear with the final answer'],
+                ['Isolated sessions', 'Running and queued state never leaks into another chat'],
               ].map(([name, desc]) => (
                 <StaggerItem key={name}>
                   <div className="flex items-center gap-4 rounded-xl border border-line bg-surface px-5 py-4">
@@ -306,7 +306,7 @@ export default function Home() {
                     Know exactly where <span className="accent-word">every token</span> goes.
                   </>
                 }
-                lead="An activity heatmap, provider mix, daily usage, and GPU telemetry — recorded locally, compared against the limits you set. No vendor dashboard required."
+                lead="A profile activity map, lifetime and peak tokens, streaks, task duration, and live compute history — recorded locally without a vendor dashboard."
               />
               <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
                 {[
@@ -346,7 +346,7 @@ export default function Home() {
               eyebrow=""
               title={
                 <>
-                  The same crew, now in <span className="accent-word">your terminal.</span>
+                  The same local-first control, now in <span className="accent-word">your terminal.</span>
                 </>
               }
               lead="One prompt for Claude, Codex, and OpenCode — switch models mid-session with /model, keep a thread per provider, and script it with one-shot mode. No API keys, ever."
