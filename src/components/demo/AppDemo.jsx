@@ -284,6 +284,21 @@ const DASH_STATS = [
   ['5 days', 'Longest streak'],
 ]
 
+function ActivityGrid({ github = false }) {
+  return (
+    <div className="mt-3 grid grid-cols-[repeat(36,minmax(0,1fr))] gap-1">
+      {Array.from({ length: 36 * 5 }).map((_, index) => {
+        const hot = index > (github ? 142 : 158) && index % (github ? 6 : 7) !== 0
+        const peak = index === (github ? 166 : 170)
+        const color = github
+          ? peak ? 'bg-[#39d353]' : hot ? 'bg-[#26a641]/70' : 'bg-white/[0.04]'
+          : peak ? 'bg-violet-400' : hot ? 'bg-emerald-400/45' : 'bg-white/[0.04]'
+        return <span key={index} className={`aspect-square rounded-[2px] border border-white/[0.04] ${color}`} />
+      })}
+    </div>
+  )
+}
+
 export function DashboardView() {
   return (
     <div className="px-5 py-6 sm:px-8">
@@ -316,13 +331,12 @@ export function DashboardView() {
           <p className={`text-[12px] font-semibold ${T.text}`}>Token activity</p>
           <span className={`text-[10px] ${T.dim}`}>Daily</span>
         </div>
-        <div className="mt-3 grid grid-cols-[repeat(36,minmax(0,1fr))] gap-1">
-          {Array.from({ length: 36 * 5 }).map((_, index) => {
-            const hot = index > 158 && index % 7 !== 0
-            const peak = index === 170
-            return <span key={index} className={`aspect-square rounded-[2px] border border-white/[0.04] ${peak ? 'bg-violet-400' : hot ? 'bg-emerald-400/45' : 'bg-white/[0.04]'}`} />
-          })}
+        <ActivityGrid />
+        <div className="mt-4 flex items-center justify-between">
+          <p className={`text-[12px] font-semibold ${T.text}`}>GitHub activity</p>
+          <span className={`text-[10px] ${T.dim}`}>@saitakarcesme</span>
         </div>
+        <ActivityGrid github />
         <div className={`mt-5 border-t ${T.cardBorder} pt-4`}>
           <div className="flex items-center justify-between"><p className={`text-[12px] font-semibold ${T.text}`}>Compute usage</p><span className={`font-mono text-[9px] ${T.faint}`}>THIS MAC · CPU 38%</span></div>
           <svg viewBox="0 0 600 54" className="mt-2 h-12 w-full" preserveAspectRatio="none" aria-hidden>
@@ -747,7 +761,7 @@ export function SettingsView() {
               {[
                 ['Available providers', '4/4'],
                 ['Project memory', 'On'],
-                ['App version', '0.7.4'],
+                ['App version', '0.7.6'],
               ].map(([label, value]) => (
                 <div key={label} className={`rounded-lg border ${T.cardBorder} ${T.card} p-3`}>
                   <p className={`truncate text-[10px] ${T.faint}`}>{label}</p>
@@ -787,7 +801,15 @@ export function SettingsView() {
 
 /* ================= LOOP ================= */
 
-const LOOP_PHASES = ['Understand', 'Plan', 'Execute', 'Analyze', 'Replan']
+const LOOP_PHASES = ['Understand', 'Plan', 'Execute', 'Analyze', 'Replan', 'Complete']
+const LOOP_UPDATES = [
+  ['Goal understood', 'Turned the request into one concrete outcome and a definition of done.'],
+  ['Plan prepared', 'Selected the next bounded action that can be verified after execution.'],
+  ['Executing cycle 2', 'The chosen CLI is working inside the scoped repository and recording evidence.'],
+  ['Result analyzed', 'Compared changed files and verification results with the complete Goal.'],
+  ['Remaining work replanned', 'Fed the most important unfinished requirement into the next cycle.'],
+  ['Goal reached', 'All required evidence now matches the requested outcome.'],
+]
 
 export function LoopView() {
   const [activeTab, setActiveTab] = useState(0)
@@ -805,21 +827,26 @@ export function LoopView() {
         <div><p className={`font-mono text-[9px] uppercase tracking-wider ${T.faint}`}>Durable goal · cycle 2</p><h3 className={`mt-1 text-[16px] font-semibold ${T.text}`}>{tabs[activeTab]}</h3></div>
         <span className="rounded-full border border-violet-400/30 bg-violet-400/10 px-3 py-1 font-mono text-[9px] text-violet-300">{LOOP_PHASES[phase]}</span>
       </div>
-      <div className={`relative mt-5 overflow-hidden rounded-xl border ${T.cardBorder} ${T.card} p-4`}>
-        <svg className="absolute inset-0 hidden h-full w-full sm:block" viewBox="0 0 600 190" fill="none" aria-hidden>
-          <path d="M105 45H195M275 45H365M405 70V122M365 145H275M235 122V70M445 145H530" stroke="#6b6b72" strokeWidth="1.4" />
-          <path d="M235 122V70M365 145H275" stroke="#8f6ae0" strokeDasharray="5 5" />
-          <path d="M445 145H530" stroke="#34c08b" />
-        </svg>
-        <div className="relative grid grid-cols-2 gap-3 sm:h-[158px] sm:grid-cols-none">
-          {LOOP_PHASES.map((name, index) => {
-            const pos = ['sm:absolute sm:left-[4%] sm:top-1', 'sm:absolute sm:left-[34%] sm:top-1', 'sm:absolute sm:left-[64%] sm:top-1', 'sm:absolute sm:left-[64%] sm:top-[62%]', 'sm:absolute sm:left-[34%] sm:top-[62%]']
-            return <button key={name} onClick={() => setPhase(index)} className={`rounded-lg border px-3 py-3 text-left sm:w-[22%] ${pos[index]} ${phase === index ? 'border-violet-400/40 bg-violet-400/10' : `${T.cardBorder} bg-black/20`}`}><span className={`font-mono text-[8px] ${T.faint}`}>0{index + 1}</span><p className={`mt-1 text-[11px] font-semibold ${T.text}`}>{name}</p></button>
-          })}
-          <div className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-3 py-3 sm:absolute sm:left-[88%] sm:top-[62%] sm:w-[11%]"><span className="font-mono text-[8px] text-emerald-400">✓</span><p className="mt-1 text-[10px] font-semibold text-emerald-400">Done</p></div>
+      <div className={`relative mt-5 rounded-xl border ${T.cardBorder} ${T.card} px-4 py-5`}>
+        <div className="relative grid grid-cols-6 gap-1 before:absolute before:left-[8%] before:right-[8%] before:top-3 before:h-px before:bg-white/10">
+          {LOOP_PHASES.map((name, index) => (
+            <button key={name} onClick={() => setPhase(index)} className="relative z-10 flex min-w-0 flex-col items-center gap-1.5">
+              <span className={`flex h-6 w-6 items-center justify-center rounded-full border font-mono text-[8px] ${index < phase || phase === 5 ? 'border-emerald-400 bg-emerald-400 text-black' : phase === index ? 'border-violet-400 bg-[#1d1d20] text-white ring-4 ring-violet-400/10' : 'border-white/15 bg-[#1d1d20] text-[#6b6b72]'}`}>{index < phase || phase === 5 ? '✓' : index + 1}</span>
+              <small className={`hidden truncate text-[8.5px] sm:block ${phase === index ? T.text : T.faint}`}>{name}</small>
+            </button>
+          ))}
+        </div>
+        <div className={`mt-5 border-l ${T.cardBorder} pl-4`}>
+          {LOOP_UPDATES.slice(0, Math.max(1, phase + 1)).map(([title, body], index) => (
+            <div key={title} className="relative pb-3 last:pb-0">
+              <span className={`absolute -left-[19px] top-1.5 h-1.5 w-1.5 rounded-full ${index === phase ? 'animate-pulse bg-violet-400' : 'bg-emerald-400'}`} />
+              <p className={`text-[11.5px] font-semibold ${T.text}`}>{title}</p>
+              <p className={`mt-0.5 text-[10px] leading-relaxed ${T.dim}`}>{body}</p>
+            </div>
+          ))}
         </div>
       </div>
-      <p className={`mt-4 text-[11px] leading-relaxed ${T.dim}`}>Analyze checks the definition of done. If evidence is incomplete, the goal returns through Replan; otherwise it exits to Complete.</p>
+      <p className={`mt-4 text-[11px] leading-relaxed ${T.dim}`}>Every durable step explains what Akorith did. Analyze returns incomplete work to Plan; verified work exits to Complete.</p>
     </div>
   )
 }
@@ -843,7 +870,7 @@ export function BenchmarkView() {
 
 /* ================= SHELL ================= */
 
-const NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Benchmark', 'Plugins']
+const NAV = ['New chat', 'Workspace', 'Loop', 'Benchmark', 'Plugins']
 
 const CHATS = ['hello', 'hey which model are you', 'which model are you tell me', 'hello']
 
@@ -927,24 +954,20 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
               ))}
             </div>
           </div>
-          <button
-            onClick={() => go('Settings')}
-            className={`flex items-center gap-2.5 border-t ${T.cardBorder} px-4 py-3 text-left transition-colors hover:bg-white/[0.04]`}
-          >
-            <span className={`flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[11px] font-semibold ${T.text}`}>
-              I
-            </span>
-            <span>
-              <span className={`block text-[12px] font-semibold ${T.text}`}>Ibrahim</span>
-              <span className={`block text-[9.5px] ${T.faint}`}>Local profile</span>
-            </span>
-            <IconSettings className={`ml-auto h-4 w-4 ${T.faint}`} />
-          </button>
+          <div className={`flex items-center border-t ${T.cardBorder} p-2`}>
+            <button onClick={() => go('Dashboard')} className="flex min-w-0 flex-1 items-center gap-2.5 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-white/[0.04]">
+              <span className={`flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[11px] font-semibold ${T.text}`}>I</span>
+              <span className={`truncate text-[12px] font-semibold ${T.text}`}>Ibrahim</span>
+            </button>
+            <button onClick={() => go('Settings')} aria-label="Settings" className="rounded-md p-2 transition-colors hover:bg-white/[0.04]">
+              <IconSettings className={`h-4 w-4 ${T.faint}`} />
+            </button>
+          </div>
         </div>
 
         {/* mobile nav */}
         <div className={`flex gap-1 overflow-x-auto border-b ${T.cardBorder} p-2 md:hidden`}>
-          {[...NAV.slice(1), 'Settings'].map((item) => (
+          {['Workspace', 'Loop', 'Dashboard', 'Benchmark', 'Plugins', 'Settings'].map((item) => (
             <button
               key={item}
               onClick={() => go(item)}

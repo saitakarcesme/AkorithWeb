@@ -306,7 +306,7 @@ export default function Home() {
                     Know exactly where <span className="accent-word">every token</span> goes.
                   </>
                 }
-                lead="A profile activity map, lifetime and peak tokens, streaks, task duration, and live compute history — recorded locally without a vendor dashboard."
+                lead="Local token activity and your public GitHub contribution map sit together above lifetime tokens, streaks, task duration, and live compute history."
               />
               <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
                 {[

@@ -140,7 +140,7 @@ export default function Features() {
             />
             <Stagger className="mt-8 space-y-4" gap={0.1}>
               {[
-                ['53-week activity map', 'Hover any day for token and request detail, from low green to peak purple.'],
+                ['Two 53-week activity maps', 'Compare local token work with the public @saitakarcesme GitHub contribution calendar directly below it.'],
                 ['Compute history', 'See live CPU history on Apple Silicon plus detected local and connected GPU hardware.'],
                 ['Light & dark themes', 'A native-feeling Electron app that respects your aesthetic.'],
                 ['In-app source updater', 'Keep your checkout current with upstream from inside the app.'],

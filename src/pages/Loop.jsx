@@ -33,7 +33,7 @@ const GUARANTEES = [
   },
   {
     title: 'Any selected CLI',
-    desc: 'Use Claude, Codex, OpenCode, or a local Ollama model and keep the work scoped to one chosen directory.',
+    desc: 'Use Claude, Codex, OpenCode, or Ollama. Paste a GitHub repository URL and Akorith clones it into a managed Goal workspace.',
   },
   {
     title: 'Concurrent durable goals',
@@ -127,7 +127,7 @@ export default function Loop() {
           </h1>
           <Reveal delay={0.6}>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              Loop is Akorith's durable Goal mode. Give it a directory and a concrete outcome;
+              Loop is Akorith's durable Goal mode. Give it a project or GitHub repository and a concrete outcome;
               it understands, plans, executes, analyzes, and replans until the evidence says done.
             </p>
           </Reveal>
@@ -167,7 +167,7 @@ export default function Loop() {
                   Visible phases. Real evidence. <span className="accent-word">A clear finish.</span>
                 </>
               }
-              lead="Loop keeps the calm chat language of Workspace, but adds durable phase state, a definition of done, cycle evidence, and an explicit path back to Plan."
+              lead="Loop keeps the calm chat language of Workspace, adds a compact phase rail, and narrates every durable step with a title and a short explanation. Verified GitHub Loops checkpoint and push to their origin."
             />
             <Stagger className="mt-8 space-y-4" gap={0.12}>
               {GUARANTEES.map((g) => (

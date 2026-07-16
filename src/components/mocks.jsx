@@ -74,7 +74,7 @@ function useTypeLoop(texts, speed = 45, hold = 1700) {
 
 /* ---------------- Workbench: chat home with cycling models ---------------- */
 
-const WB_NAV = ['New chat', 'Workspace', 'Loop', 'Dashboard', 'Benchmark', 'Plugins']
+const WB_NAV = ['New chat', 'Workspace', 'Loop', 'Benchmark', 'Plugins']
 const WB_MODELS = [
   { dot: 'bg-moss', provider: 'OpenCode', name: 'kimi-k2.7-code' },
   { dot: 'bg-sky-600', provider: 'Codex', name: 'GPT-5.4' },
@@ -268,6 +268,14 @@ function heat(r, c) {
   return 'bg-cream'
 }
 
+function githubHeat(r, c) {
+  const value = (r * 17 + c * 5 + 3) % 12
+  if (value > 9) return 'bg-[#39d353]'
+  if (value > 7) return 'bg-[#26a641]'
+  if (value > 5) return 'bg-[#006d32]'
+  return 'bg-cream'
+}
+
 export function DashboardMock({ className = '' }) {
   const C = 2 * Math.PI * 30
   return (
@@ -296,6 +304,21 @@ export function DashboardMock({ className = '' }) {
                   className={`aspect-square rounded-[3px] ${heat(r, c)}`}
                 />
               )
+            })}
+          </motion.div>
+
+          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">GitHub activity · @saitakarcesme</p>
+          <motion.div
+            className="mt-3 grid grid-cols-[repeat(16,1fr)] gap-1"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.01 } } }}
+          >
+            {Array.from({ length: 16 * 4 }).map((_, i) => {
+              const r = Math.floor(i / 16)
+              const c = i % 16
+              return <motion.span key={i} variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }} className={`aspect-square rounded-[3px] ${githubHeat(r, c)}`} />
             })}
           </motion.div>
 
