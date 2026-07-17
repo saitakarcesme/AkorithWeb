@@ -52,6 +52,18 @@ export function IconLoop(p) {
   )
 }
 
+/* Research — BookOpen + search spark */
+export function IconResearch(p) {
+  return (
+    <Svg {...p}>
+      <path d="M2 4.5A2.5 2.5 0 0 1 4.5 2H11v18H4.5A2.5 2.5 0 0 0 2 22.5z" />
+      <path d="M22 4.5A2.5 2.5 0 0 0 19.5 2H13v18h2" />
+      <circle cx="18" cy="17" r="3" />
+      <path d="m20.2 19.2 1.8 1.8" />
+    </Svg>
+  )
+}
+
 /* Dashboard — bar chart */
 export function IconDashboard(p) {
   return (

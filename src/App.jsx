@@ -8,6 +8,7 @@ import Home from './pages/Home.jsx'
 import Features from './pages/Features.jsx'
 import Workspace from './pages/Workspace.jsx'
 import Loop from './pages/Loop.jsx'
+import Research from './pages/Research.jsx'
 import Cli from './pages/Cli.jsx'
 import Developers from './pages/Developers.jsx'
 import Download from './pages/Download.jsx'
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/workspace" element={<Workspace />} />
             <Route path="/agents" element={<Workspace />} />
             <Route path="/loop" element={<Loop />} />
+            <Route path="/research" element={<Research />} />
             <Route path="/cli" element={<Cli />} />
             <Route path="/developers" element={<Developers />} />
             <Route path="/download" element={<Download />} />

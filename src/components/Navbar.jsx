@@ -8,6 +8,7 @@ const LINKS = [
   { to: '/features', label: 'Features' },
   { to: '/workspace', label: 'Workspace' },
   { to: '/loop', label: 'Loop' },
+  { to: '/research', label: 'Research' },
   { to: '/cli', label: 'CLI' },
   { to: '/developers', label: 'Developers' },
   { to: '/download', label: 'Download' },

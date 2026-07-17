@@ -9,6 +9,7 @@ const COLUMNS = [
       { label: 'Features', to: '/features' },
       { label: 'Workspace', to: '/workspace' },
       { label: 'Loop', to: '/loop' },
+      { label: 'Research', to: '/research' },
       { label: 'Akorith CLI', to: '/cli' },
       { label: 'Developers', to: '/developers' },
       { label: 'Download', to: '/download' },

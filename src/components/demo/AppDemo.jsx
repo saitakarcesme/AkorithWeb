@@ -799,6 +799,180 @@ export function SettingsView() {
   )
 }
 
+/* ================= RESEARCH ================= */
+
+const RESEARCH_PHASES = ['Plan', 'Discover', 'Verify', 'Synthesize', 'Publish']
+const RESEARCH_DEPTHS = [
+  ['Quick', '~10 min'],
+  ['Research', '~1 hour'],
+  ['Deep', '10+ hours'],
+  ['Continuous', 'until paused'],
+]
+const RESEARCH_MODELS = ['Claude · Sonnet', 'OpenCode · glm-5.2', 'Codex · GPT-5.4']
+const RESEARCH_FORMATS = ['PDF', 'DOCX', 'Markdown', 'XLSX']
+const RESEARCH_PLANS = [
+  ['Map the field', 'Find current benchmark suites, model cards, and independent evaluations.'],
+  ['Build the evidence ledger', 'Deduplicate sources and connect each model profile to supporting claims.'],
+  ['Compare and publish', 'Resolve conflicting scores, synthesize one-page profiles, and export the atlas.'],
+]
+const RESEARCH_BOOKS = [
+  ['Frontier Model Atlas', 'PDF · 86 sources', 'from-violet-500/55 to-emerald-500/20'],
+  ['Local Coding Model Index', 'XLSX · 43 sources', 'from-emerald-500/45 to-sky-500/15'],
+  ['Agent UI Field Notes', 'DOCX · 29 sources', 'from-sky-500/35 to-violet-500/30'],
+]
+
+function ResearchLibraryDemo({ onOpen }) {
+  return (
+    <div className="p-4 sm:p-6">
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <p className={`font-mono text-[9px] uppercase tracking-[0.18em] ${T.faint}`}>Research library</p>
+          <h3 className={`mt-1 text-[17px] font-semibold ${T.text}`}>Published reports</h3>
+        </div>
+        <span className={`rounded-full border ${T.cardBorder} px-3 py-1 font-mono text-[9px] ${T.dim}`}>3 reports</span>
+      </div>
+      <div className="mt-5 grid grid-cols-3 gap-3">
+        {RESEARCH_BOOKS.map(([title, meta, gradient], index) => (
+          <button key={title} onClick={() => onOpen(index)} className="min-w-0 text-left">
+            <motion.div whileHover={{ y: -4 }} className={`flex aspect-[3/4] flex-col rounded-lg border border-white/10 bg-gradient-to-br ${gradient} p-3`}>
+              <span className="font-mono text-[6.5px] uppercase tracking-[0.18em] text-white/45">Akorith Research</span>
+              <strong className="mt-5 break-words text-[10px] leading-snug text-white sm:text-[12px]">{title}</strong>
+              <span className="mt-auto font-mono text-[7px] text-white/40">REV 0{index + 1}</span>
+            </motion.div>
+            <p className={`mt-2 truncate text-[10.5px] font-semibold ${T.text}`}>{title}</p>
+            <p className={`mt-0.5 truncate font-mono text-[8px] ${T.faint}`}>{meta}</p>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export function ResearchView() {
+  const [surface, setSurface] = useState('run')
+  const [topic, setTopic] = useState('Create a cited atlas of frontier AI models and their benchmark performance.')
+  const [depth, setDepth] = useState(1)
+  const [model, setModel] = useState(0)
+  const [format, setFormat] = useState('PDF')
+  const [phase, setPhase] = useState(1)
+  const [running, setRunning] = useState(true)
+  const [activeTab, setActiveTab] = useState(0)
+  const tabs = ['Frontier model atlas', 'Agent UI patterns']
+
+  useEffect(() => {
+    if (!running) return undefined
+    const id = window.setInterval(() => {
+      setPhase((current) => {
+        if (current >= RESEARCH_PHASES.length - 1) {
+          setRunning(false)
+          return current
+        }
+        return current + 1
+      })
+    }, 3200)
+    return () => window.clearInterval(id)
+  }, [running])
+
+  const start = () => {
+    if (!topic.trim()) return
+    setPhase(0)
+    setRunning(true)
+    setSurface('run')
+  }
+
+  if (surface === 'library') {
+    return (
+      <div>
+        <div className={`flex items-center justify-between border-b ${T.cardBorder} px-4 py-3 sm:px-6`}>
+          <div className="flex gap-1">
+            <button onClick={() => setSurface('run')} className={`rounded-full px-3 py-1 text-[10px] ${T.dim}`}>Research</button>
+            <button className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">Library</button>
+          </div>
+          <button onClick={start} className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">＋ New research</button>
+        </div>
+        <ResearchLibraryDemo onOpen={(index) => { setActiveTab(index % tabs.length); setSurface('run') }} />
+      </div>
+    )
+  }
+
+  return (
+    <div className="p-4 sm:p-6">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex min-w-0 gap-1 overflow-x-auto">
+          {tabs.map((tab, index) => (
+            <button key={tab} onClick={() => setActiveTab(index)} className={`shrink-0 rounded-lg px-3 py-1.5 text-[10.5px] ${activeTab === index ? 'bg-white/10 text-white' : T.dim}`}>
+              <span className={`mr-1.5 inline-block h-1.5 w-1.5 rounded-full ${running && index === activeTab ? 'animate-pulse bg-emerald-400' : 'bg-white/25'}`} />
+              {tab}
+            </button>
+          ))}
+        </div>
+        <button onClick={() => setSurface('library')} className={`rounded-full border ${T.cardBorder} px-3 py-1 text-[9.5px] ${T.dim}`}>Library · 3</button>
+      </div>
+
+      <div className={`mt-4 rounded-xl border ${T.cardBorder} ${T.card} p-4`}>
+        <textarea
+          value={topic}
+          onChange={(event) => setTopic(event.target.value)}
+          aria-label="Research request"
+          rows={2}
+          className={`w-full resize-none bg-transparent text-[12px] leading-relaxed outline-none placeholder:text-[#6b6b72] ${T.text}`}
+        />
+        <div className={`mt-3 flex flex-wrap items-center gap-1.5 border-t ${T.cardBorder} pt-3`}>
+          <button onClick={() => setModel((current) => (current + 1) % RESEARCH_MODELS.length)} className={`rounded-full border ${T.cardBorder} px-2.5 py-1 font-mono text-[8.5px] ${T.dim}`}>
+            <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />{RESEARCH_MODELS[model]} ⌄
+          </button>
+          <div className="flex rounded-full border border-white/[0.07] p-0.5">
+            {RESEARCH_DEPTHS.map(([name], index) => (
+              <button key={name} onClick={() => setDepth(index)} className={`rounded-full px-2 py-0.5 text-[8.5px] ${depth === index ? 'bg-white/10 text-white' : T.faint}`}>{name}</button>
+            ))}
+          </div>
+          <button onClick={() => setFormat(RESEARCH_FORMATS[(RESEARCH_FORMATS.indexOf(format) + 1) % RESEARCH_FORMATS.length])} className={`rounded-full border ${T.cardBorder} px-2.5 py-1 font-mono text-[8.5px] ${T.dim}`}>{format} ⌄</button>
+          <button onClick={running ? () => setRunning(false) : start} aria-label={running ? 'Pause research' : 'Start research'} className={`ml-auto flex h-7 w-7 items-center justify-center rounded-full text-[10px] ${running ? 'bg-white/10 text-white' : 'bg-white text-black'}`}>
+            {running ? 'Ⅱ' : '➤'}
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-5 grid grid-cols-5 gap-1 before:absolute">
+        {RESEARCH_PHASES.map((name, index) => (
+          <button key={name} onClick={() => setPhase(index)} className="relative flex min-w-0 flex-col items-center gap-1.5">
+            <span className={`flex h-6 w-6 items-center justify-center rounded-full border font-mono text-[8px] ${index < phase ? 'border-emerald-400 bg-emerald-400 text-black' : index === phase ? 'border-violet-400 bg-[#1d1d20] text-white ring-4 ring-violet-400/10' : 'border-white/15 bg-[#1d1d20] text-[#6b6b72]'}`}>
+              {index < phase ? '✓' : index + 1}
+            </span>
+            <small className={`truncate text-[8px] ${index === phase ? T.text : T.faint}`}>{name}</small>
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-5 grid gap-4 sm:grid-cols-[1.2fr_0.8fr]">
+        <div className={`rounded-xl border ${T.cardBorder} bg-black/10 p-4`}>
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className={`text-[12px] font-semibold ${T.text}`}>{running ? RESEARCH_PHASES[phase] + ' in progress' : 'Report revision ready'}</p>
+              <p className={`mt-0.5 font-mono text-[8.5px] ${T.faint}`}>{RESEARCH_DEPTHS[depth][1]} · {RESEARCH_MODELS[model]}</p>
+            </div>
+            <span className={`rounded-full border ${T.cardBorder} px-2 py-0.5 font-mono text-[8px] ${T.dim}`}>42 sources</span>
+          </div>
+          <div className={`mt-3 border-l ${T.cardBorder} pl-3`}>
+            {RESEARCH_PLANS.map(([title, body], index) => (
+              <div key={title} className="relative pb-2.5 last:pb-0">
+                <span className={`absolute -left-[15px] top-1.5 h-1.5 w-1.5 rounded-full ${index < 2 ? 'bg-emerald-400' : 'animate-pulse bg-violet-400'}`} />
+                <p className={`text-[10.5px] font-semibold ${T.text}`}>{title}</p>
+                <p className={`mt-0.5 text-[9px] leading-relaxed ${T.dim}`}>{body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <button onClick={() => setSurface('library')} className={`group flex min-h-40 flex-col rounded-xl border ${T.cardBorder} bg-gradient-to-br from-violet-500/35 via-[#25232b] to-emerald-500/20 p-4 text-left`}>
+          <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-white/40">Akorith Research</span>
+          <strong className="mt-5 text-[13px] leading-snug text-white">Frontier Model Atlas</strong>
+          <span className="mt-auto font-mono text-[8px] text-white/45">{format} · revision 04 · open library →</span>
+        </button>
+      </div>
+    </div>
+  )
+}
+
 /* ================= LOOP ================= */
 
 const LOOP_PHASES = ['Understand', 'Plan', 'Execute', 'Analyze', 'Replan', 'Complete']
@@ -870,13 +1044,14 @@ export function BenchmarkView() {
 
 /* ================= SHELL ================= */
 
-const NAV = ['New chat', 'Workspace', 'Loop', 'Benchmark', 'Plugins']
+const NAV = ['New chat', 'Workspace', 'Loop', 'Research', 'Benchmark', 'Plugins']
 
 const CHATS = ['hello', 'hey which model are you', 'which model are you tell me', 'hello']
 
 const TITLES = {
   Workspace: 'analizeRepo · Project workspace',
   Loop: 'Loop',
+  Research: 'Research',
   Dashboard: 'Dashboard',
   Benchmark: 'Benchmark',
   Plugins: 'Plugins',
@@ -967,7 +1142,7 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
 
         {/* mobile nav */}
         <div className={`flex gap-1 overflow-x-auto border-b ${T.cardBorder} p-2 md:hidden`}>
-          {['Workspace', 'Loop', 'Dashboard', 'Benchmark', 'Plugins', 'Settings'].map((item) => (
+          {['Workspace', 'Loop', 'Research', 'Dashboard', 'Benchmark', 'Plugins', 'Settings'].map((item) => (
             <button
               key={item}
               onClick={() => go(item)}
@@ -993,6 +1168,7 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
             >
               {view === 'Workspace' && <WorkspaceView seed={seed} />}
               {view === 'Loop' && <LoopView />}
+              {view === 'Research' && <ResearchView />}
               {view === 'Dashboard' && <DashboardView />}
               {view === 'Benchmark' && <BenchmarkView />}
               {view === 'Plugins' && <PluginsView />}
@@ -1011,6 +1187,7 @@ export function DemoPanel({ view, title, className = '' }) {
     workspace: WorkspaceView,
     dashboard: DashboardView,
     loop: LoopView,
+    research: ResearchView,
     benchmark: BenchmarkView,
     plugins: PluginsView,
     settings: SettingsView,
