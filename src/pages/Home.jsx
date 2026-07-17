@@ -58,6 +58,17 @@ const PILLARS = [
     ),
   },
   {
+    to: '/research',
+    name: 'Research',
+    tag: 'Autonomous evidence work',
+    desc: 'Choose a model, depth, and output format; Akorith plans, investigates, verifies, and publishes while you are away.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+        <path d="M4 3h6a2 2 0 0 1 2 2v16a3 3 0 0 0-3-3H4zM20 3h-6a2 2 0 0 0-2 2v16a3 3 0 0 1 3-3h5z" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
     to: '/features',
     name: 'Benchmark',
     tag: 'Comparable evidence',
@@ -135,7 +146,7 @@ export default function Home() {
             <span className="font-medium text-ink">Codex</span>,{' '}
             <span className="font-medium text-ink">OpenCode</span>, and local{' '}
             <span className="font-medium text-ink">Ollama</span> models in one workspace — chats,
-            project workspaces, durable loops, benchmarks, and local tools in one native app.
+            project workspaces, durable loops, autonomous research, benchmarks, and local tools in one native app.
           </motion.p>
 
           <motion.div
@@ -200,7 +211,7 @@ export default function Home() {
             }
             lead="Akorith separates direct project work, long-running goals, and model evaluation so every mode stays understandable and useful."
           />
-          <Stagger className="mt-14 grid gap-6 md:grid-cols-3">
+          <Stagger className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {PILLARS.map((p, i) => (
               <StaggerItem key={p.name}>
                 <Link to={p.to} className="block h-full">
@@ -244,7 +255,7 @@ export default function Home() {
                 Don't take screenshots' word — <span className="accent-word">click around.</span>
               </>
             }
-            lead="This is a living replica of the current app. Try Workspace, inspect the Loop cycle, compare benchmark results, filter local plugins, and explore the Dashboard."
+            lead="This is a living replica of the current app. Try Workspace, start an autonomous Research run, inspect the Loop cycle, compare benchmark results, filter local plugins, and explore the Dashboard."
           />
           <Reveal delay={0.15} className="relative mt-14">
             <div aria-hidden className="shot-glow" />
