@@ -23,10 +23,10 @@ const STEPS = [
 
 const REQUIREMENTS = [
   { name: 'macOS or Windows', desc: 'Signed macOS builds and Windows installer/portable builds are published with every stable release.', required: true },
-  { name: 'claude CLI', desc: 'Adds your signed-in Claude models to General Chat, Workspace, Benchmark, and Loop.', required: false },
-  { name: 'codex CLI', desc: 'Adds your signed-in OpenAI Codex models without storing an API key.', required: false },
-  { name: 'opencode CLI', desc: 'Adds installed OpenCode models for direct project work and goals.', required: false },
-  { name: 'Ollama', desc: 'Adds fully local models for chat, benchmarks, and compatible Loop work.', required: false },
+  { name: 'claude CLI', desc: 'Adds your signed-in Claude models to General Chat, Workspace, Benchmark, Loop, and Research.', required: false },
+  { name: 'codex CLI', desc: 'Adds your signed-in OpenAI Codex models for project work and autonomous Research without storing an API key.', required: false },
+  { name: 'opencode CLI', desc: 'Adds installed OpenCode models for direct project work, goals, and Research.', required: false },
+  { name: 'Ollama', desc: 'Adds fully local models for chat, benchmarks, compatible Loop work, and supported Research runs.', required: false },
   { name: 'Local tools', desc: 'Git, ripgrep, Pandoc, FFmpeg, and other audited tools are detected individually when installed.', required: false },
 ]
 
@@ -37,7 +37,7 @@ const FAQ = [
   },
   {
     q: 'Where is my data stored?',
-    a: 'Everything lives on your machine in a local SQLite database plus app configuration and managed attachment files. Chats, project memory, goals, benchmarks, and usage stats remain local and deletable.',
+    a: 'Everything lives on your machine in a local SQLite database plus app configuration and managed attachment files. Chats, project memory, goals, research jobs, report artifacts, benchmarks, and usage stats remain local and deletable.',
   },
   {
     q: 'Which platforms are supported?',

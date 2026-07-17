@@ -49,8 +49,8 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink/60">
-              A local-first workspace for building with Claude, Codex, OpenCode, and local models —
-              directly inside your projects, with your logins and your rules.
+              A local-first workspace for building and researching with Claude, Codex, OpenCode,
+              and local models — with your logins, your evidence, and your rules.
             </p>
             <p className="mt-6 flex items-center gap-2 font-mono text-xs text-ink/40">
               <Spark className="h-3 w-3 text-clay" />

@@ -74,7 +74,7 @@ function useTypeLoop(texts, speed = 45, hold = 1700) {
 
 /* ---------------- Workbench: chat home with cycling models ---------------- */
 
-const WB_NAV = ['New chat', 'Workspace', 'Loop', 'Benchmark', 'Plugins']
+const WB_NAV = ['New chat', 'Workspace', 'Loop', 'Research', 'Benchmark', 'Plugins']
 const WB_MODELS = [
   { dot: 'bg-moss', provider: 'OpenCode', name: 'kimi-k2.7-code' },
   { dot: 'bg-sky-600', provider: 'Codex', name: 'GPT-5.4' },

@@ -16,9 +16,9 @@ const TESTLAB_STEPS = [
 ]
 
 const PLUGINS = [
-  { name: 'Claude', cat: 'Providers', status: 'Available', desc: 'Runs the signed-in Claude CLI directly from Workspace, General Chat, Benchmark, and Loop.' },
-  { name: 'OpenAI Codex', cat: 'Providers', status: 'Available', desc: 'Uses your local Codex CLI session for project work without storing an API key.' },
-  { name: 'OpenCode', cat: 'Providers', status: 'Available', desc: 'Exposes installed OpenCode models with project-scoped, streamed execution.' },
+  { name: 'Claude', cat: 'Providers', status: 'Available', desc: 'Runs the signed-in Claude CLI directly from Workspace, General Chat, Benchmark, Loop, and autonomous Research.' },
+  { name: 'OpenAI Codex', cat: 'Providers', status: 'Available', desc: 'Uses your local Codex CLI session for project work and Research without storing an API key.' },
+  { name: 'OpenCode', cat: 'Providers', status: 'Available', desc: 'Exposes installed OpenCode models for project-scoped work, durable goals, and cited Research.' },
   { name: 'Git + Git LFS', cat: 'Developer tools', status: 'Available', desc: 'Adds repository inspection and large-file capabilities while preserving Akorith’s no-push boundary.' },
   { name: 'Pandoc + Poppler', cat: 'Documents', status: 'Available', desc: 'Detects local document and PDF tooling for tasks that need conversion or inspection.' },
   { name: 'FFmpeg + ImageMagick', cat: 'Media', status: 'Available', desc: 'Surfaces audited local media tools through capability hints and static diagnostics.' },

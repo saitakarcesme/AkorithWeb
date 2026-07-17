@@ -99,7 +99,7 @@ export default function Developers() {
                   </a>
                   <p className="mt-4 max-w-md leading-relaxed text-muted">
                     Designs and builds Akorith end to end — project-native Workspace, durable
-                    Loop goals, model Benchmarking, local telemetry, plugins, and the secure
+                    Loop goals, autonomous Research, model Benchmarking, local telemetry, plugins, and the secure
                     Electron plumbing that keeps everything on your machine.
                   </p>
 

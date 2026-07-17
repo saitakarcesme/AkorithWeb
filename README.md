@@ -1,6 +1,6 @@
 # AkorithWeb
 
-The public website for [Akorith](https://akorith.space). It keeps the site's editorial visual system while presenting the current desktop product: project-scoped Workspace chat, durable concurrent Loops, profile and compute telemetry, model Benchmarking, Plugins, Settings, and native updates.
+The public website for [Akorith](https://akorith.space). It keeps the site's editorial visual system while presenting the current desktop product: project-scoped Workspace chat, durable concurrent Loops, autonomous Research with report exports, profile and compute telemetry, model Benchmarking, Plugins, Settings, and native updates.
 
 ## Architecture
 
