@@ -831,10 +831,10 @@ function ResearchLibraryDemo({ onOpen }) {
         </div>
         <span className={`rounded-full border ${T.cardBorder} px-3 py-1 font-mono text-[9px] ${T.dim}`}>3 reports</span>
       </div>
-      <div className="mt-5 grid grid-cols-3 gap-3">
+      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
         {RESEARCH_BOOKS.map(([title, meta, gradient], index) => (
           <button key={title} onClick={() => onOpen(index)} className="min-w-0 text-left">
-            <motion.div whileHover={{ y: -4 }} className={`flex aspect-[3/4] flex-col rounded-lg border border-white/10 bg-gradient-to-br ${gradient} p-3`}>
+            <motion.div whileHover={{ y: -4 }} className={`flex aspect-[210/297] flex-col rounded-lg border border-white/10 bg-gradient-to-br ${gradient} p-3`}>
               <span className="font-mono text-[6.5px] uppercase tracking-[0.18em] text-white/45">Akorith Research</span>
               <strong className="mt-5 break-words text-[10px] leading-snug text-white sm:text-[12px]">{title}</strong>
               <span className="mt-auto font-mono text-[7px] text-white/40">REV 0{index + 1}</span>
@@ -929,9 +929,9 @@ export function ResearchView() {
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-5 gap-1 before:absolute">
+      <div className="relative mt-5 grid grid-cols-5 gap-1 before:absolute before:left-[10%] before:right-[10%] before:top-3 before:h-px before:bg-white/10">
         {RESEARCH_PHASES.map((name, index) => (
-          <button key={name} aria-current={index === phase ? 'step' : undefined} onClick={() => setPhase(index)} className="relative flex min-w-0 flex-col items-center gap-1.5">
+          <button key={name} aria-current={index === phase ? 'step' : undefined} onClick={() => setPhase(index)} className="relative z-10 flex min-w-0 flex-col items-center gap-1.5">
             <span className={`flex h-6 w-6 items-center justify-center rounded-full border font-mono text-[8px] ${index < phase ? 'border-emerald-400 bg-emerald-400 text-black' : index === phase ? 'border-violet-400 bg-[#1d1d20] text-white ring-4 ring-violet-400/10' : 'border-white/15 bg-[#1d1d20] text-[#6b6b72]'}`}>
               {index < phase ? '✓' : index + 1}
             </span>

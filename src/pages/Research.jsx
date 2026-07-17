@@ -157,14 +157,13 @@ export default function Research() {
                 Every run keeps its cover, status, depth, sources, and latest export. Open an old report,
                 continue a paused investigation, or publish a new revision from the same library entry.
               </p>
-              <div className="mt-8 grid grid-cols-3 gap-4">
+              <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
                 {LIBRARY_BOOKS.map(([title, meta, gradient], index) => (
                   <motion.div key={title} whileHover={{ y: -6 }} className="min-w-0">
-                    <div className={`flex aspect-[3/4] flex-col rounded-xl border border-white/10 bg-gradient-to-br ${gradient} p-4 shadow-[0_22px_40px_-24px_rgba(0,0,0,0.9)]`}>
+                    <div className={`flex aspect-[210/297] flex-col rounded-xl border border-white/10 bg-gradient-to-br ${gradient} p-4 shadow-[0_22px_40px_-24px_rgba(0,0,0,0.9)]`}>
                       <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/45">Akorith Research</p>
                       <p className="mt-8 break-words font-serif text-sm font-semibold leading-snug text-white sm:text-base">{title}</p>
-                      <div className="mt-auto" />
-                      <p className="mt-3 font-mono text-[8px] text-white/45">REV 0{index + 1}</p>
+                      <p className="mt-auto pt-3 font-mono text-[8px] text-white/45">REV 0{index + 1}</p>
                     </div>
                     <p className="mt-3 truncate text-sm font-semibold text-ink">{title}</p>
                     <p className="mt-1 truncate font-mono text-[10px] text-muted">{meta}</p>
