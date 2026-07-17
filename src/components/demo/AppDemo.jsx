@@ -861,17 +861,13 @@ export function ResearchView() {
 
   useEffect(() => {
     if (!running) return undefined
-    const id = window.setInterval(() => {
-      setPhase((current) => {
-        if (current >= RESEARCH_PHASES.length - 1) {
-          setRunning(false)
-          return current
-        }
-        return current + 1
-      })
-    }, 3200)
-    return () => window.clearInterval(id)
-  }, [running])
+    if (phase >= RESEARCH_PHASES.length - 1) {
+      setRunning(false)
+      return undefined
+    }
+    const id = window.setTimeout(() => setPhase((current) => current + 1), 3200)
+    return () => window.clearTimeout(id)
+  }, [phase, running])
 
   const start = () => {
     if (!topic.trim()) return
@@ -884,9 +880,9 @@ export function ResearchView() {
     return (
       <div>
         <div className={`flex items-center justify-between border-b ${T.cardBorder} px-4 py-3 sm:px-6`}>
-          <div className="flex gap-1">
-            <button onClick={() => setSurface('run')} className={`rounded-full px-3 py-1 text-[10px] ${T.dim}`}>Research</button>
-            <button className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">Library</button>
+          <div className="flex gap-1" role="tablist" aria-label="Research surfaces">
+            <button role="tab" aria-selected="false" onClick={() => setSurface('run')} className={`rounded-full px-3 py-1 text-[10px] ${T.dim}`}>Research</button>
+            <button role="tab" aria-selected="true" className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">Library</button>
           </div>
           <button onClick={start} className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">＋ New research</button>
         </div>
@@ -898,9 +894,9 @@ export function ResearchView() {
   return (
     <div className="p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex min-w-0 gap-1 overflow-x-auto">
+        <div className="flex min-w-0 gap-1 overflow-x-auto" role="tablist" aria-label="Concurrent research jobs">
           {tabs.map((tab, index) => (
-            <button key={tab} onClick={() => setActiveTab(index)} className={`shrink-0 rounded-lg px-3 py-1.5 text-[10.5px] ${activeTab === index ? 'bg-white/10 text-white' : T.dim}`}>
+            <button key={tab} role="tab" aria-selected={activeTab === index} onClick={() => setActiveTab(index)} className={`shrink-0 rounded-lg px-3 py-1.5 text-[10.5px] ${activeTab === index ? 'bg-white/10 text-white' : T.dim}`}>
               <span className={`mr-1.5 inline-block h-1.5 w-1.5 rounded-full ${running && index === activeTab ? 'animate-pulse bg-emerald-400' : 'bg-white/25'}`} />
               {tab}
             </button>
@@ -923,7 +919,7 @@ export function ResearchView() {
           </button>
           <div className="flex rounded-full border border-white/[0.07] p-0.5">
             {RESEARCH_DEPTHS.map(([name], index) => (
-              <button key={name} onClick={() => setDepth(index)} className={`rounded-full px-2 py-0.5 text-[8.5px] ${depth === index ? 'bg-white/10 text-white' : T.faint}`}>{name}</button>
+              <button key={name} aria-pressed={depth === index} onClick={() => setDepth(index)} className={`rounded-full px-2 py-0.5 text-[8.5px] ${depth === index ? 'bg-white/10 text-white' : T.faint}`}>{name}</button>
             ))}
           </div>
           <button onClick={() => setFormat(RESEARCH_FORMATS[(RESEARCH_FORMATS.indexOf(format) + 1) % RESEARCH_FORMATS.length])} className={`rounded-full border ${T.cardBorder} px-2.5 py-1 font-mono text-[8.5px] ${T.dim}`}>{format} ⌄</button>
@@ -935,7 +931,7 @@ export function ResearchView() {
 
       <div className="mt-5 grid grid-cols-5 gap-1 before:absolute">
         {RESEARCH_PHASES.map((name, index) => (
-          <button key={name} onClick={() => setPhase(index)} className="relative flex min-w-0 flex-col items-center gap-1.5">
+          <button key={name} aria-current={index === phase ? 'step' : undefined} onClick={() => setPhase(index)} className="relative flex min-w-0 flex-col items-center gap-1.5">
             <span className={`flex h-6 w-6 items-center justify-center rounded-full border font-mono text-[8px] ${index < phase ? 'border-emerald-400 bg-emerald-400 text-black' : index === phase ? 'border-violet-400 bg-[#1d1d20] text-white ring-4 ring-violet-400/10' : 'border-white/15 bg-[#1d1d20] text-[#6b6b72]'}`}>
               {index < phase ? '✓' : index + 1}
             </span>
