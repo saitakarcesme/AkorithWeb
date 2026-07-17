@@ -31,6 +31,13 @@ const WORKBENCH_POINTS = [
   ['Durable project memory', 'Each project keeps its own chat history and summarized context without leaking running state.'],
 ]
 
+const RESEARCH_POINTS = [
+  ['Four depth modes', 'Run a quick search, a one-hour research pass, a 10+ hour deep investigation, or a continuous job that waits for you to pause it.'],
+  ['Durable source ledger', 'Keep discovered pages, citations, claims, and conflicts attached to the report instead of losing them in a transient answer.'],
+  ['Model choice per run', 'Use an available Claude, Codex, OpenCode, or local model and keep each autonomous job isolated in its own tab.'],
+  ['Report library', 'Return to designed A4 covers, report revisions, sources, and downloadable PDF, DOCX, Markdown, or XLSX artifacts.'],
+]
+
 const statusColor = {
   Available: 'text-moss border-moss/30 bg-moss/10',
   Preview: 'text-clay-deep border-clay/30 bg-clay/10',
@@ -56,7 +63,7 @@ export default function Features() {
           </h1>
           <Reveal delay={0.5}>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              Workspace, Loop, Dashboard, Benchmark, and Plugins — the current Akorith workflow
+              Workspace, Loop, Research, Dashboard, Benchmark, and Plugins — the current Akorith workflow
               in one local desktop app.
             </p>
           </Reveal>
@@ -93,8 +100,34 @@ export default function Features() {
         </div>
       </section>
 
-      {/* ===== Benchmark ===== */}
+      {/* ===== Research ===== */}
       <section className="border-y border-line bg-cream/40 px-6 py-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
+          <Reveal className="order-2 lg:order-1">
+            <DemoPanel view="research" title="Research — live demo, plan a report" />
+          </Reveal>
+          <div className="order-1 lg:order-2">
+            <SectionHeading
+              eyebrow="Research"
+              title={<>Autonomous investigation with <span className="accent-word">a real deliverable.</span></>}
+              lead="Describe the question once, choose the depth and report format, then let Akorith plan, search, verify, synthesize, and publish without waiting for more prompts."
+            />
+            <Stagger className="mt-8 space-y-4" gap={0.1}>
+              {RESEARCH_POINTS.map(([title, desc]) => (
+                <StaggerItem key={title}>
+                  <div className="rounded-xl border border-line bg-surface px-5 py-4">
+                    <p className="font-semibold text-ink">{title}</p>
+                    <p className="mt-1 text-sm text-muted">{desc}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== Benchmark ===== */}
+      <section className="px-6 py-24">
         <div className="relative mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Benchmark"
