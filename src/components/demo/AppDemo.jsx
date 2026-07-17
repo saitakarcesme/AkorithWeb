@@ -888,7 +888,6 @@ export function ResearchView() {
   const [jobs, setJobs] = useState(() => RESEARCH_DEMO_JOBS.map((job) => ({ ...job })))
   const [activeTab, setActiveTab] = useState(0)
   const activeJob = jobs[activeTab]
-  const hasRunningJobs = jobs.some((job) => job.running)
   const runningSignature = jobs.map((job) => `${job.id}:${job.running}:${job.phase}`).join('|')
 
   const updateActiveJob = (change) => {
@@ -898,7 +897,7 @@ export function ResearchView() {
   }
 
   useEffect(() => {
-    if (!hasRunningJobs) return undefined
+    if (!runningSignature.includes(':true:')) return undefined
     const id = window.setTimeout(() => {
       setJobs((current) => current.map((job) => {
         if (!job.running) return job
@@ -907,7 +906,7 @@ export function ResearchView() {
       }))
     }, 3200)
     return () => window.clearTimeout(id)
-  }, [hasRunningJobs, runningSignature])
+  }, [runningSignature])
 
   const start = () => {
     if (!activeJob.topic.trim()) return
