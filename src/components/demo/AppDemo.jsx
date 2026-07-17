@@ -810,10 +810,45 @@ const RESEARCH_DEPTHS = [
 ]
 const RESEARCH_MODELS = ['Claude · Sonnet', 'OpenCode · glm-5.2', 'Codex · GPT-5.4']
 const RESEARCH_FORMATS = ['PDF', 'DOCX', 'Markdown', 'XLSX']
-const RESEARCH_PLANS = [
-  ['Map the field', 'Find current benchmark suites, model cards, and independent evaluations.'],
-  ['Build the evidence ledger', 'Deduplicate sources and connect each model profile to supporting claims.'],
-  ['Compare and publish', 'Resolve conflicting scores, synthesize one-page profiles, and export the atlas.'],
+const RESEARCH_DEMO_JOBS = [
+  {
+    id: 'frontier-model-atlas',
+    title: 'Frontier model atlas',
+    topic: 'Create a cited atlas of frontier AI models and their benchmark performance.',
+    depth: 1,
+    model: 0,
+    format: 'PDF',
+    phase: 1,
+    running: true,
+    sources: 42,
+    revision: 4,
+    reportTitle: 'Frontier Model Atlas',
+    cover: 'from-violet-500/35 via-[#25232b] to-emerald-500/20',
+    plan: [
+      ['Map the field', 'Find current benchmark suites, model cards, and independent evaluations.'],
+      ['Build the evidence ledger', 'Deduplicate sources and connect each model profile to supporting claims.'],
+      ['Compare and publish', 'Resolve conflicting scores, synthesize one-page profiles, and export the atlas.'],
+    ],
+  },
+  {
+    id: 'agent-ui-patterns',
+    title: 'Agent UI patterns',
+    topic: 'Research interface patterns that make long-running AI agents understandable and trustworthy.',
+    depth: 2,
+    model: 1,
+    format: 'DOCX',
+    phase: 3,
+    running: false,
+    sources: 29,
+    revision: 2,
+    reportTitle: 'Agent UI Field Notes',
+    cover: 'from-sky-500/35 via-[#22242b] to-violet-500/30',
+    plan: [
+      ['Collect interface evidence', 'Review agent products, research papers, and interaction guidelines.'],
+      ['Compare durable patterns', 'Group progress, intervention, provenance, and recovery patterns by user need.'],
+      ['Write the field guide', 'Turn verified examples into practical design recommendations and annotated patterns.'],
+    ],
+  },
 ]
 const RESEARCH_BOOKS = [
   ['Frontier Model Atlas', 'PDF · 86 sources', 'from-violet-500/55 to-emerald-500/20'],
@@ -850,29 +885,33 @@ function ResearchLibraryDemo({ onOpen }) {
 
 export function ResearchView() {
   const [surface, setSurface] = useState('run')
-  const [topic, setTopic] = useState('Create a cited atlas of frontier AI models and their benchmark performance.')
-  const [depth, setDepth] = useState(1)
-  const [model, setModel] = useState(0)
-  const [format, setFormat] = useState('PDF')
-  const [phase, setPhase] = useState(1)
-  const [running, setRunning] = useState(true)
+  const [jobs, setJobs] = useState(() => RESEARCH_DEMO_JOBS.map((job) => ({ ...job })))
   const [activeTab, setActiveTab] = useState(0)
-  const tabs = ['Frontier model atlas', 'Agent UI patterns']
+  const activeJob = jobs[activeTab]
+  const hasRunningJobs = jobs.some((job) => job.running)
+  const runningSignature = jobs.map((job) => `${job.id}:${job.running}:${job.phase}`).join('|')
+
+  const updateActiveJob = (change) => {
+    setJobs((current) => current.map((job, index) => (
+      index === activeTab ? { ...job, ...(typeof change === 'function' ? change(job) : change) } : job
+    )))
+  }
 
   useEffect(() => {
-    if (!running) return undefined
-    if (phase >= RESEARCH_PHASES.length - 1) {
-      setRunning(false)
-      return undefined
-    }
-    const id = window.setTimeout(() => setPhase((current) => current + 1), 3200)
+    if (!hasRunningJobs) return undefined
+    const id = window.setTimeout(() => {
+      setJobs((current) => current.map((job) => {
+        if (!job.running) return job
+        const nextPhase = Math.min(job.phase + 1, RESEARCH_PHASES.length - 1)
+        return { ...job, phase: nextPhase, running: nextPhase < RESEARCH_PHASES.length - 1 }
+      }))
+    }, 3200)
     return () => window.clearTimeout(id)
-  }, [phase, running])
+  }, [hasRunningJobs, runningSignature])
 
   const start = () => {
-    if (!topic.trim()) return
-    setPhase(0)
-    setRunning(true)
+    if (!activeJob.topic.trim()) return
+    updateActiveJob({ phase: 0, running: true })
     setSurface('run')
   }
 
@@ -886,7 +925,7 @@ export function ResearchView() {
           </div>
           <button onClick={start} className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">＋ New research</button>
         </div>
-        <ResearchLibraryDemo onOpen={(index) => { setActiveTab(index % tabs.length); setSurface('run') }} />
+        <ResearchLibraryDemo onOpen={(index) => { setActiveTab(index % jobs.length); setSurface('run') }} />
       </div>
     )
   }
@@ -895,10 +934,10 @@ export function ResearchView() {
     <div className="p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex min-w-0 gap-1 overflow-x-auto" role="tablist" aria-label="Concurrent research jobs">
-          {tabs.map((tab, index) => (
-            <button key={tab} role="tab" aria-selected={activeTab === index} onClick={() => setActiveTab(index)} className={`shrink-0 rounded-lg px-3 py-1.5 text-[10.5px] ${activeTab === index ? 'bg-white/10 text-white' : T.dim}`}>
-              <span className={`mr-1.5 inline-block h-1.5 w-1.5 rounded-full ${running && index === activeTab ? 'animate-pulse bg-emerald-400' : 'bg-white/25'}`} />
-              {tab}
+          {jobs.map((job, index) => (
+            <button key={job.id} role="tab" aria-selected={activeTab === index} onClick={() => setActiveTab(index)} className={`shrink-0 rounded-lg px-3 py-1.5 text-[10.5px] ${activeTab === index ? 'bg-white/10 text-white' : T.dim}`}>
+              <span className={`mr-1.5 inline-block h-1.5 w-1.5 rounded-full ${job.running ? 'animate-pulse bg-emerald-400' : job.phase === RESEARCH_PHASES.length - 1 ? 'bg-emerald-400' : 'bg-white/25'}`} />
+              {job.title}
             </button>
           ))}
         </div>
@@ -907,35 +946,35 @@ export function ResearchView() {
 
       <div className={`mt-4 rounded-xl border ${T.cardBorder} ${T.card} p-4`}>
         <textarea
-          value={topic}
-          onChange={(event) => setTopic(event.target.value)}
+          value={activeJob.topic}
+          onChange={(event) => updateActiveJob({ topic: event.target.value })}
           aria-label="Research request"
           rows={2}
           className={`w-full resize-none bg-transparent text-[12px] leading-relaxed outline-none placeholder:text-[#6b6b72] ${T.text}`}
         />
         <div className={`mt-3 flex flex-wrap items-center gap-1.5 border-t ${T.cardBorder} pt-3`}>
-          <button onClick={() => setModel((current) => (current + 1) % RESEARCH_MODELS.length)} className={`rounded-full border ${T.cardBorder} px-2.5 py-1 font-mono text-[8.5px] ${T.dim}`}>
-            <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />{RESEARCH_MODELS[model]} ⌄
+          <button onClick={() => updateActiveJob((job) => ({ model: (job.model + 1) % RESEARCH_MODELS.length }))} className={`rounded-full border ${T.cardBorder} px-2.5 py-1 font-mono text-[8.5px] ${T.dim}`}>
+            <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />{RESEARCH_MODELS[activeJob.model]} ⌄
           </button>
           <div className="flex rounded-full border border-white/[0.07] p-0.5">
             {RESEARCH_DEPTHS.map(([name], index) => (
-              <button key={name} aria-pressed={depth === index} onClick={() => setDepth(index)} className={`rounded-full px-2 py-0.5 text-[8.5px] ${depth === index ? 'bg-white/10 text-white' : T.faint}`}>{name}</button>
+              <button key={name} aria-pressed={activeJob.depth === index} onClick={() => updateActiveJob({ depth: index })} className={`rounded-full px-2 py-0.5 text-[8.5px] ${activeJob.depth === index ? 'bg-white/10 text-white' : T.faint}`}>{name}</button>
             ))}
           </div>
-          <button onClick={() => setFormat(RESEARCH_FORMATS[(RESEARCH_FORMATS.indexOf(format) + 1) % RESEARCH_FORMATS.length])} className={`rounded-full border ${T.cardBorder} px-2.5 py-1 font-mono text-[8.5px] ${T.dim}`}>{format} ⌄</button>
-          <button onClick={running ? () => setRunning(false) : start} aria-label={running ? 'Pause research' : 'Start research'} className={`ml-auto flex h-7 w-7 items-center justify-center rounded-full text-[10px] ${running ? 'bg-white/10 text-white' : 'bg-white text-black'}`}>
-            {running ? 'Ⅱ' : '➤'}
+          <button onClick={() => updateActiveJob((job) => ({ format: RESEARCH_FORMATS[(RESEARCH_FORMATS.indexOf(job.format) + 1) % RESEARCH_FORMATS.length] }))} className={`rounded-full border ${T.cardBorder} px-2.5 py-1 font-mono text-[8.5px] ${T.dim}`}>{activeJob.format} ⌄</button>
+          <button onClick={activeJob.running ? () => updateActiveJob({ running: false }) : start} aria-label={activeJob.running ? 'Pause research' : 'Start research'} className={`ml-auto flex h-7 w-7 items-center justify-center rounded-full text-[10px] ${activeJob.running ? 'bg-white/10 text-white' : 'bg-white text-black'}`}>
+            {activeJob.running ? 'Ⅱ' : '➤'}
           </button>
         </div>
       </div>
 
       <div className="relative mt-5 grid grid-cols-5 gap-1 before:absolute before:left-[10%] before:right-[10%] before:top-3 before:h-px before:bg-white/10">
         {RESEARCH_PHASES.map((name, index) => (
-          <button key={name} aria-current={index === phase ? 'step' : undefined} onClick={() => setPhase(index)} className="relative z-10 flex min-w-0 flex-col items-center gap-1.5">
-            <span className={`flex h-6 w-6 items-center justify-center rounded-full border font-mono text-[8px] ${index < phase ? 'border-emerald-400 bg-emerald-400 text-black' : index === phase ? 'border-violet-400 bg-[#1d1d20] text-white ring-4 ring-violet-400/10' : 'border-white/15 bg-[#1d1d20] text-[#6b6b72]'}`}>
-              {index < phase ? '✓' : index + 1}
+          <button key={name} aria-current={index === activeJob.phase ? 'step' : undefined} onClick={() => updateActiveJob({ phase: index })} className="relative z-10 flex min-w-0 flex-col items-center gap-1.5">
+            <span className={`flex h-6 w-6 items-center justify-center rounded-full border font-mono text-[8px] ${index < activeJob.phase ? 'border-emerald-400 bg-emerald-400 text-black' : index === activeJob.phase ? 'border-violet-400 bg-[#1d1d20] text-white ring-4 ring-violet-400/10' : 'border-white/15 bg-[#1d1d20] text-[#6b6b72]'}`}>
+              {index < activeJob.phase ? '✓' : index + 1}
             </span>
-            <small className={`truncate text-[8px] ${index === phase ? T.text : T.faint}`}>{name}</small>
+            <small className={`truncate text-[8px] ${index === activeJob.phase ? T.text : T.faint}`}>{name}</small>
           </button>
         ))}
       </div>
@@ -944,13 +983,15 @@ export function ResearchView() {
         <div className={`rounded-xl border ${T.cardBorder} bg-black/10 p-4`}>
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className={`text-[12px] font-semibold ${T.text}`}>{running ? RESEARCH_PHASES[phase] + ' in progress' : 'Report revision ready'}</p>
-              <p className={`mt-0.5 font-mono text-[8.5px] ${T.faint}`}>{RESEARCH_DEPTHS[depth][1]} · {RESEARCH_MODELS[model]}</p>
+              <p className={`text-[12px] font-semibold ${T.text}`}>
+                {activeJob.running ? `${RESEARCH_PHASES[activeJob.phase]} in progress` : activeJob.phase === RESEARCH_PHASES.length - 1 ? 'Report revision ready' : 'Research paused'}
+              </p>
+              <p className={`mt-0.5 font-mono text-[8.5px] ${T.faint}`}>{RESEARCH_DEPTHS[activeJob.depth][1]} · {RESEARCH_MODELS[activeJob.model]}</p>
             </div>
-            <span className={`rounded-full border ${T.cardBorder} px-2 py-0.5 font-mono text-[8px] ${T.dim}`}>42 sources</span>
+            <span className={`rounded-full border ${T.cardBorder} px-2 py-0.5 font-mono text-[8px] ${T.dim}`}>{activeJob.sources} sources</span>
           </div>
           <div className={`mt-3 border-l ${T.cardBorder} pl-3`}>
-            {RESEARCH_PLANS.map(([title, body], index) => (
+            {activeJob.plan.map(([title, body], index) => (
               <div key={title} className="relative pb-2.5 last:pb-0">
                 <span className={`absolute -left-[15px] top-1.5 h-1.5 w-1.5 rounded-full ${index < 2 ? 'bg-emerald-400' : 'animate-pulse bg-violet-400'}`} />
                 <p className={`text-[10.5px] font-semibold ${T.text}`}>{title}</p>
@@ -959,10 +1000,10 @@ export function ResearchView() {
             ))}
           </div>
         </div>
-        <button onClick={() => setSurface('library')} className={`group flex min-h-40 flex-col rounded-xl border ${T.cardBorder} bg-gradient-to-br from-violet-500/35 via-[#25232b] to-emerald-500/20 p-4 text-left`}>
+        <button onClick={() => setSurface('library')} className={`group flex min-h-40 flex-col rounded-xl border ${T.cardBorder} bg-gradient-to-br ${activeJob.cover} p-4 text-left`}>
           <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-white/40">Akorith Research</span>
-          <strong className="mt-5 text-[13px] leading-snug text-white">Frontier Model Atlas</strong>
-          <span className="mt-auto font-mono text-[8px] text-white/45">{format} · revision 04 · open library →</span>
+          <strong className="mt-5 text-[13px] leading-snug text-white">{activeJob.reportTitle}</strong>
+          <span className="mt-auto font-mono text-[8px] text-white/45">{activeJob.format} · revision {String(activeJob.revision).padStart(2, '0')} · open library →</span>
         </button>
       </div>
     </div>
