@@ -19,11 +19,12 @@ const DEPTHS = [
 ]
 
 const FLOW = [
-  ['01', 'Plan', 'Translate the request, depth, model, and output format into a durable research plan.'],
-  ['02', 'Discover', 'Search broadly, follow useful references, and deduplicate repeated material.'],
-  ['03', 'Verify', 'Cross-check claims against the source ledger and surface uncertainty instead of hiding it.'],
-  ['04', 'Synthesize', 'Turn the evidence into a readable report with citations, sections, and a designed cover.'],
-  ['05', 'Publish', 'Export PDF, DOCX, Markdown, or XLSX and keep every revision in the Research library.'],
+  ['01', 'Understand', 'Turn the request, depth, model, and output format into a concrete definition of done.'],
+  ['02', 'Plan', 'Create durable search passes, source targets, and verification criteria before collection starts.'],
+  ['03', 'Research', 'Search broadly, follow useful references, and deduplicate repeated evidence.'],
+  ['04', 'Verify', 'Cross-check claims against the source ledger and surface uncertainty instead of hiding it.'],
+  ['05', 'Write', 'Turn verified evidence into a readable report with citations, sections, and a designed cover.'],
+  ['06', 'Publish', 'Export PDF, DOCX, Markdown, or XLSX and keep every revision in the Research library.'],
 ]
 
 const OUTPUTS = [
@@ -109,7 +110,7 @@ export default function Research() {
           />
           <div className="relative mt-14">
             <div aria-hidden className="absolute left-8 right-8 top-9 hidden h-px bg-line lg:block" />
-            <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5" gap={0.1}>
+            <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6" gap={0.1}>
               {FLOW.map(([number, name, description]) => (
                 <StaggerItem key={name}>
                   <Card className="relative h-full p-6">

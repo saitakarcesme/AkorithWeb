@@ -801,7 +801,7 @@ export function SettingsView() {
 
 /* ================= RESEARCH ================= */
 
-const RESEARCH_PHASES = ['Plan', 'Discover', 'Verify', 'Synthesize', 'Publish']
+const RESEARCH_PHASES = ['Understand', 'Plan', 'Research', 'Verify', 'Write', 'Publish']
 const RESEARCH_DEPTHS = [
   ['Quick', '~10 min'],
   ['Research', '~1 hour'],
@@ -818,7 +818,7 @@ const RESEARCH_DEMO_JOBS = [
     depth: 1,
     model: 0,
     format: 'PDF',
-    phase: 1,
+    phase: 2,
     running: true,
     sources: 42,
     revision: 4,
@@ -837,7 +837,7 @@ const RESEARCH_DEMO_JOBS = [
     depth: 2,
     model: 1,
     format: 'DOCX',
-    phase: 3,
+    phase: 4,
     running: false,
     sources: 29,
     revision: 2,
@@ -847,6 +847,25 @@ const RESEARCH_DEMO_JOBS = [
       ['Collect interface evidence', 'Review agent products, research papers, and interaction guidelines.'],
       ['Compare durable patterns', 'Group progress, intervention, provenance, and recovery patterns by user need.'],
       ['Write the field guide', 'Turn verified examples into practical design recommendations and annotated patterns.'],
+    ],
+  },
+  {
+    id: 'local-coding-model-index',
+    title: 'Local coding model index',
+    topic: 'Compare current local coding models, their hardware needs, and verified benchmark results.',
+    depth: 1,
+    model: 2,
+    format: 'XLSX',
+    phase: 5,
+    running: false,
+    sources: 43,
+    revision: 3,
+    reportTitle: 'Local Coding Model Index',
+    cover: 'from-emerald-500/45 via-[#202a27] to-sky-500/15',
+    plan: [
+      ['Define the comparison set', 'Identify maintained local coding models and record their published hardware requirements.'],
+      ['Verify benchmark evidence', 'Reconcile model cards, benchmark harnesses, and independent result tables.'],
+      ['Publish the workbook', 'Organize profiles, claims, sources, and comparison metrics into fitted worksheets.'],
     ],
   },
 ]
@@ -914,6 +933,31 @@ export function ResearchView() {
     setSurface('run')
   }
 
+  const newResearch = () => {
+    const nextIndex = jobs.length + 1
+    setJobs((current) => [...current, {
+      id: `new-research-${nextIndex}`,
+      title: 'New research',
+      topic: '',
+      depth: 0,
+      model: 0,
+      format: 'PDF',
+      phase: 0,
+      running: false,
+      sources: 0,
+      revision: 0,
+      reportTitle: 'Untitled Research',
+      cover: 'from-violet-500/30 via-[#25232b] to-emerald-500/15',
+      plan: [
+        ['Understand the outcome', 'Turn the request into a concrete definition of done and evidence boundary.'],
+        ['Plan the investigation', 'Choose the first search passes, source types, and verification criteria.'],
+        ['Publish the deliverable', 'Write, validate, and retain the selected output in the Research library.'],
+      ],
+    }])
+    setActiveTab(jobs.length)
+    setSurface('run')
+  }
+
   if (surface === 'library') {
     return (
       <div>
@@ -922,9 +966,9 @@ export function ResearchView() {
             <button role="tab" aria-selected="false" onClick={() => setSurface('run')} className={`rounded-full px-3 py-1 text-[10px] ${T.dim}`}>Research</button>
             <button role="tab" aria-selected="true" className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">Library</button>
           </div>
-          <button onClick={start} className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">＋ New research</button>
+          <button onClick={newResearch} className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">＋ New research</button>
         </div>
-        <ResearchLibraryDemo onOpen={(index) => { setActiveTab(index % jobs.length); setSurface('run') }} />
+        <ResearchLibraryDemo onOpen={(index) => { setActiveTab(index); setSurface('run') }} />
       </div>
     )
   }
@@ -967,7 +1011,7 @@ export function ResearchView() {
         </div>
       </div>
 
-      <div className="relative mt-5 grid grid-cols-5 gap-1 before:absolute before:left-[10%] before:right-[10%] before:top-3 before:h-px before:bg-white/10">
+      <div className="relative mt-5 grid grid-cols-6 gap-1 before:absolute before:left-[8%] before:right-[8%] before:top-3 before:h-px before:bg-white/10">
         {RESEARCH_PHASES.map((name, index) => (
           <button key={name} aria-current={index === activeJob.phase ? 'step' : undefined} onClick={() => updateActiveJob({ phase: index })} className="relative z-10 flex min-w-0 flex-col items-center gap-1.5">
             <span className={`flex h-6 w-6 items-center justify-center rounded-full border font-mono text-[8px] ${index < activeJob.phase ? 'border-emerald-400 bg-emerald-400 text-black' : index === activeJob.phase ? 'border-violet-400 bg-[#1d1d20] text-white ring-4 ring-violet-400/10' : 'border-white/15 bg-[#1d1d20] text-[#6b6b72]'}`}>
