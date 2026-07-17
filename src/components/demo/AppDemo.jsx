@@ -1054,6 +1054,16 @@ const TITLES = {
   Settings: 'Settings',
 }
 
+const VIEW_CONTEXT = {
+  Workspace: 'Project workspace',
+  Loop: 'Durable goal',
+  Research: 'Autonomous research',
+  Dashboard: 'Local profile',
+  Benchmark: 'Model comparison',
+  Plugins: 'Local capabilities',
+  Settings: 'App controls',
+}
+
 export function AppDemo({ initial = 'Workspace', className = '' }) {
   const [view, setView] = useState(initial)
   const [seed, setSeed] = useState('')
@@ -1078,7 +1088,7 @@ export function AppDemo({ initial = 'Workspace', className = '' }) {
         <span className={`truncate text-[12.5px] font-semibold ${T.text}`}>{TITLES[view]}</span>
         <div className="flex items-center gap-2">
           <span className={`hidden rounded-md border ${T.cardBorder} px-2.5 py-1 text-[10.5px] sm:block ${T.dim}`}>
-            Project workspace
+            {VIEW_CONTEXT[view]}
           </span>
           <span className={`hidden items-center gap-1.5 rounded-md border ${T.cardBorder} px-2.5 py-1 text-[10.5px] sm:flex ${T.dim}`}>
             Changes
